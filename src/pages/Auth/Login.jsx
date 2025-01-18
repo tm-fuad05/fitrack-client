@@ -9,12 +9,12 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
-  const { signInUser, setUser } = useAuth();
+  const { signInUser, setUser, user } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,10 +26,7 @@ const Login = () => {
 
     const email = form.email.value;
     const password = form.password.value;
-    const userInfo = {
-      email,
-      password,
-    };
+
     setError("");
 
     signInUser(email, password)
@@ -40,6 +37,9 @@ const Login = () => {
       })
       .catch(() => setError("Invalid email or password.Try again!"));
   };
+  if (user) {
+    return <Navigate to={location.state ? location.state : "/"} />;
+  }
 
   return (
     <div

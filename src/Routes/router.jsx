@@ -3,6 +3,7 @@ import Root from "../pages/Root";
 import Home from "../pages/Home";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
+import Error from "../pages/Error";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         element: <Login></Login>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Error></Error>,
   },
 ]);
 

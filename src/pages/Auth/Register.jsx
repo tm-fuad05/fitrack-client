@@ -9,14 +9,15 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
-  const { registerUser, updateUserProfile, signOutUser } = useAuth();
+  const { registerUser, updateUserProfile, signOutUser, user } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -48,6 +49,9 @@ const Register = () => {
       })
       .catch((error) => setError(error));
   };
+  if (user) {
+    return <Navigate to={location.state ? location.state : "/"} />;
+  }
 
   return (
     <div
