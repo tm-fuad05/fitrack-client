@@ -2,23 +2,59 @@ import React, { useState } from "react";
 // Pic import
 import authbg from "../../assets/authbg.jpg";
 import gymbg from "../../assets/gymbg.jpg";
-import gymbg2 from "../../assets/gymbg2.jpg";
 
 // Icons
 
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import SocialLogin from "../../components/Shared/SocialLogin";
+import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
+  const { registerUser, updateUserProfile, signOutUser } = useAuth();
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value;
+    const photo = form.photo.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    setError("");
+    const strongPass =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+
+    if (!strongPass.test(password)) {
+      setError("Your password is not enough strong.Try again!");
+      return;
+    }
+
+    registerUser(email, password)
+      .then(() => {
+        updateUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+            toast.success("Successfully registered");
+            signOutUser();
+            navigate("/login");
+          })
+          .catch(() => alert("Something went wrong!"));
+      })
+      .catch((error) => setError(error));
+  };
 
   return (
     <div
       className="flex min-h-screen items-center bg-cover "
       style={{ backgroundImage: `url(${gymbg})` }}
     >
-      <div className="lg:w-8/12 mx-auto flex lg:h-[550px] justify-center rounded-xl bg-cover">
+      <div className="lg:w-8/12 mx-auto flex lg:h-[600px] justify-center rounded-xl bg-cover my-20">
         <img
           className="w-1/2 h-full object-cover rounded-l-xl hidden lg:block"
           src={authbg}
@@ -34,7 +70,7 @@ const Register = () => {
               Register to Fit<span className="text-orange-600">Rack</span>
             </h2>
           </div>
-          <form className="space-y-2">
+          <form onSubmit={handleRegister} className="space-y-2">
             {/* Name */}
             <div>
               <label htmlFor="password" className="text-[15px] font-[400]">
@@ -98,14 +134,27 @@ const Register = () => {
                     onClick={() => setIsEyeOpen(true)}
                   />
                 )}
+                {/* Error Handling */}
+                {error && <p className="text-xs text-red-500 mb-1">{error}</p>}
               </div>
             </div>
+
             {/* button */}
             <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] btn w-full text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b]">
               Register
             </button>
-            <SocialLogin></SocialLogin>
           </form>
+          <div className="mt-2">
+            <SocialLogin></SocialLogin>
+          </div>
+          <div className="mt-3 text-center">
+            <p>
+              Already have an account?{" "}
+              <Link className="hover:underline text-orange-600" to="/login">
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
