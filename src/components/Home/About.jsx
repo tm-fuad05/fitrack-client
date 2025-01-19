@@ -1,6 +1,5 @@
 import React from "react";
 import aboutbg from "../../assets/aboutbg.png";
-import SectionTitle from "../Shared/SectionTitle";
 import Button from "../Shared/Button";
 
 const About = () => {

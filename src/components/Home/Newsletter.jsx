@@ -83,7 +83,7 @@ const Newsletter = () => {
           className="textarea textarea-bordered w-full col-span-2"
           rows={5}
         />
-        <Button text={"Send now"} textColor={"white"}></Button>
+        <Button text={"subscribe now"} textColor={"white"}></Button>
       </form>
     </div>
   );

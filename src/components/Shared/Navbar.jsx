@@ -128,7 +128,7 @@ const Navbar = () => {
                   className={`${
                     accountMenuOpen
                       ? "translate-y-0 opacity-100 z-[1]"
-                      : "translate-y-[10px] opacity-0 z-[-1]"
+                      : "hidden opacity-0 z-[-1]"
                   } bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
                 >
                   <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100">
@@ -173,7 +173,7 @@ const Navbar = () => {
           className={` ${
             mobileSidebarOpen
               ? "translate-x-0 opacity-100 z-20"
-              : "translate-x-[200px] opacity-0 z-[-1]"
+              : "hidden opacity-0 z-[-1]"
           } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[90px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
         >
           <ul

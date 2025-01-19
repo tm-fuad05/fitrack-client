@@ -49,13 +49,17 @@ const Trainers = () => {
               className="text-white space-y-3 flex flex-col justify-center items-center group"
             >
               <img
-                className="w-[250px] h-[250px] rounded-full object-cover group-hover:scale-105 group-hover:opacity-70 duration-300"
+                className="w-[250px] h-[250px] rounded-full object-cover group-hover:scale-105 group-hover:opacity-70 duration-300 "
                 src={trainer.photo}
                 alt=""
               />
-              <h4 className="text-2xl lg:text-3xl font-bold">{trainer.name}</h4>
-              <p className="text-sm lg:text-md text-center">{trainer.bio}</p>
-              <p className="font-bold">Expertise in:</p>
+              <h4 className="text-2xl lg:text-3xl font-bold ">
+                {trainer.name}
+              </h4>
+              <p className="text-sm lg:text-md text-center flex-grow">
+                {trainer.bio}
+              </p>
+              <p className="font-bold ">Expertise in:</p>
               <ul className="text-sm lg:text-md list-disc">
                 {trainer.expertise.map((point) => (
                   <li>{point}</li>
