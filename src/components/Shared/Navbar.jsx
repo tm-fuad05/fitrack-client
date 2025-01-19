@@ -99,7 +99,7 @@ const Navbar = () => {
         <Logo />
         <ul
           id="home-nav"
-          className="items-center gap-[40px] text-[1rem] text-white lg:flex hidden"
+          className="items-center gap-[40px] text-[1rem] text-white lg:flex hidden p-2"
         >
           {navMenu}
         </ul>
