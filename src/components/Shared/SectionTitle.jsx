@@ -7,7 +7,7 @@ const SectionTitle = ({ subtitle, title, color }) => {
         {subtitle}
       </p>
       <h2
-        className={`text-${color} text-2xl md:text-3xl lg:text-4xl leading-3 font-extrabold`}
+        className={`text-${color} text-2xl md:text-3xl lg:text-4xl leading-7 font-extrabold`}
       >
         {title}
       </h2>

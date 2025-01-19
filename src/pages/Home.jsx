@@ -1,3 +1,4 @@
+import About from "../components/Home/About";
 import Banner from "../components/Home/Banner";
 import Feaatured from "../components/Home/Feaatured";
 import Newsletter from "../components/Home/Newsletter";
@@ -8,6 +9,7 @@ const Home = () => {
     <div>
       <Banner></Banner>
       <Trainers></Trainers>
+      <About></About>
       <Feaatured></Feaatured>
       <Newsletter></Newsletter>
     </div>
