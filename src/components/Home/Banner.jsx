@@ -24,7 +24,7 @@ const Banner = () => {
         </p>
         <div className="mt-3">
           <Link to={"/all-classes"}>
-            <Button textColor={"white"}></Button>
+            <Button textColor={"white"} text={"go to classes page"}></Button>
           </Link>
         </div>
       </div>
