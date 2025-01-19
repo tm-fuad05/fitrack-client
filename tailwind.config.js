@@ -4,9 +4,13 @@ export default {
 
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        primary: "#e13a3a",
+        secondary: "#e96d4c",
+      },
       fontFamily: {
         poppins: "Poppins",
+        oxanium: "Oxanium",
       },
     },
   },

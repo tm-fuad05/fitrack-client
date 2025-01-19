@@ -56,7 +56,7 @@ const Login = () => {
           {/* Content */}
           <div className="flex flex-col gap-2 mb-4">
             <h2 className="font-bold text-2xl lg:text-3xl mt-2">
-              Login to Fit<span className="text-orange-600">Rack</span>
+              Login to Fit<span className="text-secondary">Rack</span>
             </h2>
           </div>
           <form onSubmit={handleLogin} className="space-y-2">
@@ -70,7 +70,7 @@ const Login = () => {
                 name="email"
                 id="email"
                 placeholder="Email "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-red-600 transition-colors duration-300"
+                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
               />
             </div>
             {/* password */}
@@ -84,7 +84,7 @@ const Login = () => {
                   name="password"
                   id="password"
                   placeholder="Password"
-                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-red-600 transition-colors duration-300 mb-2"
+                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-primary transition-colors duration-300 mb-2"
                 />
                 {isEyeOpen ? (
                   <IoEyeOutline
@@ -104,7 +104,7 @@ const Login = () => {
             </div>
 
             {/* button */}
-            <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] btn w-full text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b]">
+            <button className="bg-gradient-to-r from-primary to-secondary btn w-full text-white hover:bg-gradient-to-r hover:from-secondary hover:to-primary">
               Login
             </button>
           </form>
@@ -114,7 +114,7 @@ const Login = () => {
           <div className="mt-3 text-center">
             <p>
               New in this website?{" "}
-              <Link className="hover:underline text-orange-600" to="/register">
+              <Link className="hover:underline text-secondary" to="/register">
                 Register
               </Link>
             </p>

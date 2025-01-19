@@ -20,7 +20,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-orange-600"
+              className="text-gray-300 hover:text-secondary"
               aria-label="Facebook"
             >
               <IoLogoFacebook className="text-3xl" />
@@ -29,7 +29,7 @@ const Footer = () => {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-orange-600"
+              className="text-gray-300 hover:text-secondary"
               aria-label="Twitter"
             >
               <IoLogoTwitter className="text-3xl" />
@@ -38,7 +38,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-orange-600"
+              className="text-gray-300 hover:text-secondary"
               aria-label="Instagram"
             >
               <IoLogoInstagram className="text-3xl" />
@@ -47,7 +47,7 @@ const Footer = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-orange-600"
+              className="text-gray-300 hover:text-secondary"
               aria-label="LinkedIn"
             >
               <i className="fab fa-linkedin-in"></i>
@@ -70,7 +70,7 @@ const Footer = () => {
               <strong>Email:</strong>{" "}
               <a
                 href="mailto:contact@mywebsite.com"
-                className="text-gray-300 hover:text-orange-600"
+                className="text-gray-300 hover:text-secondary"
               >
                 contact@mywebsite.com
               </a>
@@ -79,7 +79,7 @@ const Footer = () => {
               <strong>Phone:</strong>{" "}
               <a
                 href="tel:+1234567890"
-                className="text-gray-300 hover:text-orange-600"
+                className="text-gray-300 hover:text-secondary"
               >
                 +123 456 7890
               </a>

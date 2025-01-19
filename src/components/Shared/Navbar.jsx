@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // react icons
 
@@ -23,6 +23,23 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 
   const { user, signOutUser } = useAuth();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleSignOut = () => {
     signOutUser().then(() => {
@@ -38,33 +55,33 @@ const Navbar = () => {
   const navMenu = (
     <>
       <NavLink
-        className="before:w-0 hover:before:w-full before:bg-red-600 before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-red-600 transition-all duration-300 before:left-0 cursor-pointer capitalize"
+        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
         to={"/"}
       >
         Home
       </NavLink>
       <NavLink
-        className="before:w-0 hover:before:w-full before:bg-red-600 before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-red-600 transition-all duration-300 before:left-0 cursor-pointer capitalize"
+        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
         to={"all-trainer"}
       >
         All Trainer
       </NavLink>
       <NavLink
-        className="before:w-0 hover:before:w-full before:bg-red-600 before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-red-600 transition-all duration-300 before:left-0 cursor-pointer capitalize"
+        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
         to={"all-classes"}
       >
         All Classes
       </NavLink>
       {user && user?.email && (
         <NavLink
-          className="before:w-0 hover:before:w-full before:bg-red-600 before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-red-600 transition-all duration-300 before:left-0 cursor-pointer capitalize"
+          className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
           to={"dashboard"}
         >
           Dashboard
         </NavLink>
       )}
       <NavLink
-        className="before:w-0 hover:before:w-full before:bg-red-600 before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-red-600 transition-all duration-300 before:left-0 cursor-pointer capitalize"
+        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
         to={"community"}
       >
         Community
@@ -73,12 +90,16 @@ const Navbar = () => {
   );
 
   return (
-    <div className="shadow-md">
-      <nav className="flex items-center justify-between relative w-11/12 mx-auto py-4">
+    <div
+      className={`bg-opacity-5 fixed z-20 w-full duration-300 ${
+        scrolled ? "bg-black bg-opacity-80" : ""
+      }`}
+    >
+      <nav className="flex items-center justify-between relative w-11/12 mx-auto py-6 ">
         <Logo />
         <ul
           id="home-nav"
-          className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden"
+          className="items-center gap-[40px] text-[1rem] text-white lg:flex hidden"
         >
           {navMenu}
         </ul>
@@ -99,7 +120,7 @@ const Navbar = () => {
                   <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
                 </div>
 
-                <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
+                <h1 className="text-[1rem] font-[400] text-white sm:block hidden">
                   {user?.displayName}
                 </h1>
 
@@ -110,7 +131,7 @@ const Navbar = () => {
                       : "translate-y-[10px] opacity-0 z-[-1]"
                   } bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
                 >
-                  <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-50">
+                  <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100">
                     <FiUser />
                     View Profile
                   </p>
@@ -129,7 +150,7 @@ const Navbar = () => {
                 <IoIosArrowUp
                   className={`${
                     accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
-                  } transition-all duration-300 text-gray-600 sm:block hidden`}
+                  } transition-all duration-300 text-white sm:block hidden`}
                 />
               </div>
             </div>
@@ -141,7 +162,7 @@ const Navbar = () => {
             </Link>
           )}
           <div
-            className="text-3xl cursor-pointer lg:hidden"
+            className="text-3xl cursor-pointer lg:hidden text-white"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           >
             {mobileSidebarOpen ? <IoMdClose /> : <RiMenuFill />}
@@ -153,7 +174,7 @@ const Navbar = () => {
             mobileSidebarOpen
               ? "translate-x-0 opacity-100 z-20"
               : "translate-x-[200px] opacity-0 z-[-1]"
-          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[55px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
+          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[90px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
         >
           <ul
             id="home-nav"

@@ -71,7 +71,7 @@ const Register = () => {
           {/* Content */}
           <div className="flex flex-col gap-2 mb-4">
             <h2 className="font-bold text-2xl lg:text-3xl mt-2">
-              Register to Fit<span className="text-orange-600">Rack</span>
+              Register to Fit<span className="text-secondary">Rack</span>
             </h2>
           </div>
           <form onSubmit={handleRegister} className="space-y-2">
@@ -85,7 +85,7 @@ const Register = () => {
                 name="name"
                 id="name"
                 placeholder="Name "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-red-600 transition-colors duration-300"
+                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
               />
             </div>
             {/* Photo */}
@@ -98,7 +98,7 @@ const Register = () => {
                 name="photo"
                 id="photo"
                 placeholder="Photo URL"
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-red-600 transition-colors duration-300"
+                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
               />
             </div>
             {/* email */}
@@ -111,7 +111,7 @@ const Register = () => {
                 name="email"
                 id="email"
                 placeholder="Email "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-red-600 transition-colors duration-300"
+                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
               />
             </div>
             {/* password */}
@@ -125,7 +125,7 @@ const Register = () => {
                   name="password"
                   id="password"
                   placeholder="Password"
-                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-red-600 transition-colors duration-300 mb-2"
+                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-primary transition-colors duration-300 mb-2"
                 />
                 {isEyeOpen ? (
                   <IoEyeOutline
@@ -144,7 +144,7 @@ const Register = () => {
             </div>
 
             {/* button */}
-            <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] btn w-full text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b]">
+            <button className="bg-gradient-to-r from-primary to-secondary btn w-full text-white hover:bg-gradient-to-r hover:from-secondary hover:to-primary">
               Register
             </button>
           </form>
@@ -154,7 +154,7 @@ const Register = () => {
           <div className="mt-3 text-center">
             <p>
               Already have an account?{" "}
-              <Link className="hover:underline text-orange-600" to="/login">
+              <Link className="hover:underline text-secondary" to="/login">
                 Login
               </Link>
             </p>
