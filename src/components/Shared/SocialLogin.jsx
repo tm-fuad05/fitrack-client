@@ -2,15 +2,27 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SocialLogin = () => {
   const { googleSignIn, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
 
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result) => {
+        const userInfo = {
+          name: result.user?.displayName,
+          email: result.user?.email,
+        };
+
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            navigate(location.state ? location.state : "/");
+          }
+        });
         setUser(result.user);
         toast.success("Successfully signed in");
         navigate(location.state ? location.state : "/");

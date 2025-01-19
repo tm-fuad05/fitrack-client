@@ -72,7 +72,7 @@ const Footer = () => {
                 href="mailto:contact@mywebsite.com"
                 className="text-gray-300 hover:text-secondary"
               >
-                contact@mywebsite.com
+                fitrack.admin@gmail.com
               </a>
             </p>
             <p className="text-sm">

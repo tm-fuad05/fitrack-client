@@ -11,6 +11,7 @@ import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
@@ -18,6 +19,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -41,17 +43,26 @@ const Register = () => {
       .then(() => {
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
-            toast.success("Successfully registered");
-            signOutUser();
-            navigate("/login");
+            const userInfo = { name: name, email: email };
+
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Successfully registered");
+                signOutUser()
+                  .then(() => {
+                    navigate("/login");
+                  })
+                  .catch((error) => alert(error));
+              }
+            });
           })
           .catch(() => alert("Something went wrong!"));
       })
       .catch((error) => setError(error));
   };
-  if (user) {
-    return <Navigate to={location.state ? location.state : "/"} />;
-  }
+  // if (user) {
+  //   return <Navigate to={location.state ? location.state : "/login"} />;
+  // }
 
   return (
     <div
