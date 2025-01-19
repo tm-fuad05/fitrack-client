@@ -4,6 +4,7 @@ import {
   IoLogoInstagram,
   IoLogoTwitter,
 } from "react-icons/io5";
+import Logo from "./logo";
 
 const Footer = () => {
   return (
@@ -12,9 +13,7 @@ const Footer = () => {
         {/* Top Section */}
         <div className="flex flex-wrap justify-between items-center">
           {/* Logo and Name */}
-          <div className="flex items-center space-x-4">
-            <span className="text-2xl font-bold text-white">FitRack</span>
-          </div>
+          <Logo />
           {/* Social Media Links */}
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a
