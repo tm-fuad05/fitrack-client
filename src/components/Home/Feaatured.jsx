@@ -41,7 +41,7 @@ const Feaatured = () => {
         title={"Transform Your Health and Elevate Your Fitness Journey"}
         subtitle={"our services"}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-10/12 mx-auto mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-10/12 mx-auto mt-10">
         {cards.map((card, idx) => (
           <div
             key={idx}
@@ -59,7 +59,7 @@ const Feaatured = () => {
               </p>
               <div>
                 <button
-                  className={`mt-2 capitalize btn bg-transparent rounded-full text-black hover:bg-gradient-to-l hover:from-secondary hover:to-primary group  group-hover:text-white group-hover:bg-black`}
+                  className={`mt-2 capitalize btn bg-transparent rounded-full text-black hover:bg-gradient-to-l hover:from-secondary hover:to-primary group  group-hover:text-white group-hover:bg-black border-black `}
                 >
                   read more
                   <FiArrowRight className="text-3xl p-1 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:translate-x-2 duration-300 text-white" />
