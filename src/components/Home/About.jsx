@@ -8,8 +8,8 @@ const About = () => {
       className="bg-cover min-h-screen py-10 flex items-center"
       style={{ backgroundImage: `url(${aboutbg})` }}
     >
-      <div className="w-11/12 mx-auto">
-        <div className="uppercase  space-y-3 lg:w-7/12 w-1/2">
+      <div className="w-10/12 mx-auto">
+        <div className="uppercase  space-y-3 lg:w-1/2 text-center lg:text-start">
           <p className="text-primary tracking-[4px] text-md lg:text-lg font-semibold">
             about us
           </p>
