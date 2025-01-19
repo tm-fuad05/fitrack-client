@@ -53,7 +53,7 @@ const Trainers = () => {
                 src={trainer.photo}
                 alt=""
               />
-              <h4 className="text-xl lg:text-2xl font-bold">{trainer.name}</h4>
+              <h4 className="text-2xl lg:text-3xl font-bold">{trainer.name}</h4>
               <p className="text-sm lg:text-md text-center">{trainer.bio}</p>
               <p className="font-bold">Expertise in:</p>
               <ul className="text-sm lg:text-md list-disc">

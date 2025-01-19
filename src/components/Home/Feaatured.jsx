@@ -36,7 +36,7 @@ const Feaatured = () => {
   ];
 
   return (
-    <div className="bg-background min-h-screen py-20 my-20">
+    <div className="bg-background min-h-screen py-20">
       <SectionTitle
         title={"Transform Your Health and Elevate Your Fitness Journey"}
         subtitle={"our services"}
