@@ -45,7 +45,7 @@ const Feaatured = () => {
         {cards.map((card, idx) => (
           <div
             key={idx}
-            className="flex gap-6 border border-secondary p-10 group hover:bg-gradient-to-t hover:from-secondary hover:to-primary transition-all duration-300"
+            className="flex flex-col lg:flex-row gap-6 border border-secondary p-10 group hover:bg-gradient-to-t hover:from-secondary hover:to-primary transition-all duration-300"
           >
             <div className="p-4 text-5xl text-secondary rounded-full border border-secondary w-fit h-fit group-hover:bg-white duration-300">
               {card.icons}

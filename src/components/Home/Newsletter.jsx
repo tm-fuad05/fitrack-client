@@ -50,7 +50,7 @@ const Newsletter = () => {
       />
       <form
         onSubmit={handleSubmit}
-        className="font-poppins grid grid-cols-2 gap-3 w-10/12 mx-auto lg:w-7/12 mt-10"
+        className="font-poppins grid grid-cols-1 md:grid-cols-2 gap-3 w-10/12 mx-auto lg:w-7/12 mt-10"
       >
         <input
           type="text"
@@ -80,7 +80,7 @@ const Newsletter = () => {
           type="text"
           name="message"
           placeholder="Send a message"
-          className="textarea textarea-bordered w-full col-span-2"
+          className="textarea textarea-bordered w-full md:col-span-2"
           rows={5}
         />
         <Button text={"subscribe now"} textColor={"white"}></Button>
