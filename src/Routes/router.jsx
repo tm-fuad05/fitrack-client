@@ -6,6 +6,7 @@ import Login from "../pages/Auth/Login";
 import Error from "../pages/Error";
 import AllTrainers from "../pages/AllTrainers";
 import TrainerDetails from "../components/All Trainers/TrainerDetails/TrainerDetails";
+import ApplicationForTrainer from "../pages/ApplicationForTrainer";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/all-trainer",
         element: <AllTrainers></AllTrainers>,
+      },
+      {
+        path: "/become-a-trainer",
+        element: <ApplicationForTrainer />,
       },
       {
         path: "/all-trainer/:trainerName",

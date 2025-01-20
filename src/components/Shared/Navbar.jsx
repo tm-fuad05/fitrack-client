@@ -7,7 +7,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
 
 import { FiUser } from "react-icons/fi";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 // SweetAlert
@@ -19,6 +19,7 @@ import Logo from "./logo";
 
 const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 
@@ -91,9 +92,13 @@ const Navbar = () => {
 
   return (
     <div
-      className={`bg-opacity-5 fixed z-20 w-full duration-300 ${
-        scrolled ? "bg-black bg-opacity-80" : ""
-      }`}
+      className={`bg-opacity-5 ${
+        pathname === "/" || pathname === "/all-trainer"
+          ? `fixed  ${scrolled ? "bg-black bg-opacity-80" : ""}`
+          : `sticky top-0 bg-gray-900  ${
+              scrolled ? "bg-opacity-80" : "bg-opacity-100"
+            }`
+      } z-20 w-full duration-300`}
     >
       <nav className="flex items-center justify-between relative w-11/12 mx-auto py-6 ">
         <Logo />
