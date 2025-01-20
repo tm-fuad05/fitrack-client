@@ -56,32 +56,32 @@ const Newsletter = () => {
           type="text"
           placeholder="Name"
           name="name"
-          className="input  input-bordered w-full "
+          className=" rounded-md pl-4 py-2 focus:outline-none w-full "
         />
         <input
           type="text"
           name="phone"
           placeholder="Phone"
-          className="input input-bordered w-full "
+          className="rounded-md pl-4 py-2 focus:outline-none w-full "
         />
         <input
           type="email"
           name="email"
           placeholder="Email"
-          className="input input-bordered w-full "
+          className="rounded-md pl-4 py-2 focus:outline-none w-full "
         />
         <input
           type="text"
           placeholder="Subject"
           name="subject"
-          className="input input-bordered w-full "
+          className="rounded-md pl-4 py-2 focus:outline-none w-full "
         />
         <textarea
           type="text"
           name="message"
           placeholder="Send a message"
-          className="textarea textarea-bordered w-full md:col-span-2"
-          rows={5}
+          className="rounded-md pl-4 pt-2 focus:outline-none w-full md:col-span-2"
+          rows={6}
         />
         <Button text={"subscribe now"} textColor={"white"}></Button>
       </form>

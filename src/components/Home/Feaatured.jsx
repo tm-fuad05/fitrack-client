@@ -50,16 +50,16 @@ const Feaatured = () => {
             <div className="p-4 text-5xl text-secondary rounded-full border border-secondary w-fit h-fit group-hover:bg-white duration-300">
               {card.icons}
             </div>
-            <div className="space-y-2 group-hover:text-white duration-300">
-              <h3 className="uppercase text-xl lg:text-2xl font-bold">
+            <div className="flex flex-col gap-2 group-hover:text-white duration-300">
+              <h3 className="uppercase text-xl lg:text-2xl font-bold  flex-grow">
                 {card.name}
               </h3>
-              <p className="font-poppins text-md lg:text-lg text-gray-500 group-hover:text-white font-light duration-300">
+              <p className="font-poppins text-md lg:text-lg text-gray-500 group-hover:text-white font-light duration-300  ">
                 {card.description}
               </p>
               <div>
                 <button
-                  className={`mt-2 capitalize btn bg-transparent rounded-full text-black  group  group-hover:text-white group-hover:bg-black border-black `}
+                  className={`mt-2 capitalize flex justify-center items-center gap-3 py-2 px-4 font-medium bg-transparent rounded-full text-black hover:translate-x-2 duration-300  group  group-hover:text-white group-hover:bg-black border border-black  `}
                 >
                   read more
                   <FiArrowRight className="text-3xl p-1 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:translate-x-2 duration-300 text-white" />

@@ -23,7 +23,7 @@ const About = () => {
             guidance to help you achieve your health goals. We believe in
             empowering you to live a healthier, happier life
           </p>
-          <div>
+          <div className="w-fit mx-auto lg:mx-0">
             <Button textColor={"white"} text={"read more"}></Button>
           </div>
         </div>

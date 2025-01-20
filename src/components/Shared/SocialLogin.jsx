@@ -16,6 +16,7 @@ const SocialLogin = () => {
         const userInfo = {
           name: result.user?.displayName,
           email: result.user?.email,
+          role: "member",
         };
 
         axiosPublic.post("/users", userInfo).then((res) => {
@@ -32,7 +33,10 @@ const SocialLogin = () => {
 
   return (
     <div className="flex justify-between gap-2 mx-auto">
-      <button onClick={handleGoogleSignIn} className="btn bg-white w-full">
+      <button
+        onClick={handleGoogleSignIn}
+        className="py-3 rounded-md bg-white w-full flex justify-center gap-2 hover:bg-gray-200 font-medium"
+      >
         <img
           src="https://i.ibb.co/dQMmB8h/download-4-removebg-preview-1.png"
           alt="google logo"

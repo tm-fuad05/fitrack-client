@@ -5,7 +5,10 @@ const Error = () => {
   return (
     <div className="min-h-screen flex items-center justify-center flex-col">
       <img className="w-3/4 lg:w-1/2" src={error} alt="" />
-      <Link className="btn bg-red-400 text-white" to={"/"}>
+      <Link
+        className="px-4 py-3 rounded-md font-medium hover:bg-opacity-50 bg-red-400 text-white"
+        to={"/"}
+      >
         Back to home
       </Link>
     </div>

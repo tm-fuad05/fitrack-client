@@ -104,7 +104,7 @@ const Login = () => {
             </div>
 
             {/* button */}
-            <button className="bg-gradient-to-r from-primary to-secondary btn w-full text-white hover:bg-gradient-to-r hover:from-secondary hover:to-primary  border-none">
+            <button className="bg-gradient-to-r from-primary to-secondary py-3 rounded-md w-full text-white font-medium hover:bg-gradient-to-r hover:from-secondary hover:to-primary  border-none">
               Login
             </button>
           </form>

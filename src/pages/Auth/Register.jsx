@@ -43,7 +43,7 @@ const Register = () => {
       .then(() => {
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
-            const userInfo = { name: name, email: email };
+            const userInfo = { name: name, email: email, role: "member" };
 
             axiosPublic.post("/users", userInfo).then((res) => {
               if (res.data.insertedId) {
@@ -60,9 +60,9 @@ const Register = () => {
       })
       .catch((error) => setError(error));
   };
-  // if (user) {
-  //   return <Navigate to={location.state ? location.state : "/login"} />;
-  // }
+  if (user) {
+    return <Navigate to={location.state ? location.state : "/login"} />;
+  }
 
   return (
     <div
@@ -155,7 +155,7 @@ const Register = () => {
             </div>
 
             {/* button */}
-            <button className="bg-gradient-to-r from-primary to-secondary btn w-full text-white hover:bg-gradient-to-r hover:from-secondary hover:to-primary">
+            <button className="bg-gradient-to-r from-primary to-secondary py-3 rounded-md w-full text-white font-medium hover:bg-gradient-to-r hover:from-secondary hover:to-primary">
               Register
             </button>
           </form>
