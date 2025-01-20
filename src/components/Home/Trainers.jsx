@@ -5,7 +5,7 @@ const Trainers = () => {
   const trainers = [
     {
       name: "Dr. Ayesha Rahman",
-      bio: "Dr. Ayesha Rahman is a seasoned educator with over 15 years of experience in academic counseling and leadership training. She has worked with various educational institutions to design effective learning modules and mentoring systems.",
+      bio: "Dr. Ayesha Rahman is a seasoned educator with over 5 years of experience in academic counseling and leadership training. She has worked with various educational institutions to design effective learning modules and mentoring systems.",
       expertise: [
         "Leadership Development",
         "Academic Counseling",
