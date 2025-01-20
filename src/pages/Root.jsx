@@ -8,7 +8,8 @@ const Root = () => {
 
   const noHeaderFooter =
     location.pathname.includes("/login") ||
-    location.pathname.includes("/register");
+    location.pathname.includes("/register") ||
+    location.pathname.includes("/dashboard");
 
   return (
     <div>
