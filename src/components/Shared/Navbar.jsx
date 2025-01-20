@@ -92,7 +92,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`bg-opacity-5 ${
+      className={` ${
         pathname === "/" || pathname === "/all-trainer"
           ? `fixed  ${scrolled ? "bg-black bg-opacity-80" : ""}`
           : `sticky top-0 bg-gray-900  ${

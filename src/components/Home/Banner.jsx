@@ -12,7 +12,7 @@ const Banner = () => {
         clipPath: "polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%)",
       }}
     >
-      <div className="font-oxanium w-11/12 mx-auto text-white flex flex-col gap-3 text-center md:text-start">
+      <div className="font-oxanium w-11/12 mx-auto text-white flex flex-col items-center md:items-start gap-3 text-center md:text-start">
         <h4 className=" font-semibold text-md lg:text-xl  capitalize tracking-[7px] lg:tracking-[15px]  p-2 w-fit mx-auto bg-gradient-to-r from-primary to-secondary  rounded-bl-2xl rounded-tr-2xl  md:mx-0">
           welcome to FitRack
         </h4>

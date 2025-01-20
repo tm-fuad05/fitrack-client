@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import useAuth from "../hooks/useAuth";
-
+import useAxiosPublic from "../hooks/useAxiosPublic";
+// SweetAlert
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 const ApplicationForTrainer = () => {
+  const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "",
     email: user.email,
     age: "",
-    profileImage: null,
+    profileImage: "",
     skills: [],
     availableDays: [],
     availableTime: "",
@@ -52,8 +58,17 @@ const ApplicationForTrainer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Add your logic to save the data to the database
+    const trainerInfo = formData;
+    console.log(trainerInfo);
+    axiosPublic.post("/applied-as-trainer", trainerInfo).then((res) => {
+      if (res.data.insertedId) {
+        e.target.reset();
+        Swal.fire({
+          title: "Successfully Applied",
+          icon: "success",
+        });
+      }
+    });
   };
 
   return (
@@ -107,17 +122,31 @@ const ApplicationForTrainer = () => {
         </div>
 
         {/* Profile Image */}
-        <div>
+        {/* <div>
           <label className="block text-gray-700 font-medium mb-2">
             Profile Image
           </label>
           <input
             type="file"
             accept="image/*"
+            name="profileImage"
             className="w-full border rounded-lg px-4 py-2 focus:outline-none"
             onChange={(e) =>
               setFormData({ ...formData, profileImage: e.target.files[0] })
             }
+          />
+        </div> */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Photo</label>
+          <input
+            type="text"
+            placeholder="Photo URL"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={formData.profileImage}
+            onChange={(e) =>
+              setFormData({ ...formData, profileImage: e.target.value })
+            }
+            required
           />
         </div>
 
