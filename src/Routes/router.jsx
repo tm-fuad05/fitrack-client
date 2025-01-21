@@ -13,6 +13,12 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import NewsletterSubscribers from "../pages/Dashboard/Admin dashboard/NewsletterSubscribers";
 import TrainerHandling from "../pages/Dashboard/Admin dashboard/TrainerHandling";
 import ManageUsers from "../pages/Dashboard/Admin dashboard/ManageUsers";
+import ActivityLog from "../pages/Dashboard/Member Dashboard/ActivityLog";
+import BookedTrainer from "../pages/Dashboard/Member Dashboard/BookedTrainer";
+import Profile from "../pages/Dashboard/Member Dashboard/Profile";
+import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
+import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
+import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
 
 const router = createBrowserRouter([
   {
@@ -48,10 +54,8 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         children: [
-          {
-            path: "/dashboard",
-            element: <Navigate to={"/dashboard/newsletter"}></Navigate>,
-          },
+          // Admin Dashboard Menus
+
           {
             path: "/dashboard/newsletter",
             element: <NewsletterSubscribers></NewsletterSubscribers>,
@@ -63,6 +67,33 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/manage-users",
             element: <ManageUsers></ManageUsers>,
+          },
+
+          // Member Dashboard Menus
+          {
+            path: "/dashboard/activity-log",
+            element: <ActivityLog></ActivityLog>,
+          },
+          {
+            path: "/dashboard/booked-trainers",
+            element: <BookedTrainer></BookedTrainer>,
+          },
+          {
+            path: "/dashboard/my-profile",
+            element: <Profile></Profile>,
+          },
+          // Trainer Dashboard Menus
+          {
+            path: "/dashboard/manage-slot",
+            element: <ManageSlot></ManageSlot>,
+          },
+          {
+            path: "/dashboard/add-slot",
+            element: <AddSlot></AddSlot>,
+          },
+          {
+            path: "/dashboard/add-forum",
+            element: <AddForum></AddForum>,
           },
         ],
       },

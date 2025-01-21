@@ -3,91 +3,195 @@ import Logo from "../../components/Shared/logo";
 import { NavLink, Outlet } from "react-router-dom";
 import "./dashboard.css";
 import { LuLetterText } from "react-icons/lu";
-import { CgGym } from "react-icons/cg";
+import { CgGym, CgProfile } from "react-icons/cg";
 import { RiMenuFill, RiMoneyDollarCircleLine } from "react-icons/ri";
-import { MdClass } from "react-icons/md";
-import { SiGoogleclassroom } from "react-icons/si";
-import { FaHouse, FaRegCircleUser } from "react-icons/fa6";
-import { IoMdClose } from "react-icons/io";
+import { MdClass, MdForum } from "react-icons/md";
+import { SiGooglecampaignmanager360, SiGoogleclassroom } from "react-icons/si";
+import { FaBookmark, FaHouse, FaRegCircleUser } from "react-icons/fa6";
+import { IoIosAddCircle, IoMdClose } from "react-icons/io";
+import { BsActivity } from "react-icons/bs";
+import useUser from "../../hooks/useUser";
+import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
+  const { user } = useAuth();
+  const { users } = useUser();
+  const currentUser = users.find((u) => u.email === user?.email);
+
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
+
+  const roleNavLinks = {
+    admin: (
+      <>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/newsletter"}
+        >
+          {" "}
+          <LuLetterText className="text-xl" />
+          Newsletter Subscribers
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/trainers"}
+        >
+          <CgGym className="text-xl" />
+          Trainers
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/balance"}
+        >
+          {" "}
+          <RiMoneyDollarCircleLine className="text-xl" />
+          Balance
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/classes"}
+        >
+          {" "}
+          <MdClass className="text-xl" />
+          Classes
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/add-class"}
+        >
+          <SiGoogleclassroom className="text-xl" />
+          Add Class
+        </NavLink>
+        {/* Devider */}
+        <div className="border-b mb-5"></div>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2"
+          }
+          to={"/dashboard/manage-users"}
+        >
+          <FaRegCircleUser className="text-xl" />
+          Manage Users
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/"}
+        >
+          <FaHouse className="text-xl" />
+          Home
+        </NavLink>{" "}
+      </>
+    ),
+    trainer: (
+      <>
+        {" "}
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/manage-slot"}
+        >
+          {" "}
+          <SiGooglecampaignmanager360 className="text-xl" />
+          Manage Slot
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/add-slot"}
+        >
+          {" "}
+          <IoIosAddCircle className="text-xl" />
+          Add Slot
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/add-forum"}
+        >
+          {" "}
+          <MdForum className="text-xl" />
+          Add forum
+        </NavLink>
+        {/* Devider */}
+        <div className="border-b mb-5"></div>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/"}
+        >
+          <FaHouse className="text-xl" />
+          Home
+        </NavLink>
+      </>
+    ),
+    member: (
+      <>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/my-profile"}
+        >
+          {" "}
+          <CgProfile className="text-xl" />
+          Profile
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/activity-log"}
+        >
+          {" "}
+          <BsActivity className="text-xl" />
+          Activity Log
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/booked-trainers"}
+        >
+          {" "}
+          <FaBookmark className="text-xl" />
+          Booked Trainers
+        </NavLink>
+        {/* Devider */}
+        <div className="border-b mb-5"></div>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/"}
+        >
+          <FaHouse className="text-xl" />
+          Home
+        </NavLink>
+      </>
+    ),
+  };
 
   const navMenu = (
     <nav
       id="dashboard-nav"
       className="font-semibold text-white w-full space-y-1"
     >
-      {/* Admin */}
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/dashboard/newsletter"}
-      >
-        {" "}
-        <LuLetterText className="text-xl" />
-        Newsletter Subscribers
-      </NavLink>
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/dashboard/trainers"}
-      >
-        <CgGym className="text-xl" />
-        Trainers
-      </NavLink>
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/dashboard/balance"}
-      >
-        {" "}
-        <RiMoneyDollarCircleLine className="text-xl" />
-        Balance
-      </NavLink>
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/dashboard/classes"}
-      >
-        {" "}
-        <MdClass className="text-xl" />
-        Classes
-      </NavLink>
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/dashboard/add-class"}
-      >
-        <SiGoogleclassroom className="text-xl" />
-        Add Class
-      </NavLink>
-      {/* Devider */}
-      <div className="border-b mb-5"></div>
-
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2"
-        }
-        to={"/dashboard/manage-users"}
-      >
-        <FaRegCircleUser className="text-xl" />
-        Manage Users
-      </NavLink>
-      <NavLink
-        className={
-          " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-        }
-        to={"/"}
-      >
-        <FaHouse className="text-xl" />
-        Home
-      </NavLink>
+      {roleNavLinks[currentUser?.role]}
     </nav>
   );
 

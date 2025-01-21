@@ -16,6 +16,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import "./navbar.css";
 
 import Logo from "./logo";
+import useUser from "../../hooks/useUser";
 
 const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -24,6 +25,16 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 
   const { user, signOutUser } = useAuth();
+
+  const { users } = useUser();
+  const currentUser = users.find((u) => u.email === user?.email);
+
+  const roleRoutes = {
+    admin: "newsletter",
+    trainer: "manage-slot",
+    member: "my-profile",
+  };
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -76,7 +87,7 @@ const Navbar = () => {
       {user && user?.email && (
         <NavLink
           className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-          to={"dashboard"}
+          to={`/dashboard/${roleRoutes[currentUser?.role]}`}
         >
           Dashboard
         </NavLink>
