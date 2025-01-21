@@ -29,8 +29,22 @@ const Navbar = () => {
   const { users } = useUser();
   const currentUser = users.find((u) => u.email === user?.email);
 
+  // Dashboard Routes according to role
   const roleRoutes = {
     admin: "newsletter",
+    trainer: "manage-slot",
+    member: "my-profile",
+  };
+
+  //ConditionalLink Link show according to role
+  const conditionalLink = {
+    admin: "Manage Users",
+    trainer: "Manage Slot",
+    member: "View Profile",
+  };
+  // Conditional Navigate according to role
+  const conditionalNavigate = {
+    admin: "manage-users",
     trainer: "manage-slot",
     member: "my-profile",
   };
@@ -147,10 +161,12 @@ const Navbar = () => {
                       : "hidden opacity-0 z-[-1]"
                   } bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
                 >
-                  <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100">
-                    <FiUser />
-                    View Profile
-                  </p>
+                  <Link
+                    to={`/dashboard/${conditionalNavigate[currentUser?.role]}`}
+                    className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100"
+                  >
+                    {conditionalLink[currentUser?.role]}
+                  </Link>
 
                   <div
                     onClick={handleSignOut}

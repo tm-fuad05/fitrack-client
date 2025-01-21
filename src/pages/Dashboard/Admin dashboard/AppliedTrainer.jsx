@@ -54,15 +54,10 @@ const AppliedTrainer = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Post to ConfirmedTrainer
-        axiosPublic.post("/confirmed-trainer", confirmedTrainer).then((res) => {
-          if (res.data.insertedId) {
-            Swal.fire({
-              title: "Confirmed!",
-              text: `${trainer.fullName} is Trainer now.`,
-              icon: "success",
-            });
-          }
-        });
+        // axiosPublic.post("/confirmed-trainer", confirmedTrainer).then((res) => {
+        //   if (res.data.insertedId) {
+        //   }
+        // });
 
         // Delete from appliedTrainer
         axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
@@ -77,6 +72,11 @@ const AppliedTrainer = () => {
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               refetch();
+              Swal.fire({
+                title: "Confirmed!",
+                text: `${trainer.fullName} is Trainer now.`,
+                icon: "success",
+              });
             }
           });
       }

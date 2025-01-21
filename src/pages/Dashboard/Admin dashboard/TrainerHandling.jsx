@@ -1,13 +1,45 @@
 import React from "react";
-import useConfirmedTrainer from "../../../hooks/useConfirmedTrainer";
 import { FaTrash } from "react-icons/fa6";
 import useUser from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 const TrainerHandling = () => {
-  const { users } = useUser();
-
+  const { users, refetch } = useUser();
+  const axiosPublic = useAxiosPublic();
   const trainers = users.filter((u) => u.role === "trainer");
+
+  const handleRemoveTrainerRole = (trainer) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Would you want to make ${trainer.name} Admin?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.patch(`/users/make-member/${trainer._id}`).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            console.log(res.data);
+            refetch();
+            Swal.fire({
+              title: `${trainer.name} is now a member!`,
+              icon: "success",
+            });
+          }
+        });
+        // axiosPublic.delete(`/users/${trainer._id}`).then((res) => {
+        //   if (res.data.deletedCount > 0) {
+        //     refetch();
+        //   }
+        // });
+      }
+    });
+  };
 
   return (
     <div>
@@ -42,7 +74,10 @@ const TrainerHandling = () => {
                       {trainer.role}
                     </td>
                     <td className="p-3">
-                      <button className="text-xl p-2 bg-primary text-white rounded-md hover:bg-opacity-50">
+                      <button
+                        onClick={() => handleRemoveTrainerRole(trainer)}
+                        className="text-xl p-2 bg-primary text-white rounded-md hover:bg-opacity-50"
+                      >
                         {" "}
                         <FaTrash />{" "}
                       </button>
