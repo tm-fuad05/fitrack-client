@@ -9,6 +9,7 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
+import useUser from "../hooks/useUser";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {

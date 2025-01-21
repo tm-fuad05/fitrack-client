@@ -60,15 +60,17 @@ const ApplicationForTrainer = () => {
     e.preventDefault();
     const trainerInfo = formData;
     console.log(trainerInfo);
-    axiosPublic.post("/applied-as-trainer", trainerInfo).then((res) => {
-      if (res.data.insertedId) {
-        e.target.reset();
-        Swal.fire({
-          title: "Successfully Applied",
-          icon: "success",
-        });
-      }
-    });
+    axiosPublic
+      .post("/applied-as-trainer", { ...trainerInfo, status: "pending" })
+      .then((res) => {
+        if (res.data.insertedId) {
+          e.target.reset();
+          Swal.fire({
+            title: "Successfully Applied",
+            icon: "success",
+          });
+        }
+      });
   };
 
   return (

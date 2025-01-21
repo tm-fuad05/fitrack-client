@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Root from "../pages/Root";
 import Home from "../pages/Home";
 import Register from "../pages/Auth/Register";
@@ -10,8 +10,9 @@ import ApplicationForTrainer from "../pages/ApplicationForTrainer";
 import PrivateRoute from "./PrivateRoute";
 import AllClasses from "../pages/AllClasses";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Newsletter from "../components/Home/Newsletter";
 import NewsletterSubscribers from "../pages/Dashboard/Admin dashboard/NewsletterSubscribers";
+import TrainerHandling from "../pages/Dashboard/Admin dashboard/TrainerHandling";
+import ManageUsers from "../pages/Dashboard/Admin dashboard/ManageUsers";
 
 const router = createBrowserRouter([
   {
@@ -48,8 +49,20 @@ const router = createBrowserRouter([
         ),
         children: [
           {
+            path: "/dashboard",
+            element: <Navigate to={"/dashboard/newsletter"}></Navigate>,
+          },
+          {
             path: "/dashboard/newsletter",
             element: <NewsletterSubscribers></NewsletterSubscribers>,
+          },
+          {
+            path: "/dashboard/trainers",
+            element: <TrainerHandling></TrainerHandling>,
+          },
+          {
+            path: "/dashboard/manage-users",
+            element: <ManageUsers></ManageUsers>,
           },
         ],
       },

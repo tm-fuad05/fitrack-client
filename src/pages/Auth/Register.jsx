@@ -48,13 +48,13 @@ const Register = () => {
             axiosPublic.post("/users", userInfo).then((res) => {
               if (res.data.insertedId) {
                 toast.success("Successfully registered");
-                signOutUser()
-                  .then(() => {
-                    navigate("/login");
-                  })
-                  .catch((error) => alert(error));
               }
             });
+            signOutUser()
+              .then(() => {
+                navigate("/login");
+              })
+              .catch((error) => alert(error));
           })
           .catch(() => alert("Something went wrong!"));
       })
