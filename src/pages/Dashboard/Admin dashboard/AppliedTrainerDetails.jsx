@@ -1,10 +1,18 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import Back from "../../../components/Shared/Back";
 
 const AppliedTrainerDetails = () => {
   const appliedTrainer = useLoaderData();
+
   return (
     <div>
+      <div className="mb-5">
+        <Back></Back>
+      </div>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5">
+        {appliedTrainer.fullName}'s Details
+      </h2>
       <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:w-1/2">
         <img
           className="w-full h-[400px] object-cover"

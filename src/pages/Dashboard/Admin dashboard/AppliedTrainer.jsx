@@ -4,10 +4,68 @@ import { TiTick } from "react-icons/ti";
 import { FaTrash } from "react-icons/fa6";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
-
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// SweetAlert
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import useUser from "../../../hooks/useUser";
 const AppliedTrainer = () => {
-  const { appliedTrainers } = useAppliedTrainer();
-  console.log(appliedTrainers);
+  const { appliedTrainers, refetch } = useAppliedTrainer();
+  const axiosPublic = useAxiosPublic();
+  const { users } = useUser();
+
+  const handleConfirmTrainer = (trainer) => {
+    const currentTrainer = users.find((u) => u.email === trainer.email);
+
+    const confirmedTrainer = {
+      fullName: trainer.fullName,
+      email: trainer.email,
+      age: trainer.age,
+      profileImage: trainer.profileImage,
+      skills: trainer.skills,
+      availableDays: trainer.availableDays,
+      availableTime: trainer.availableTime,
+    };
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to confirm ${trainer.fullName} as trainer?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Post to ConfirmedTrainer
+        axiosPublic.post("/confirmed-trainer", confirmedTrainer).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              title: "Confirmed!",
+              text: `${trainer.fullName} is Trainer now.`,
+              icon: "success",
+            });
+          }
+        });
+
+        // Delete from appliedTrainer
+        axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+          }
+        });
+
+        // Role Change from users
+        axiosPublic
+          .patch(`/users/make-trainer/${currentTrainer._id}`)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              refetch();
+            }
+          });
+      }
+    });
+  };
+
   return (
     <div>
       <div>
@@ -56,7 +114,7 @@ const AppliedTrainer = () => {
                     </td>
                     <td className="p-3">
                       <button
-                        onClick={() => handleRole(trainer)}
+                        onClick={() => handleConfirmTrainer(trainer)}
                         className="text-xl p-2 bg-green-600 text-white rounded-md hover:bg-opacity-50"
                       >
                         {" "}
