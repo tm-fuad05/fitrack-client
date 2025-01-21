@@ -55,7 +55,7 @@ const Review = () => {
         className="mySwiper w-10/12 mx-auto"
       >
         {reviews.map((review) => (
-          <SwiperSlide>
+          <SwiperSlide key={review._id}>
             <div
               key={review._id}
               className="border border-secondary bg-secondary bg-opacity-10 p-5 text-center flex flex-col gap-2 h-72 md:h-52 lg:h-64"

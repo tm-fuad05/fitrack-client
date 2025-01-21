@@ -12,8 +12,8 @@ const TrainerDetails = () => {
 
   return (
     <div className="pt-20 ">
-      <section className="px-20">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:w-1/2">
+      <section className="w-11/12 mx-auto flex flex-col lg:flex-row gap-10 mb-32">
+        <div className="bg-white shadow-xl rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:w-1/2">
           <img
             className="w-full h-[400px] object-cover"
             src={trainer.profileImage}
@@ -52,7 +52,7 @@ const TrainerDetails = () => {
             </p>
           </div>
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white shadow-xl rounded-lg p-6 lg:w-1/2 border">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Available Slots
           </h2>

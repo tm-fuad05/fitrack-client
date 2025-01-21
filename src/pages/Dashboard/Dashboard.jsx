@@ -15,9 +15,23 @@ import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, signOutUser } = useAuth();
   const { users } = useUser();
   const currentUser = users.find((u) => u.email === user?.email);
+
+  // if (!currentUser) {
+  //   return signOutUser()
+  //     .then(() => {
+  //       Swal.fire({
+  //         title: "Something went wrong!",
+  //         text: "Please sign in again.",
+  //         icon: "error",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     })
+  //     .catch(() => alert("Something wemt wrong."));
+  // }
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 

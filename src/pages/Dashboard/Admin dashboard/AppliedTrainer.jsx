@@ -9,15 +9,32 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useUser from "../../../hooks/useUser";
+import Back from "../../../components/Shared/Back";
+// Material Ui
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Input,
+  Textarea,
+  Typography,
+} from "@material-tailwind/react";
+
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch } = useAppliedTrainer();
   const axiosPublic = useAxiosPublic();
   const { users } = useUser();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
+
   const handleConfirmTrainer = (trainer) => {
     const currentTrainer = users.find((u) => u.email === trainer.email);
 
     const confirmedTrainer = {
+      trainerId: trainer._id,
       fullName: trainer.fullName,
       email: trainer.email,
       age: trainer.age,
@@ -66,11 +83,44 @@ const AppliedTrainer = () => {
     });
   };
 
+  //   Rejecting feedback
+  const handleSendFeedback = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const feedback = form.feedback.value;
+    const rejectionFeedback = {
+      email,
+      feedback,
+    };
+    axiosPublic.post("/rejection-feedback", rejectionFeedback).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Feedback Sent",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+
+  const handleReject = (trainer) => {
+    handleOpen();
+    // Delete from appliedTrainer
+    axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
+      if (res.data.deletedCount > 0) {
+        refetch();
+      }
+    });
+  };
+
   return (
     <div>
+      <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">All appliedTrainers</h1>
+        <h1 className="text-2xl font-bold mb-4">Applied Trainers</h1>
 
         {/* Total Count */}
         <div className="mb-4">
@@ -95,7 +145,7 @@ const AppliedTrainer = () => {
             <tbody>
               {appliedTrainers &&
                 appliedTrainers.map((trainer) => (
-                  <tr key={trainer._id} className="border hover:bg-gray-50">
+                  <tr key={trainer._id} className="border even:bg-gray-50">
                     <td className="p-3">{trainer.fullName}</td>
                     <td className="p-3">{trainer.email}</td>
                     <td className={`p-3 font-semibold text-primary`}>
@@ -123,15 +173,99 @@ const AppliedTrainer = () => {
                     </td>
                     <td className="p-3">
                       <button
-                        onClick={() => handleDelete(trainer)}
+                        onClick={handleOpen}
                         className="text-xl p-2 bg-red-600 text-white rounded-md hover:bg-opacity-50"
                       >
                         {" "}
                         <FaTrash />{" "}
                       </button>
                     </td>
+                    <Dialog
+                      open={open}
+                      size="xs"
+                      handler={handleOpen}
+                      onSubmit={handleSendFeedback}
+                    >
+                      <DialogBody className="font-poppins">
+                        <h2 className="text-center text-xl font-bold ">
+                          {trainer.fullName}'s Info
+                        </h2>
+                        <div className="mt-4">
+                          <p>
+                            <span className="font-[600]">Name:</span>{" "}
+                            {trainer.fullName}
+                          </p>
+                          <p>
+                            <span className="font-[600]">Email:</span>{" "}
+                            {trainer.email}
+                          </p>
+                          <p>
+                            <span className="font-[600]">Age:</span>{" "}
+                            {trainer.age}
+                          </p>
+                        </div>
+                      </DialogBody>
+                      <DialogBody className="font-poppins">
+                        <form
+                          onSubmit={handleSendFeedback}
+                          className="space-y-4"
+                        >
+                          {/* Email */}
+                          <Input
+                            label="email"
+                            name="email"
+                            defaultValue={trainer.email}
+                            readOnly
+                          />
+                          {/* <div>
+                            <label
+                              htmlFor="password"
+                              className="text-[15px] font-[400]"
+                            >
+                              Email
+                            </label>
+                            <input
+                              type="email"
+                              name="email"
+                              id="email"
+                              defaultValue={trainer.email}
+                              placeholder="Email "
+                              className="peer border-gray-400 border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
+                              readOnly
+                            />
+                          </div> */}
+                          {/* Feedback */}
+                          <Textarea label="Feedback" name="feedback" />
+                          {/* <div className="w-full mt-3">
+                            <label
+                              htmlFor="description"
+                              className="font-[400] text-[15px]"
+                            >
+                              Feedback
+                            </label>
+                            <textarea
+                              type="text"
+                              name="feedback"
+                              id="feedback"
+                              placeholder="Write your feedback"
+                              className="border-gray-400 border rounded-md outline-none mt-1 px-4 w-full py-3  focus:border-primary transition-colors duration-300"
+                              rows={4}
+                            />
+                          </div> */}
+                          <div className="text-right mt-2">
+                            <button
+                              onClick={() => handleReject(trainer)}
+                              className="capitalize bg-gradient-to-r from-primary to-secondary text-white hover:bg-gradient-to-l hoverfrom-primary hover:to-secondary font-[400] px-3 py-2 rounded-md"
+                            >
+                              send feedback
+                            </button>
+                          </div>
+                        </form>
+                      </DialogBody>
+                    </Dialog>
                   </tr>
                 ))}
+              {/* Modal */}
             </tbody>
           </table>
         </div>

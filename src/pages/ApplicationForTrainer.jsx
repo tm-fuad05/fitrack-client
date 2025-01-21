@@ -12,7 +12,7 @@ const ApplicationForTrainer = () => {
   const { user } = useAuth();
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    fullName: user.displayName,
     email: user.email,
     age: "",
     profileImage: "",

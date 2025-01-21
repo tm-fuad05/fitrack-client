@@ -6,6 +6,7 @@ import { FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import Back from "../../../components/Shared/Back";
 
 const ManageUsers = () => {
   const { users, refetch } = useUser();
@@ -33,6 +34,7 @@ const ManageUsers = () => {
             });
           }
         });
+        // axiosPublic.delete(`/confirmed-trainer`)
       }
     });
   };
@@ -63,6 +65,7 @@ const ManageUsers = () => {
 
   return (
     <div>
+      <Back></Back>
       <div>
         {/* Simple Header */}
         <h1 className="text-2xl font-bold mb-4">All Users</h1>
@@ -87,7 +90,7 @@ const ManageUsers = () => {
             <tbody>
               {users &&
                 users.map((user) => (
-                  <tr key={user._id} className="border hover:bg-gray-50">
+                  <tr key={user._id} className="border even:bg-gray-50">
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td

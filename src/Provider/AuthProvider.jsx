@@ -19,18 +19,6 @@ const AuthProvider = ({ children }) => {
   // Google provider
   const googleProvider = new GoogleAuthProvider();
 
-  //   On Auth State change
-  useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoader(false);
-    });
-
-    return () => {
-      unSubscribe();
-    };
-  }, []);
-
   //   Register User
   const registerUser = (email, password) => {
     setLoader(true);
@@ -58,6 +46,18 @@ const AuthProvider = ({ children }) => {
     setLoader(true);
     return signOut(auth);
   };
+
+  //   On Auth State change
+  useEffect(() => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoader(false);
+    });
+
+    return () => {
+      unSubscribe();
+    };
+  }, []);
 
   const authInfo = {
     user,

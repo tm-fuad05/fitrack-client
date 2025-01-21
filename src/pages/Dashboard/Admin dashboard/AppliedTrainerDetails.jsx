@@ -7,15 +7,13 @@ const AppliedTrainerDetails = () => {
 
   return (
     <div>
-      <div className="mb-5">
-        <Back></Back>
-      </div>
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-5">
+      <Back></Back>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-5">
         {appliedTrainer.fullName}'s Details
       </h2>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:w-1/2">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 w-10/12 mx-auto">
         <img
-          className="w-full h-[400px] object-cover"
+          className="w-full h-[400px] lg:h-[500px] object-cover"
           src={appliedTrainer.profileImage}
           alt={`${appliedTrainer.fullName} Profile`}
         />

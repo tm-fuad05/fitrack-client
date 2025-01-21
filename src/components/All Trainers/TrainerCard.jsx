@@ -11,7 +11,7 @@ const TrainerCard = ({ trainer }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col">
       <img
-        className="w-full h-48 object-cover"
+        className="w-full h-[340px] md:h-64 object-cover"
         src={trainer.profileImage}
         alt={`${trainer.trainerName} Profile`}
       />

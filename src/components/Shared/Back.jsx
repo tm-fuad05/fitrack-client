@@ -9,10 +9,10 @@ const Back = () => {
     navigate(-1);
   };
   return (
-    <div>
+    <div className="mb-5">
       <button
         onClick={handleGoToPreviousPage}
-        className="bg-gradient-to-r from-primary to-secondary hover:bg-opacity-50 px-5 py-3 text-white font-semibold flex items-center gap-3"
+        className="bg-gradient-to-r from-primary to-secondary hover:opacity-50 focus:scale-95 rounded-full px-5 py-3 text-white font-semibold flex items-center gap-3"
       >
         <FaArrowLeft /> Back
       </button>
