@@ -19,6 +19,8 @@ import Profile from "../pages/Dashboard/Member Dashboard/Profile";
 import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
 import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
+import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
+import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,16 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/manage-users",
             element: <ManageUsers></ManageUsers>,
+          },
+          {
+            path: "/dashboard/applied-trainers",
+            element: <AppliedTrainer></AppliedTrainer>,
+          },
+          {
+            path: "/dashboard/applied-trainers/:id",
+            element: <AppliedTrainerDetails></AppliedTrainerDetails>,
+            loader: ({ params }) =>
+              fetch(`http://localhost:5000/applied-as-trainer/${params.id}`),
           },
 
           // Member Dashboard Menus

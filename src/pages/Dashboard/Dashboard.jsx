@@ -10,6 +10,7 @@ import { SiGooglecampaignmanager360, SiGoogleclassroom } from "react-icons/si";
 import { FaBookmark, FaHouse, FaRegCircleUser } from "react-icons/fa6";
 import { IoIosAddCircle, IoMdClose } from "react-icons/io";
 import { BsActivity } from "react-icons/bs";
+import { SlEnvolopeLetter } from "react-icons/sl";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
 
@@ -32,6 +33,16 @@ const Dashboard = () => {
           {" "}
           <LuLetterText className="text-xl" />
           Newsletter Subscribers
+        </NavLink>
+        <NavLink
+          className={
+            " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+          }
+          to={"/dashboard/applied-trainers"}
+        >
+          {" "}
+          <SlEnvolopeLetter className="text-xl" />
+          Applied Trainers
         </NavLink>
         <NavLink
           className={

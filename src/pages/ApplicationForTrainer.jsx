@@ -64,7 +64,8 @@ const ApplicationForTrainer = () => {
       .post("/applied-as-trainer", { ...trainerInfo, status: "pending" })
       .then((res) => {
         if (res.data.insertedId) {
-          e.target.reset();
+          const form = e.target;
+          form.reset();
           Swal.fire({
             title: "Successfully Applied",
             icon: "success",
