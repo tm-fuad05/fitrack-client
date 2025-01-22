@@ -117,9 +117,9 @@ const Navbar = () => {
 
   return (
     <div
-      className={` ${
+      className={` z-50  ${
         pathname === "/" || pathname === "/all-trainer"
-          ? `fixed  ${scrolled ? "bg-black bg-opacity-80" : ""}`
+          ? `fixed z-50 ${scrolled ? "bg-black bg-opacity-80" : ""}`
           : `sticky top-0 bg-gray-900  ${
               scrolled ? "bg-opacity-80" : "bg-opacity-100"
             }`

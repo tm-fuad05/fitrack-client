@@ -14,7 +14,7 @@ const TrainerHandling = () => {
   const handleRemoveTrainerRole = (trainer) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `Would you want to make ${trainer.name} Admin?`,
+      text: `Would you want to make ${trainer.name} member?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

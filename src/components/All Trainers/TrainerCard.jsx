@@ -16,18 +16,16 @@ const TrainerCard = ({ trainer }) => {
         alt={`${trainer.trainerName} Profile`}
       />
       <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-xl font-bold text-gray-800">
-          {trainer.trainerName}
-        </h2>
+        <h2 className="text-xl font-bold text-gray-800">{trainer.fullName}</h2>
         <p className="text-gray-600 mt-2 text-sm ">
           {trainer.yearsOfExperience} Years of Experience
         </p>
         <p className="text-gray-700 mt-2 flex-grow">
           <span className="font-semibold">Expertise:</span>{" "}
-          {trainer.expertise.map((skill, index) => (
+          {trainer.skills.map((skill, index) => (
             <span key={index} className="text-gray-500">
               {skill}
-              {index < trainer.expertise.length - 1 && ", "}
+              {index < trainer.skills.length - 1 && ", "}
             </span>
           ))}
         </p>
@@ -41,11 +39,11 @@ const TrainerCard = ({ trainer }) => {
         <p className="text-gray-800 font-medium">
           Available Slots:{" "}
           <span className="text-secondary font-semibold">
-            {trainer.availableSlots}
+            {trainer.availableDays.length}
           </span>
         </p>
         <div className="mt-2">
-          <Link to={`${trainer.trainerName}`}>
+          <Link to={`${trainer._id}`}>
             <Button text={"know more"} hoverText={"white"}></Button>
           </Link>
         </div>

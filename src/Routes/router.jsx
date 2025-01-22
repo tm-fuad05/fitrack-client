@@ -37,10 +37,10 @@ const router = createBrowserRouter([
         element: <AllTrainers></AllTrainers>,
       },
       {
-        path: "/all-trainer/:trainerName",
+        path: "/all-trainer/:id",
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/trainers/${params.trainerName}`),
+          fetch(`http://localhost:5000/trainers/${params.id}`),
       },
       {
         path: "/all-classes",
@@ -61,6 +61,7 @@ const router = createBrowserRouter([
             <Dashboard></Dashboard>
           </PrivateRoute>
         ),
+
         children: [
           // Admin Dashboard Menus
 

@@ -28,6 +28,10 @@ const AppliedTrainerDetails = () => {
             <span className="font-semibold ">Age:</span> {appliedTrainer.age}
           </p>
           <p className="mt-2 text-gray-700">
+            <span className="font-semibold ">Years of Experience:</span>{" "}
+            {appliedTrainer.yearsOfExperience}
+          </p>
+          <p className="mt-2 text-gray-700">
             <span className="font-semibold ">Available Time:</span>{" "}
             {appliedTrainer.availableTime}
           </p>

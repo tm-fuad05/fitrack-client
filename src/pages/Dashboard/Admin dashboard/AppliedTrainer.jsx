@@ -34,7 +34,6 @@ const AppliedTrainer = () => {
     const currentTrainer = users.find((u) => u.email === trainer.email);
 
     const confirmedTrainer = {
-      trainerId: trainer._id,
       fullName: trainer.fullName,
       email: trainer.email,
       age: trainer.age,
@@ -53,11 +52,12 @@ const AppliedTrainer = () => {
       confirmButtonText: "Confirm",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Post to ConfirmedTrainer
-        // axiosPublic.post("/confirmed-trainer", confirmedTrainer).then((res) => {
-        //   if (res.data.insertedId) {
-        //   }
-        // });
+        // Post to allTrainer
+        axiosPublic.post("/trainers", confirmedTrainer).then((res) => {
+          if (res.data.insertedId) {
+            //
+          }
+        });
 
         // Delete from appliedTrainer
         axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
@@ -235,7 +235,7 @@ const AppliedTrainer = () => {
                             />
                           </div> */}
                           {/* Feedback */}
-                          <Textarea label="Feedback" name="feedback" />
+                          <Textarea label="Feedback" name="feedback" required />
                           {/* <div className="w-full mt-3">
                             <label
                               htmlFor="description"

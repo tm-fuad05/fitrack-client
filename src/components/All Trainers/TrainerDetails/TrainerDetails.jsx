@@ -13,58 +13,84 @@ const TrainerDetails = () => {
   return (
     <div className="pt-20 ">
       <section className="w-11/12 mx-auto flex flex-col lg:flex-row gap-10 mb-32">
-        <div className="bg-white shadow-xl rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col lg:w-1/2">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 lg:w-1/2">
           <img
-            className="w-full h-[400px] object-cover"
+            className="w-full h-[400px] lg:h-[500px] object-cover"
             src={trainer.profileImage}
-            alt={`${trainer.trainerName} Profile`}
+            alt={`${trainer.fullName} Profile`}
           />
           <div className="p-4 flex flex-col flex-grow">
             <h2 className="text-xl font-bold text-gray-800">
-              {trainer.trainerName}
+              {trainer.fullName}
             </h2>
-            <p className=" mt-2 text-sm px-3 py-2 bg-secondary w-fit text-white bg-opacity-80 rounded-full">
-              {trainer.yearsOfExperience} Years of Experience
+            <p className=" mt-2 text-sm px-3 py-2 bg-secondary w-fit text-white bg-opacity-80 rounded-full font-semibold">
+              {trainer.email}
             </p>
+            <p className="mt-6 text-gray-700">
+              <span className="font-semibold ">Age:</span> {trainer.age}
+            </p>
+            <p className="mt-2 text-gray-700">
+              <span className="font-semibold ">Years of Experience:</span>{" "}
+              {trainer.yearsOfExperience}
+            </p>
+            <p className="mt-2 text-gray-700">
+              <span className="font-semibold ">Available Time:</span>{" "}
+              {trainer.availableTime}
+            </p>
+            {/* Devider */}
+            <div className="border-b mt-3"></div>
             <p className="text-gray-700 mt-2 flex-grow">
-              <span className="font-semibold ">Expertise in:</span>{" "}
+              <span className="font-semibold ">Skills:</span>{" "}
               <ul className="list-decimal pl-7 mt-1">
                 {" "}
-                {trainer.expertise.map((skill, index) => (
+                {trainer.skills?.map((skill, index) => (
                   <li key={index}>{skill}</li>
                 ))}
               </ul>
             </p>
+            {/* Devider */}
             <div className="border-b mt-3"></div>
-            <p className="mt-3">{trainer.bio}</p>
-            <div className=" mt-4 text-3xl text-secondary flex gap-3">
-              <IoLogoFacebook className="hover:opacity-50 cursor-pointer" />
-              <IoLogoInstagram className="hover:opacity-50 cursor-pointer" />
-              <IoLogoTwitter className="hover:opacity-50 cursor-pointer" />
-            </div>
-          </div>
-          <div className="bg-gray-100 p-4">
-            <p className="text-gray-800 font-medium">
-              Available Slots:{" "}
-              <span className="text-secondary font-semibold">
-                {trainer.availableSlots}
-              </span>
+            <p className="text-gray-700 mt-2 flex-grow">
+              <span className="font-semibold ">Available Days:</span>{" "}
+              <ul className="mt-1 flex flex-wrap gap-1">
+                {" "}
+                {trainer.availableDays?.map((day, index) => (
+                  <li
+                    className="bg-gray-500 rounded-full text-white font-[500] p-2 px-3"
+                    key={index}
+                  >
+                    {day}
+                  </li>
+                ))}
+              </ul>
             </p>
+
+            <p className="mt-3">{trainer.bio}</p>
           </div>
         </div>
-        <div className="bg-white shadow-xl rounded-lg p-6 lg:w-1/2 border">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Available Slots
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {/* {slots.map((slot, index) => ( */}
-            <button
-              // key={index}
-              className="bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-            >
-              12
-            </button>
-            {/* ))} */}
+        <div className="lg:w-1/2">
+          <div className="bg-white shadow-xl rounded-lg p-6  border">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Available Slots{" "}
+              <span className="font-[300]">
+                {" "}
+                (
+                {trainer.availableDays.map((skill, idx) => (
+                  <span key={idx}>{skill},</span>
+                ))}{" "}
+                <span>{trainer.availableTime}</span>)
+              </span>
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {/* {slots.map((slot, index) => ( */}
+              <button
+                // key={index}
+                className="bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                {trainer.availableDays?.length}
+              </button>
+              {/* ))} */}
+            </div>
           </div>
         </div>
       </section>

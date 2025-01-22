@@ -16,6 +16,7 @@ const ApplicationForTrainer = () => {
     email: user.email,
     age: "",
     profileImage: "",
+    yearsOfExperience: "",
     skills: [],
     availableDays: [],
     availableTime: "",
@@ -148,6 +149,22 @@ const ApplicationForTrainer = () => {
             value={formData.profileImage}
             onChange={(e) =>
               setFormData({ ...formData, profileImage: e.target.value })
+            }
+            required
+          />
+        </div>
+        {/* Years of exp */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">
+            Years of Experience
+          </label>
+          <input
+            type="text"
+            placeholder="Years"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={formData.yearsOfExperience}
+            onChange={(e) =>
+              setFormData({ ...formData, yearsOfExperience: e.target.value })
             }
             required
           />

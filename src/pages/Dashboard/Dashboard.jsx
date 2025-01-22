@@ -234,7 +234,7 @@ const Dashboard = () => {
       </aside>
       {/* Main */}
       <section className="col-span-12 lg:col-span-9">
-        <div className="bg-gray-900 lg:hidden sticky top-0">
+        <div className="bg-gray-900 lg:hidden sticky top-0 z-50">
           <div className="flex justify-between items-center w-11/12 mx-auto py-5">
             <Logo></Logo>
             <div
@@ -247,8 +247,8 @@ const Dashboard = () => {
         </div>
 
         <aside
-          className={` lg:hidden bg-gray-900  w-full p-5 absolute ${
-            mobileSidebarOpen ? " z-50  top-[90px]" : "hidden opacity-0 z-[1]"
+          className={` lg:hidden bg-gray-900  w-full p-5 absolute  z-50 ${
+            mobileSidebarOpen ? " top-[90px]" : "hidden opacity-0 z-[1]"
           } `}
         >
           {/* NavMenu */}
