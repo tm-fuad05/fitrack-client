@@ -1,118 +1,10 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import useClass from "../hooks/useClass";
 
 const AllClasses = () => {
-  // Sample data for 12 classes
-  const classes = [
-    {
-      id: 1,
-      name: "Yoga",
-      description:
-        "Beginner friendly yoga sessions focusing on flexibility and mindfulness",
-      trainers: [
-        { id: 1, name: "Sarah Smith", image: "/api/placeholder/150/150" },
-        { id: 2, name: "Michael Chen", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 2,
-      name: "Pilates",
-      description:
-        "Core strengthening and posture improvement through controlled movements",
-      trainers: [
-        { id: 3, name: "Emma Davis", image: "/api/placeholder/150/150" },
-        { id: 4, name: "John Wilson", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 3,
-      name: "HIIT Training",
-      description: "High-intensity interval training for maximum calorie burn",
-      trainers: [
-        { id: 5, name: "Alex Johnson", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 4,
-      name: "Zumba",
-      description:
-        "Dance fitness program featuring Latin and international music",
-      trainers: [
-        { id: 6, name: "Maria Garcia", image: "/api/placeholder/150/150" },
-        { id: 7, name: "Carlos Rodriguez", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 5,
-      name: "Strength Training",
-      description: "Build muscle and increase strength with weighted exercises",
-      trainers: [
-        { id: 8, name: "David Brown", image: "/api/placeholder/150/150" },
-        { id: 9, name: "Lisa Wang", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 6,
-      name: "Spinning",
-      description: "Indoor cycling workouts for cardio and leg strength",
-      trainers: [
-        { id: 10, name: "Chris Thompson", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 7,
-      name: "Boxing",
-      description: "Learn boxing techniques while getting a full-body workout",
-      trainers: [
-        { id: 11, name: "Mike Taylor", image: "/api/placeholder/150/150" },
-        { id: 12, name: "Sam Lee", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 8,
-      name: "Meditation",
-      description:
-        "Guided meditation sessions for mental wellness and stress relief",
-      trainers: [
-        { id: 13, name: "Rachel Green", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 9,
-      name: "CrossFit",
-      description: "High-intensity functional movements for overall fitness",
-      trainers: [
-        { id: 14, name: "Tom Wilson", image: "/api/placeholder/150/150" },
-        { id: 15, name: "Kate Miller", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 10,
-      name: "Swimming",
-      description: "Swimming lessons and water-based workouts for all levels",
-      trainers: [
-        { id: 16, name: "Andrew Clark", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 11,
-      name: "Dance",
-      description: "Various dance styles from ballet to contemporary",
-      trainers: [
-        { id: 17, name: "Sofia Martinez", image: "/api/placeholder/150/150" },
-        { id: 18, name: "James Wilson", image: "/api/placeholder/150/150" },
-      ],
-    },
-    {
-      id: 12,
-      name: "Kickboxing",
-      description: "Combine martial arts techniques with fast-paced cardio",
-      trainers: [
-        { id: 19, name: "Ryan Kim", image: "/api/placeholder/150/150" },
-        { id: 20, name: "Nina Patel", image: "/api/placeholder/150/150" },
-      ],
-    },
-  ];
+  const { classes, refetch } = useClass();
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -174,24 +66,22 @@ const AllClasses = () => {
 
                 <div className="flex flex-wrap gap-3">
                   {classItem.trainers.slice(0, 5).map((trainer) => (
-                    <div
+                    <Link
                       key={trainer.id}
                       className="group cursor-pointer"
-                      onClick={() =>
-                        (window.location.href = `/trainer/${trainer.id}`)
-                      }
+                      to={`/all-trainer/${trainer.fullName}`}
                     >
                       <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white group-hover:border-blue-500 transition-colors">
                         <img
                           src={trainer.image}
-                          alt={trainer.name}
+                          alt={trainer.fullName}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <p className="text-xs text-center mt-1 text-gray-600 group-hover:text-blue-500">
-                        {trainer.name}
+                        {trainer.fullName}
                       </p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

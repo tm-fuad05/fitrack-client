@@ -3,7 +3,7 @@ import React from "react";
 const Coverpage = ({ bg, subtitle, title }) => {
   return (
     <div
-      className="bg-cover max-sm:bg-center min-h-screen flex justify-center items-center"
+      className="bg-cover bg-center lg:bg-top min-h-screen flex justify-center items-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="uppercase mx-auto text-center space-y-2 w-10/12 lg:w-7/12">

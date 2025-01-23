@@ -6,7 +6,7 @@ import Button from "../Shared/Button";
 const Banner = () => {
   return (
     <div
-      className="bg-cover max-sm:bg-center min-h-screen flex justify-center items-center mb-16"
+      className="bg-cover bg-center lg:bg-top min-h-screen flex justify-center items-center mb-16"
       style={{
         backgroundImage: `url(${hero})`,
         clipPath: "polygon(0 0, 100% 0, 100% 92%, 50% 100%, 0 92%)",
