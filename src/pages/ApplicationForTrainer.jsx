@@ -5,8 +5,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 // SweetAlert
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
+
 const ApplicationForTrainer = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();

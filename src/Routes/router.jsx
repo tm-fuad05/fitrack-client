@@ -21,6 +21,7 @@ import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
 import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
 import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
+import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
           {
             path: "/dashboard/applied-trainers",
             element: <AppliedTrainer></AppliedTrainer>,
+          },
+          {
+            path: "/dashboard/add-class",
+            element: <AddClass></AddClass>,
           },
           {
             path: "/dashboard/applied-trainers/:id",

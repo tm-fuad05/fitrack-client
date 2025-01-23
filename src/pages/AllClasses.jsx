@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useClass from "../hooks/useClass";
 
 const AllClasses = () => {
-  const { classes, refetch } = useClass();
+  const { classes } = useClass();
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -64,26 +64,18 @@ const AllClasses = () => {
                   <span>Trainers ({classItem.trainers.length})</span>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <ul className="text-xs list-decimal text-gray-600 pl-3">
                   {classItem.trainers.slice(0, 5).map((trainer) => (
-                    <Link
-                      key={trainer.id}
-                      className="group cursor-pointer"
-                      to={`/all-trainer/${trainer.fullName}`}
-                    >
-                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white group-hover:border-blue-500 transition-colors">
-                        <img
-                          src={trainer.image}
-                          alt={trainer.fullName}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <p className="text-xs text-center mt-1 text-gray-600 group-hover:text-blue-500">
-                        {trainer.fullName}
-                      </p>
-                    </Link>
+                    <li key={trainer.id} className="group cursor-pointer">
+                      <Link
+                        to={`/all-trainer/${trainer}`}
+                        className="  mt-1  group-hover:text-blue-500"
+                      >
+                        {trainer}
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
           </div>
