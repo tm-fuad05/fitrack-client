@@ -79,7 +79,7 @@ const Profile = () => {
               Update
             </button>
             <Dialog open={open} handler={handleOpen}>
-              <DialogHeader>Change your name</DialogHeader>
+              <DialogHeader>Change your info</DialogHeader>
               <DialogBody>
                 <form onSubmit={handleUpdate} className="space-y-3">
                   <Input

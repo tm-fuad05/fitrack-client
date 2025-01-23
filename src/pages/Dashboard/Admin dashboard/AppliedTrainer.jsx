@@ -24,6 +24,7 @@ import {
 
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch } = useAppliedTrainer();
+  const pendingFilter = appliedTrainers.filter((p) => p.status === "pending");
   const axiosPublic = useAxiosPublic();
   const { users } = useUser();
 
@@ -55,7 +56,6 @@ const AppliedTrainer = () => {
         // Post to allTrainer
         axiosPublic.post("/trainers", confirmedTrainer).then((res) => {
           if (res.data.insertedId) {
-            //
           }
         });
 
@@ -107,9 +107,10 @@ const AppliedTrainer = () => {
 
   const handleReject = (trainer) => {
     handleOpen();
+
     // Delete from appliedTrainer
-    axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
-      if (res.data.deletedCount > 0) {
+    axiosPublic.patch(`/applied-as-trainer/${trainer._id}`).then((res) => {
+      if (res.data.modifiedCount > 0) {
         refetch();
       }
     });
@@ -125,7 +126,7 @@ const AppliedTrainer = () => {
         {/* Total Count */}
         <div className="mb-4">
           <p className="text-gray-600">
-            Total Applied Trainers: {appliedTrainers?.length}
+            Total Applied Trainers: {pendingFilter?.length}
           </p>
         </div>
 
@@ -143,8 +144,8 @@ const AppliedTrainer = () => {
               </tr>
             </thead>
             <tbody>
-              {appliedTrainers &&
-                appliedTrainers.map((trainer) => (
+              {pendingFilter &&
+                pendingFilter.map((trainer) => (
                   <tr key={trainer._id} className="border even:bg-gray-50">
                     <td className="p-3">{trainer.fullName}</td>
                     <td className="p-3">{trainer.email}</td>
@@ -153,10 +154,7 @@ const AppliedTrainer = () => {
                     </td>
                     <td className="p-3">
                       <Link to={trainer._id}>
-                        <button
-                          onClick={() => handleRole(trainer)}
-                          className="text-xl p-2 bg-secondary  text-white rounded-md hover:bg-opacity-50"
-                        >
+                        <button className="text-xl p-2 bg-secondary  text-white rounded-md hover:bg-opacity-50">
                           {" "}
                           <TbListDetails />{" "}
                         </button>
@@ -180,12 +178,7 @@ const AppliedTrainer = () => {
                         <FaTrash />{" "}
                       </button>
                     </td>
-                    <Dialog
-                      open={open}
-                      size="xs"
-                      handler={handleOpen}
-                      onSubmit={handleSendFeedback}
-                    >
+                    <Dialog open={open} size="xs">
                       <DialogBody className="font-poppins">
                         <h2 className="text-center text-xl font-bold ">
                           {trainer.fullName}'s Info
@@ -217,41 +210,10 @@ const AppliedTrainer = () => {
                             defaultValue={trainer.email}
                             readOnly
                           />
-                          {/* <div>
-                            <label
-                              htmlFor="password"
-                              className="text-[15px] font-[400]"
-                            >
-                              Email
-                            </label>
-                            <input
-                              type="email"
-                              name="email"
-                              id="email"
-                              defaultValue={trainer.email}
-                              placeholder="Email "
-                              className="peer border-gray-400 border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
-                              readOnly
-                            />
-                          </div> */}
+
                           {/* Feedback */}
                           <Textarea label="Feedback" name="feedback" required />
-                          {/* <div className="w-full mt-3">
-                            <label
-                              htmlFor="description"
-                              className="font-[400] text-[15px]"
-                            >
-                              Feedback
-                            </label>
-                            <textarea
-                              type="text"
-                              name="feedback"
-                              id="feedback"
-                              placeholder="Write your feedback"
-                              className="border-gray-400 border rounded-md outline-none mt-1 px-4 w-full py-3  focus:border-primary transition-colors duration-300"
-                              rows={4}
-                            />
-                          </div> */}
+
                           <div className="text-right mt-2">
                             <button
                               onClick={() => handleReject(trainer)}
@@ -261,11 +223,16 @@ const AppliedTrainer = () => {
                             </button>
                           </div>
                         </form>
+                        <button
+                          className="px-3 py-2 rounded-md hover:bg-gray-100"
+                          onClick={handleOpen}
+                        >
+                          Cancel
+                        </button>
                       </DialogBody>
                     </Dialog>
                   </tr>
                 ))}
-              {/* Modal */}
             </tbody>
           </table>
         </div>
