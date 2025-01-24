@@ -68,11 +68,11 @@ const Dashboard = () => {
           className={
             " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
           }
-          to={"/dashboard/classes"}
+          to={"/dashboard/add-forum"}
         >
           {" "}
           <MdClass className="text-xl" />
-          Classes
+          Add Forum
         </NavLink>
         <NavLink
           className={

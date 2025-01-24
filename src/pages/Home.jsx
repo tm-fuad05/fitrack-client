@@ -5,6 +5,7 @@ import Feaatured from "../components/Home/Feaatured";
 import Newsletter from "../components/Home/Newsletter";
 import Review from "../components/Home/Review";
 import Trainers from "../components/Home/Trainers";
+import RecentCommunity from "../components/Home/RecentCommunity";
 
 const Home = () => {
   return (
@@ -15,8 +16,9 @@ const Home = () => {
       <Banner></Banner>
       <Trainers></Trainers>
       <About></About>
-      <Feaatured></Feaatured>
+      <RecentCommunity></RecentCommunity>
       <Review></Review>
+      <Feaatured></Feaatured>
       <Newsletter></Newsletter>
     </div>
   );

@@ -1,9 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
+import { Helmet } from "react-helmet-async";
+import "react-datepicker/dist/react-datepicker.css";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import moment from "moment/moment";
 
 const AddForum = () => {
+  const { user } = useAuth();
+  const { users } = useUser();
+  const currentUser = users.find((u) => u.email === user.email);
+  const axiosSecure = useAxiosSecure();
+
+  const date = new Date();
+  const [formData, setFormData] = useState({
+    title: "",
+    author: user?.displayName,
+    date: moment(date).format("MMM DD YYYY"),
+    category: "",
+    role: currentUser?.role,
+    description: "",
+    votes: 0,
+  });
+
+  const handlePost = (e) => {
+    e.preventDefault();
+    const forumInfo = formData;
+    axiosSecure.post("/community", forumInfo).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: "Successfully Added",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+
   return (
-    <div>
-      <h2>Add Forums</h2>
+    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+      <Helmet>
+        <title>FitRack | Become a trainer</title>
+      </Helmet>
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        Post a Forum
+      </h1>
+      <form onSubmit={handlePost} className="space-y-6">
+        {/* Full Name */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Title</label>
+          <input
+            type="text"
+            placeholder="Forum title"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        {/* Category */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">
+            Category
+          </label>
+          <input
+            type="text"
+            placeholder="Forum Category"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={formData.category}
+            onChange={(e) =>
+              setFormData({ ...formData, category: e.target.value })
+            }
+            required
+          />
+        </div>
+        {/* Description */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">
+            Description
+          </label>
+          <textarea
+            type="textarea"
+            placeholder="Forum Description"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={formData.description}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
+            rows={6}
+            required
+          />
+        </div>
+
+        {/* Submit Button */}
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-primary to-secondary py-3 rounded-md w-full text-white font-medium hover:bg-gradient-to-r hover:from-secondary hover:to-primary  border-none"
+          >
+            Post
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

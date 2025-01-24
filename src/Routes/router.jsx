@@ -23,6 +23,7 @@ import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
 import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 import AdminRoute from "./AdminRoute";
+import Community from "../pages/Community";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/all-classes",
         element: <AllClasses></AllClasses>,
+      },
+      {
+        path: "/community",
+        element: <Community></Community>,
       },
       {
         path: "/become-a-trainer",

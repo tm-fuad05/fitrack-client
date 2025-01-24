@@ -29,7 +29,7 @@ const Review = () => {
     >
       <SectionTitle subtitle={"Testimonials"} title={"What our clients say"} />
       <Swiper
-        slidesPerView={3}
+        slidesPerView={1} //default setting from small device
         spaceBetween={20}
         autoplay={{
           delay: 4000,
@@ -58,11 +58,12 @@ const Review = () => {
           <SwiperSlide key={review._id}>
             <div
               key={review._id}
-              className="border border-secondary bg-secondary bg-opacity-10 p-5 text-center flex flex-col gap-2 h-72 md:h-52 lg:h-64"
+              className="border border-secondary bg-secondary bg-opacity-10 p-5 text-center flex flex-col items-center justify-center gap-2 h-72 md:h-52 lg:h-64"
             >
               <FaQuoteRight className="text-4xl w-fit mx-auto text-secondary" />
               <h3 className="text-xl lg:text-2xl font-bold ">{review.name}</h3>
-              <p className="text-sm  lg:text-md flex-grow">{review.review}</p>
+              <p className="text-sm  lg:text-md ">{review.review}</p>
+              {/* Devider */}
               <div className="border-[1px] border-secondary mt-3 w-1/4 mx-auto"></div>
             </div>
           </SwiperSlide>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import useAuth from "./useAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
@@ -12,6 +12,7 @@ const axiosSecure = axios.create({
 const useAxiosSecure = () => {
   const { signOutUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Add a request interceptor
   axiosSecure.interceptors.request.use(
@@ -41,9 +42,10 @@ const useAxiosSecure = () => {
             showConfirmButton: false,
             timer: 2000,
           });
+          navigate("/login");
         });
-        navigate("/login");
       }
+
       return Promise.reject(error);
     }
   );
