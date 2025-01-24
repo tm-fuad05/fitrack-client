@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import useNewsletter from "../../../hooks/useNewsletter";
+import { Helmet } from "react-helmet-async";
 
 const NewsletterSubscribers = () => {
   const newsletters = useNewsletter();
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Newsletters</title>
+      </Helmet>
       {/* Simple Header */}
       <h1 className="text-2xl font-bold mb-4">Newsletter Subscribers</h1>
 

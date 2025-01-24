@@ -7,6 +7,9 @@ const AppliedTrainerDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Trainer details</title>
+      </Helmet>
       <Back></Back>
       <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-5">
         {appliedTrainer.fullName}'s Details

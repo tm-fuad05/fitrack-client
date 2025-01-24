@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import useAuth from "../hooks/useAuth";
-import useAxiosPublic from "../hooks/useAxiosPublic";
 // SweetAlert
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const ApplicationForTrainer = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -59,8 +60,8 @@ const ApplicationForTrainer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const trainerInfo = formData;
-    console.log(trainerInfo);
-    axiosPublic
+
+    axiosSecure
       .post("/applied-as-trainer", { ...trainerInfo, status: "pending" })
       .then((res) => {
         if (res.data.insertedId) {
@@ -76,6 +77,9 @@ const ApplicationForTrainer = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+      <Helmet>
+        <title>FitRack | Become a trainer</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Apply to Be a Trainer
       </h1>

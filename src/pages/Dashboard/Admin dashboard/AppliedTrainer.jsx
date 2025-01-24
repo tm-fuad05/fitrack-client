@@ -4,28 +4,21 @@ import { TiTick } from "react-icons/ti";
 import { FaTrash } from "react-icons/fa6";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
 // SweetAlert
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useUser from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
 // Material Ui
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  Input,
-  Textarea,
-  Typography,
-} from "@material-tailwind/react";
+import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch } = useAppliedTrainer();
   const pendingFilter = appliedTrainers.filter((p) => p.status === "pending");
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { users } = useUser();
 
   const [open, setOpen] = React.useState(false);
@@ -54,20 +47,20 @@ const AppliedTrainer = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Post to allTrainer
-        axiosPublic.post("/trainers", confirmedTrainer).then((res) => {
+        axiosSecure.post("/trainers", confirmedTrainer).then((res) => {
           if (res.data.insertedId) {
           }
         });
 
         // Delete from appliedTrainer
-        axiosPublic.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
+        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
           }
         });
 
         // Role Change from users
-        axiosPublic
+        axiosSecure
           .patch(`/users/make-trainer/${currentTrainer._id}`)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
@@ -93,7 +86,7 @@ const AppliedTrainer = () => {
       email,
       feedback,
     };
-    axiosPublic.post("/rejection-feedback", rejectionFeedback).then((res) => {
+    axiosSecure.post("/rejection-feedback", rejectionFeedback).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Feedback Sent",
@@ -109,7 +102,7 @@ const AppliedTrainer = () => {
     handleOpen();
 
     // Delete from appliedTrainer
-    axiosPublic.patch(`/applied-as-trainer/${trainer._id}`).then((res) => {
+    axiosSecure.patch(`/applied-as-trainer/${trainer._id}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
       }
@@ -118,6 +111,9 @@ const AppliedTrainer = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Applied trainers</title>
+      </Helmet>
       <Back></Back>
       <div>
         {/* Simple Header */}

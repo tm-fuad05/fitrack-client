@@ -13,25 +13,12 @@ import { BsActivity } from "react-icons/bs";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
   const { user, signOutUser } = useAuth();
   const { users } = useUser();
   const currentUser = users.find((u) => u.email === user?.email);
-
-  // if (!currentUser) {
-  //   return signOutUser()
-  //     .then(() => {
-  //       Swal.fire({
-  //         title: "Something went wrong!",
-  //         text: "Please sign in again.",
-  //         icon: "error",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //     })
-  //     .catch(() => alert("Something wemt wrong."));
-  // }
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 

@@ -2,13 +2,15 @@ import React from "react";
 import { FaTrash } from "react-icons/fa6";
 import useUser from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const TrainerHandling = () => {
   const { users, refetch } = useUser();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const trainers = users.filter((u) => u.role === "trainer");
 
   const handleRemoveTrainerRole = (trainer) => {
@@ -22,7 +24,7 @@ const TrainerHandling = () => {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.patch(`/users/make-member/${trainer._id}`).then((res) => {
+        axiosSecure.patch(`/users/make-member/${trainer._id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             console.log(res.data);
             refetch();
@@ -32,7 +34,7 @@ const TrainerHandling = () => {
             });
           }
         });
-        // axiosPublic.delete(`/users/${trainer._id}`).then((res) => {
+        // axiosSecure.delete(`/users/${trainer._id}`).then((res) => {
         //   if (res.data.deletedCount > 0) {
         //     refetch();
         //   }
@@ -43,6 +45,9 @@ const TrainerHandling = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Trainers</title>
+      </Helmet>
       <Back></Back>
       <div>
         {/* Simple Header */}

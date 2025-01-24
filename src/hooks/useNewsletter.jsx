@@ -1,14 +1,15 @@
 import React from "react";
-import useAxiosPublic from "./useAxiosPublic";
+
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useNewsletter = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: newsletters = [] } = useQuery({
     queryKey: ["newsletters"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/newsletter");
+      const { data } = await axiosSecure.get("/newsletter");
       return data;
     },
   });

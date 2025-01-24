@@ -10,11 +10,12 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
 import useUser from "../../../hooks/useUser";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
   const [open, setOpen] = React.useState(false);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const handleOpen = () => setOpen(!open);
 
   const { user, updateUserProfile } = useAuth();
@@ -38,7 +39,7 @@ const Profile = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        axiosPublic
+        axiosSecure
           .patch(`/users/${currentUser._id}`, updateProfile)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
@@ -50,6 +51,9 @@ const Profile = () => {
   };
   return (
     <div className="relative">
+      <Helmet>
+        <title>FitRack | Profile</title>
+      </Helmet>
       <h1 className="text-2xl font-bold mb-4">Your Profile</h1>
       <div className="bg-gradient-to-t from-primary to-secondary min-h-[300px] rounded-xl"></div>
       <div className="rounded-xl  bg-white shadow-2xl w-9/12 relative p-5 pt-0 -translate-x-1/2 left-1/2 -top-24 z-10">

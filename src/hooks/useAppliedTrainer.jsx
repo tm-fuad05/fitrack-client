@@ -1,14 +1,13 @@
-import React from "react";
-import useAxiosPublic from "./useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useAppliedTrainer = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: appliedTrainers = [], refetch } = useQuery({
     queryKey: ["appliedTrainers"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/applied-as-trainer");
+      const { data } = await axiosSecure.get("/applied-as-trainer");
       return data;
     },
   });

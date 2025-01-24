@@ -11,19 +11,20 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+
 import { useQuery } from "@tanstack/react-query";
 import { FaTrash } from "react-icons/fa6";
-import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const ActivityLog = () => {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   // Feedback
   const { data: rejectionFeedback = [] } = useQuery({
     queryKey: ["feedback"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/rejection-feedback");
+      const { data } = await axiosSecure.get("/rejection-feedback");
       return data;
     },
   });
@@ -40,7 +41,7 @@ const ActivityLog = () => {
   const handleOpen = () => setOpen(!open);
 
   const handleDelete = () => {
-    axiosPublic.delete(`/applied-as-trainer/${currentUser._id}`).then((res) => {
+    axiosSecure.delete(`/applied-as-trainer/${currentUser._id}`).then((res) => {
       if (res.data.deletedCount > 0) {
         refetch();
         Swal.fire({
@@ -55,6 +56,9 @@ const ActivityLog = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Activity log</title>
+      </Helmet>
       <Back></Back>
       <div>
         {/* Simple Header */}

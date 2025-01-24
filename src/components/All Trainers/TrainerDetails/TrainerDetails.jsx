@@ -6,12 +6,16 @@ import {
 } from "react-icons/io5";
 import { useLoaderData } from "react-router-dom";
 import BeATrainer from "./BeATariner";
+import { Helmet } from "react-helmet-async";
 
 const TrainerDetails = () => {
   const trainer = useLoaderData();
 
   return (
     <div className="pt-20 ">
+      <Helmet>
+        <title>FitRack | Details</title>
+      </Helmet>
       <section className="w-11/12 mx-auto flex flex-col lg:flex-row gap-10 mb-32">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 lg:w-1/2">
           <img

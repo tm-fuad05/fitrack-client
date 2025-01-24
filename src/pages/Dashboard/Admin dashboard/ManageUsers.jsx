@@ -5,13 +5,14 @@ import { FaTrash } from "react-icons/fa6";
 // SweetAlert
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Back from "../../../components/Shared/Back";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const ManageUsers = () => {
   const { users, refetch } = useUser();
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const handleDelete = (user) => {
     Swal.fire({
@@ -24,7 +25,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, delete ",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/users/${user._id}`).then((res) => {
+        axiosSecure.delete(`/users/${user._id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
@@ -34,7 +35,7 @@ const ManageUsers = () => {
             });
           }
         });
-        // axiosPublic.delete(`/confirmed-trainer`)
+        // axiosSecure.delete(`/confirmed-trainer`)
       }
     });
   };
@@ -50,7 +51,7 @@ const ManageUsers = () => {
       confirmButtonText: "Make Admin",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.patch(`/users/make-admin/${user._id}`).then((res) => {
+        axiosSecure.patch(`/users/make-admin/${user._id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();
             Swal.fire({
@@ -65,6 +66,9 @@ const ManageUsers = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FitRack | Manage users</title>
+      </Helmet>
       <Back></Back>
       <div>
         {/* Simple Header */}

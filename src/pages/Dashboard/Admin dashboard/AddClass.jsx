@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Select from "react-select";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useTrainer from "../../../hooks/useTrainer";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const AddClass = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { trainers } = useTrainer();
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +23,7 @@ const AddClass = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const classesInfo = formData;
-    axiosPublic.post("/classes", classesInfo).then((res) => {
+    axiosSecure.post("/classes", classesInfo).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({
           title: "Successfully Added Class",
@@ -36,6 +37,9 @@ const AddClass = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg lg:p-8">
+      <Helmet>
+        <title>FitRack | Add class</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Add Class
       </h1>

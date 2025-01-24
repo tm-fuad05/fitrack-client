@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import useClass from "../hooks/useClass";
+import { IoSearch } from "react-icons/io5";
+import { Helmet } from "react-helmet-async";
 
 const AllClasses = () => {
-  const { classes } = useClass();
+  const [search, setSearch] = useState("");
+  console.log(search);
+  const { classes } = useClass({ search });
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -29,6 +33,23 @@ const AllClasses = () => {
         <p className="text-gray-600">
           Explore our comprehensive selection of classes
         </p>
+      </div>
+      <Helmet>
+        <title>FitRack | All classes</title>
+      </Helmet>
+
+      {/* Search field */}
+      <div className="max-w-sm relative mb-7">
+        <input
+          onChange={(e) => setSearch(e.target.value)}
+          type="text"
+          placeholder="Search by class name"
+          className="border border-[#e5eaf2] py-3 pl-4 pr-[65px] outline-none w-full rounded-md"
+        />
+
+        <span className="bg-gray-300 text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center rounded-r-md cursor-pointer hover:bg-gray-400 group">
+          <IoSearch className="text-[1.3rem]  group-hover:text-gray-200" />
+        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

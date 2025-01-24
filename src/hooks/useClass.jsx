@@ -2,13 +2,13 @@ import React from "react";
 import useAxiosPublic from "./useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 
-const useClass = () => {
+const useClass = ({ search }) => {
   const axiosPublic = useAxiosPublic();
 
   const { data: classes = [], refetch } = useQuery({
-    queryKey: ["classes"],
+    queryKey: [search, "classes"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/classes");
+      const { data } = await axiosPublic.get(`/classes?search=${search}`);
       return data;
     },
   });

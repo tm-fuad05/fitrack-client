@@ -22,6 +22,7 @@ import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
 import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
 import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -68,27 +69,51 @@ const router = createBrowserRouter([
 
           {
             path: "/dashboard/newsletter",
-            element: <NewsletterSubscribers></NewsletterSubscribers>,
+            element: (
+              <AdminRoute>
+                <NewsletterSubscribers></NewsletterSubscribers>
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/trainers",
-            element: <TrainerHandling></TrainerHandling>,
+            element: (
+              <AdminRoute>
+                <TrainerHandling></TrainerHandling>
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/manage-users",
-            element: <ManageUsers></ManageUsers>,
+            element: (
+              <AdminRoute>
+                <ManageUsers></ManageUsers>
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/applied-trainers",
-            element: <AppliedTrainer></AppliedTrainer>,
+            element: (
+              <AdminRoute>
+                <AppliedTrainer></AppliedTrainer>
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/add-class",
-            element: <AddClass></AddClass>,
+            element: (
+              <AdminRoute>
+                <AddClass></AddClass>
+              </AdminRoute>
+            ),
           },
           {
             path: "/dashboard/applied-trainers/:id",
-            element: <AppliedTrainerDetails></AppliedTrainerDetails>,
+            element: (
+              <AdminRoute>
+                <AppliedTrainerDetails></AppliedTrainerDetails>
+              </AdminRoute>
+            ),
             loader: ({ params }) =>
               fetch(`http://localhost:5000/applied-as-trainer/${params.id}`),
           },
