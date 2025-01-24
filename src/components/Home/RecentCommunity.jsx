@@ -3,6 +3,7 @@ import React from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import SectionTitle from "../Shared/SectionTitle";
+import { Link } from "react-router-dom";
 
 const RecentCommunity = () => {
   const axiosPublic = useAxiosPublic();
@@ -63,6 +64,13 @@ const RecentCommunity = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="w-fit mx-auto">
+        <Link to={"all-classes"}>
+          <button className="bg-gradient-to-r from-primary to-secondary px-4 py-2 text-white rounded-md font-[500] hover:opacity-50">
+            See All Posts
+          </button>
+        </Link>
       </div>
     </div>
   );

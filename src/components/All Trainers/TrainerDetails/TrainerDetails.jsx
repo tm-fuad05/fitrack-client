@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  IoLogoFacebook,
-  IoLogoInstagram,
-  IoLogoTwitter,
-} from "react-icons/io5";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import BeATrainer from "./BeATariner";
 import { Helmet } from "react-helmet-async";
 
@@ -72,6 +67,7 @@ const TrainerDetails = () => {
             <p className="mt-3">{trainer.bio}</p>
           </div>
         </div>
+        {/* Slots */}
         <div className="lg:w-1/2">
           <div className="bg-white shadow-xl rounded-lg p-6  border">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -79,21 +75,21 @@ const TrainerDetails = () => {
               <span className="font-[300]">
                 {" "}
                 (
-                {trainer.availableDays.map((skill, idx) => (
-                  <span key={idx}>{skill},</span>
+                {trainer.availableDays.map((day, idx) => (
+                  <span key={idx}>{day},</span>
                 ))}{" "}
                 <span>{trainer.availableTime}</span>)
               </span>
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {/* {slots.map((slot, index) => ( */}
-              <button
-                // key={index}
-                className="bg-blue-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-              >
-                {trainer.availableDays?.length}
-              </button>
-              {/* ))} */}
+            <div className="flex gap-4">
+              {trainer.availableDays?.map((day) => (
+                <Link
+                  to={`/trainer-booking/${trainer.fullName}/${day} (${trainer.availableTime})/${trainer.skills}`}
+                  className="bg-blue-500 text-white font-medium py-2 px-4 text-center rounded-lg hover:bg-blue-600 transition duration-200"
+                >
+                  {day} ({trainer.availableTime})
+                </Link>
+              ))}
             </div>
           </div>
         </div>

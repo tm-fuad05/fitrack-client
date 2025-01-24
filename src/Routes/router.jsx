@@ -24,6 +24,8 @@ import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTra
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 import AdminRoute from "./AdminRoute";
 import Community from "../pages/Community";
+import TrainerBooking from "../pages/TrainerBooking";
+import Payment from "../pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/trainers/${params.trainerName}`),
+      },
+      {
+        path: "/trainer-booking/:trainerName/:slot/:skills",
+        element: <TrainerBooking></TrainerBooking>,
+      },
+      {
+        path: "/payment/:slot/:membershipType/:price",
+        element: <Payment></Payment>,
       },
       {
         path: "/all-classes",

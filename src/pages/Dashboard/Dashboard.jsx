@@ -13,7 +13,10 @@ import { BsActivity } from "react-icons/bs";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import useUser from "../../hooks/useUser";
 import useAuth from "../../hooks/useAuth";
-import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+
+import { TbLogout2 } from "react-icons/tb";
 
 const Dashboard = () => {
   const { user, signOutUser } = useAuth();
@@ -207,6 +210,17 @@ const Dashboard = () => {
     </nav>
   );
 
+  const handleSignOut = () => {
+    signOutUser().then(() => {
+      Swal.fire({
+        title: "Successfully signed out",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+  };
+
   return (
     <div className="grid grid-cols-12 relative">
       {/* SideBar */}
@@ -218,6 +232,14 @@ const Dashboard = () => {
         <div className="border-b mb-5"></div>
         {/* NavMenu */}
         {navMenu}
+        {/* Logout */}
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-600"
+        >
+          <TbLogout2 />
+          Logout
+        </button>
       </aside>
       {/* Main */}
       <section className="col-span-12 lg:col-span-9">
@@ -240,6 +262,14 @@ const Dashboard = () => {
         >
           {/* NavMenu */}
           {navMenu}
+          {/* Logout */}
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-600"
+          >
+            <TbLogout2 />
+            Logout
+          </button>
         </aside>
         {/* Content */}
         <section className="py-10 w-11/12 mx-auto">

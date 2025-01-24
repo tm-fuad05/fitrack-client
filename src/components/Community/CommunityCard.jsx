@@ -1,6 +1,6 @@
 import React from "react";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiOutlineDislike } from "react-icons/ai";
+import { AiFillDislike, AiFillLike } from "react-icons/ai";
+
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -60,18 +60,12 @@ const CommunityCard = ({ post, refetch }) => {
           {" "}
           <span className="font-semibold">Votes:</span> {votes}
         </span>
-        <div className="space-x-2 text-xl font-semibold">
-          <button
-            onClick={() => handleUpVote(_id)}
-            className="px-3 py-2 rounded-full "
-          >
-            <AiOutlineLike />
+        <div className="space-x-2 text-xl font-semibold text-gray-500 ">
+          <button onClick={() => handleUpVote(_id)} className={`px-3 py-2 `}>
+            <AiFillLike />
           </button>
-          <button
-            onClick={() => handleDownVote(_id)}
-            className="px-3 py-2 rounded-full "
-          >
-            <AiOutlineDislike />
+          <button onClick={() => handleDownVote(_id)} className={`px-3 py-2 $`}>
+            <AiFillDislike />
           </button>
         </div>
       </div>

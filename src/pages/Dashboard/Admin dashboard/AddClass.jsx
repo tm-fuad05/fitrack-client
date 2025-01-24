@@ -36,7 +36,7 @@ const AddClass = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg lg:p-8">
+    <div className="w-11/12 mx-auto bg-white rounded-lg lg:p-8">
       <Helmet>
         <title>FitRack | Add class</title>
       </Helmet>

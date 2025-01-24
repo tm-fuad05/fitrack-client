@@ -65,68 +65,72 @@ const ActivityLog = () => {
         <h1 className="text-2xl font-bold mb-4">Activity Log</h1>
 
         {/* Simple Table */}
-        <div className="overflow-x-auto  ">
-          <table className="w-full bg-white border">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 text-left">Name</th>
-                <th className="p-3 text-left">Email</th>
-                <th className="p-3 text-left">Applied for</th>
-                <th className="p-3 text-left">Status</th>
-                {currentUser?.status === "rejected" && (
-                  <th className="p-3 text-left">Feedback</th>
-                )}
-                <th className="p-3 text-left"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentUser && (
-                <tr className="border even:bg-gray-50">
-                  <td className="p-3">{currentUser?.fullName}</td>
-                  <td className="p-3">{currentUser?.email}</td>
-                  <td className="p-3 text-green-500 font-[600]">trainer</td>
-
-                  <td className={`p-3 font-semibold text-primary`}>
-                    {currentUser?.status}
-                  </td>
+        {currentUser ? (
+          <div className="overflow-x-auto  ">
+            <table className="w-full bg-white border">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-3 text-left">Name</th>
+                  <th className="p-3 text-left">Email</th>
+                  <th className="p-3 text-left">Applied for</th>
+                  <th className="p-3 text-left">Status</th>
                   {currentUser?.status === "rejected" && (
-                    <td className={`p-3`}>
+                    <th className="p-3 text-left">Feedback</th>
+                  )}
+                  <th className="p-3 text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentUser && (
+                  <tr className="border even:bg-gray-50">
+                    <td className="p-3">{currentUser?.fullName}</td>
+                    <td className="p-3">{currentUser?.email}</td>
+                    <td className="p-3 text-green-500 font-[600]">trainer</td>
+
+                    <td className={`p-3 font-semibold text-primary`}>
+                      {currentUser?.status}
+                    </td>
+                    {currentUser?.status === "rejected" && (
+                      <td className={`p-3`}>
+                        <button
+                          onClick={handleOpen}
+                          className="text-gray-700 text-2xl hover:text-gray-500"
+                        >
+                          <IoEyeOutline />
+                        </button>
+                      </td>
+                    )}
+                    <td className="p-3">
                       <button
-                        onClick={handleOpen}
-                        className="text-gray-700 text-2xl hover:text-gray-500"
+                        onClick={handleDelete}
+                        className="bg-red-500 p-2 rounded-md hover:bg-opacity-50"
                       >
-                        <IoEyeOutline />
+                        {" "}
+                        <FaTrash className="text-white" />
                       </button>
                     </td>
-                  )}
-                  <td className="p-3">
-                    <button
-                      onClick={handleDelete}
-                      className="bg-red-500 p-2 rounded-md hover:bg-opacity-50"
-                    >
-                      {" "}
-                      <FaTrash className="text-white" />
-                    </button>
-                  </td>
-                  <Dialog open={open} handler={handleOpen}>
-                    <DialogHeader>Admin Feedback</DialogHeader>
-                    <DialogBody>{rejectedUser?.feedback}</DialogBody>
-                    <DialogFooter>
-                      <Button
-                        variant="text"
-                        color="red"
-                        onClick={handleOpen}
-                        className="mr-1"
-                      >
-                        <span>Ok, I understand</span>
-                      </Button>
-                    </DialogFooter>
-                  </Dialog>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                    <Dialog open={open} handler={handleOpen}>
+                      <DialogHeader>Admin Feedback</DialogHeader>
+                      <DialogBody>{rejectedUser?.feedback}</DialogBody>
+                      <DialogFooter>
+                        <Button
+                          variant="text"
+                          color="red"
+                          onClick={handleOpen}
+                          className="mr-1"
+                        >
+                          <span>Ok, I understand</span>
+                        </Button>
+                      </DialogFooter>
+                    </Dialog>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-center mt-10">No Activities</p>
+        )}
       </div>
     </div>
   );

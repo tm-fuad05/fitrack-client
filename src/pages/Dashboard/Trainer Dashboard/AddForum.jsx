@@ -41,15 +41,15 @@ const AddForum = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+    <div className="w-11/12 mx-auto bg-white rounded-lg p-8">
       <Helmet>
-        <title>FitRack | Become a trainer</title>
+        <title>FitRack | Add Forum</title>
       </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Post a Forum
       </h1>
       <form onSubmit={handlePost} className="space-y-6">
-        {/* Full Name */}
+        {/* Title */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">Title</label>
           <input

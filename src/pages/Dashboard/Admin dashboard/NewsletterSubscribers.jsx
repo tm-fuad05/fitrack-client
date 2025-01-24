@@ -18,30 +18,34 @@ const NewsletterSubscribers = () => {
       </div>
 
       {/* Simple Table */}
-      <div className="overflow-x-auto  ">
-        <table className="w-full bg-white border">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Phone</th>
-              <th className="p-3 text-left">Subject</th>
-              <th className="p-3 text-left">Message</th>
-            </tr>
-          </thead>
-          <tbody>
-            {newsletters.map((subscriber) => (
-              <tr key={subscriber.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">{subscriber.name}</td>
-                <td className="p-3">{subscriber.email}</td>
-                <td className="p-3">{subscriber.phone}</td>
-                <td className="p-3">{subscriber.subject}</td>
-                <td className="p-3">{subscriber.message}</td>
+      {newsletters?.length === 0 ? (
+        <p className="text-center mt-5">No newsletters found</p>
+      ) : (
+        <div className="overflow-x-auto  ">
+          <table className="w-full bg-white border">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Email</th>
+                <th className="p-3 text-left">Phone</th>
+                <th className="p-3 text-left">Subject</th>
+                <th className="p-3 text-left">Message</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {newsletters.map((subscriber) => (
+                <tr key={subscriber.id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{subscriber.name}</td>
+                  <td className="p-3">{subscriber.email}</td>
+                  <td className="p-3">{subscriber.phone}</td>
+                  <td className="p-3">{subscriber.subject}</td>
+                  <td className="p-3">{subscriber.message}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

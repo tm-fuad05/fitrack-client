@@ -120,118 +120,128 @@ const AppliedTrainer = () => {
         <h1 className="text-2xl font-bold mb-4">Applied Trainers</h1>
 
         {/* Total Count */}
-        <div className="mb-4">
-          <p className="text-gray-600">
-            Total Applied Trainers: {pendingFilter?.length}
-          </p>
-        </div>
+        {pendingFilter?.length > 0 && (
+          <div className="mb-4">
+            <p className="text-gray-600">
+              Total Applied Trainers: {pendingFilter?.length}
+            </p>
+          </div>
+        )}
 
         {/* Simple Table */}
-        <div className="overflow-x-auto  ">
-          <table className="w-full bg-white border">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 text-left">Name</th>
-                <th className="p-3 text-left">Email</th>
-                <th className="p-3 text-left">Status</th>
-                <th className="p-3 text-left">Details</th>
-                <th className="p-3 text-left">Confirm</th>
-                <th className="p-3 text-left">Reject</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pendingFilter &&
-                pendingFilter.map((trainer) => (
-                  <tr key={trainer._id} className="border even:bg-gray-50">
-                    <td className="p-3">{trainer.fullName}</td>
-                    <td className="p-3">{trainer.email}</td>
-                    <td className={`p-3 font-semibold text-primary`}>
-                      {trainer.status}
-                    </td>
-                    <td className="p-3">
-                      <Link to={trainer._id}>
-                        <button className="text-xl p-2 bg-secondary  text-white rounded-md hover:bg-opacity-50">
-                          {" "}
-                          <TbListDetails />{" "}
-                        </button>
-                      </Link>
-                    </td>
-                    <td className="p-3">
-                      <button
-                        onClick={() => handleConfirmTrainer(trainer)}
-                        className="text-xl p-2 bg-green-600 text-white rounded-md hover:bg-opacity-50"
-                      >
-                        {" "}
-                        <TiTick />{" "}
-                      </button>
-                    </td>
-                    <td className="p-3">
-                      <button
-                        onClick={handleOpen}
-                        className="text-xl p-2 bg-red-600 text-white rounded-md hover:bg-opacity-50"
-                      >
-                        {" "}
-                        <FaTrash />{" "}
-                      </button>
-                    </td>
-                    <Dialog open={open} size="xs">
-                      <DialogBody className="font-poppins">
-                        <h2 className="text-center text-xl font-bold ">
-                          {trainer.fullName}'s Info
-                        </h2>
-                        <div className="mt-4">
-                          <p>
-                            <span className="font-[600]">Name:</span>{" "}
-                            {trainer.fullName}
-                          </p>
-                          <p>
-                            <span className="font-[600]">Email:</span>{" "}
-                            {trainer.email}
-                          </p>
-                          <p>
-                            <span className="font-[600]">Age:</span>{" "}
-                            {trainer.age}
-                          </p>
-                        </div>
-                      </DialogBody>
-                      <DialogBody className="font-poppins">
-                        <form
-                          onSubmit={handleSendFeedback}
-                          className="space-y-4"
-                        >
-                          {/* Email */}
-                          <Input
-                            label="email"
-                            name="email"
-                            defaultValue={trainer.email}
-                            readOnly
-                          />
-
-                          {/* Feedback */}
-                          <Textarea label="Feedback" name="feedback" required />
-
-                          <div className="text-right mt-2">
-                            <button
-                              onClick={() => handleReject(trainer)}
-                              className="capitalize bg-gradient-to-r from-primary to-secondary text-white hover:bg-gradient-to-l hoverfrom-primary hover:to-secondary font-[400] px-3 py-2 rounded-md"
-                            >
-                              send feedback
-                            </button>
-                          </div>
-                        </form>
+        {pendingFilter?.length === 0 ? (
+          <p className="text-center mt-5">No users apply for trainer</p>
+        ) : (
+          <div className="overflow-x-auto  ">
+            <table className="w-full bg-white border">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="p-3 text-left">Name</th>
+                  <th className="p-3 text-left">Email</th>
+                  <th className="p-3 text-left">Status</th>
+                  <th className="p-3 text-left">Details</th>
+                  <th className="p-3 text-left">Confirm</th>
+                  <th className="p-3 text-left">Reject</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pendingFilter &&
+                  pendingFilter.map((trainer) => (
+                    <tr key={trainer._id} className="border even:bg-gray-50">
+                      <td className="p-3">{trainer.fullName}</td>
+                      <td className="p-3">{trainer.email}</td>
+                      <td className={`p-3 font-semibold text-primary`}>
+                        {trainer.status}
+                      </td>
+                      <td className="p-3">
+                        <Link to={trainer._id}>
+                          <button className="text-xl p-2 bg-secondary  text-white rounded-md hover:bg-opacity-50">
+                            {" "}
+                            <TbListDetails />{" "}
+                          </button>
+                        </Link>
+                      </td>
+                      <td className="p-3">
                         <button
-                          className="px-3 py-2 rounded-md hover:bg-gray-100"
-                          onClick={handleOpen}
+                          onClick={() => handleConfirmTrainer(trainer)}
+                          className="text-xl p-2 bg-green-600 text-white rounded-md hover:bg-opacity-50"
                         >
-                          Cancel
+                          {" "}
+                          <TiTick />{" "}
                         </button>
-                      </DialogBody>
-                    </Dialog>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                      <td className="p-3">
+                        <button
+                          onClick={handleOpen}
+                          className="text-xl p-2 bg-red-600 text-white rounded-md hover:bg-opacity-50"
+                        >
+                          {" "}
+                          <FaTrash />{" "}
+                        </button>
+                      </td>
+                      <Dialog open={open} size="xs">
+                        <DialogBody className="font-poppins">
+                          <h2 className="text-center text-xl font-bold ">
+                            {trainer.fullName}'s Info
+                          </h2>
+                          <div className="mt-4">
+                            <p>
+                              <span className="font-[600]">Name:</span>{" "}
+                              {trainer.fullName}
+                            </p>
+                            <p>
+                              <span className="font-[600]">Email:</span>{" "}
+                              {trainer.email}
+                            </p>
+                            <p>
+                              <span className="font-[600]">Age:</span>{" "}
+                              {trainer.age}
+                            </p>
+                          </div>
+                        </DialogBody>
+                        <DialogBody className="font-poppins">
+                          <form
+                            onSubmit={handleSendFeedback}
+                            className="space-y-4"
+                          >
+                            {/* Email */}
+                            <Input
+                              label="email"
+                              name="email"
+                              defaultValue={trainer.email}
+                              readOnly
+                            />
+
+                            {/* Feedback */}
+                            <Textarea
+                              label="Feedback"
+                              name="feedback"
+                              required
+                            />
+
+                            <div className="text-right mt-2">
+                              <button
+                                onClick={() => handleReject(trainer)}
+                                className="capitalize bg-gradient-to-r from-primary to-secondary text-white hover:bg-gradient-to-l hoverfrom-primary hover:to-secondary font-[400] px-3 py-2 rounded-md"
+                              >
+                                send feedback
+                              </button>
+                            </div>
+                          </form>
+                          <button
+                            className="px-3 py-2 rounded-md hover:bg-gray-100"
+                            onClick={handleOpen}
+                          >
+                            Cancel
+                          </button>
+                        </DialogBody>
+                      </Dialog>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
