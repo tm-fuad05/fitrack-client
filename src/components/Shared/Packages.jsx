@@ -1,7 +1,7 @@
 import React from "react";
 import { TiTick } from "react-icons/ti";
 import { Link } from "react-router-dom";
-const Packages = ({ slot }) => {
+const Packages = ({ slot, trainerName }) => {
   const packages = [
     {
       membershipType: "Basic Membership",
@@ -51,7 +51,7 @@ const Packages = ({ slot }) => {
               </p>
             ))}
             <Link
-              to={`/payment/${slot}/${p.membershipType}/${p.price}`}
+              to={`/payment/${trainerName}/${slot}/${p.membershipType}/${p.price}`}
               className="bg-white text-primary px-4 py-2 w-fit mx-auto mt-5 font-semibold hover:scale-105 duration-100"
             >
               Join Now

@@ -8,8 +8,9 @@ import "swiper/css/free-mode";
 import { Autoplay, Navigation, FreeMode, Pagination } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { FaQuoteRight } from "react-icons/fa6";
+import { FaQuoteRight, FaRegStar, FaStar } from "react-icons/fa6";
 import SectionTitle from "../Shared/SectionTitle";
+import Rating from "react-rating";
 
 const Review = () => {
   const axiosPublic = useAxiosPublic();
@@ -58,10 +59,17 @@ const Review = () => {
           <SwiperSlide key={review._id}>
             <div
               key={review._id}
-              className="border border-secondary bg-secondary bg-opacity-10 p-5 text-center flex flex-col items-center justify-center gap-2 h-72 md:h-52 lg:h-64"
+              className="border border-secondary bg-secondary bg-opacity-[8%] p-5 text-center flex flex-col items-center justify-center gap-2 h-72 md:h-64"
             >
               <FaQuoteRight className="text-4xl w-fit mx-auto text-secondary" />
               <h3 className="text-xl lg:text-2xl font-bold ">{review.name}</h3>
+              <div className="w-fit mx-auto">
+                <Rating
+                  initialRating={review.rating}
+                  emptySymbol={<FaRegStar className="text-xl text-secondary" />}
+                  fullSymbol={<FaStar className="text-xl text-secondary" />}
+                />
+              </div>
               <p className="text-sm  lg:text-md ">{review.review}</p>
               {/* Devider */}
               <div className="border-[1px] border-secondary mt-3 w-1/4 mx-auto"></div>

@@ -23,7 +23,7 @@ const TrainerBooking = () => {
           <span className="font-semibold">Skills:</span> {skills}
         </p>
       </div>
-      <Packages slot={slot}></Packages>
+      <Packages slot={slot} trainerName={trainerName}></Packages>
     </div>
   );
 };

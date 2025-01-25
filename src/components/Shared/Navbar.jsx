@@ -6,12 +6,11 @@ import { IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
 
-import { FiUser } from "react-icons/fi";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 // SweetAlert
-import Swal, { swal } from "sweetalert2/dist/sweetalert2.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import "./navbar.css";
 
@@ -53,7 +52,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);

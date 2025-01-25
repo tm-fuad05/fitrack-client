@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loader, setLoader] = useState(true);
   const axiosPublic = useAxiosPublic();
-
+  console.log(user);
   // Google provider
   const googleProvider = new GoogleAuthProvider();
 

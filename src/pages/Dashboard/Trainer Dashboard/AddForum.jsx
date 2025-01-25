@@ -7,13 +7,15 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment/moment";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AddForum = () => {
   const { user } = useAuth();
   const { users } = useUser();
   const currentUser = users.find((u) => u.email === user.email);
   const axiosSecure = useAxiosSecure();
-
+  // const axiosPublic = useAxiosPublic();
+  console.log(currentUser);
   const date = new Date();
   const [formData, setFormData] = useState({
     title: "",

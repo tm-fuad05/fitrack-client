@@ -25,7 +25,10 @@ import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 import AdminRoute from "./AdminRoute";
 import Community from "../pages/Community";
 import TrainerBooking from "../pages/TrainerBooking";
-import Payment from "../pages/Payment";
+import Payment from "../pages/Payment/Payment";
+import TrainerRoute from "./TrainerRoute";
+import CombinedRoute from "./CombinedRoute";
+import Balance from "../pages/Dashboard/Admin dashboard/Balance/Balance";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +55,7 @@ const router = createBrowserRouter([
         element: <TrainerBooking></TrainerBooking>,
       },
       {
-        path: "/payment/:slot/:membershipType/:price",
+        path: "/payment/:trainerName/:slot/:membershipType/:price",
         element: <Payment></Payment>,
       },
       {
@@ -107,6 +110,14 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: "/dashboard/balance",
+            element: (
+              <AdminRoute>
+                <Balance></Balance>
+              </AdminRoute>
+            ),
+          },
+          {
             path: "/dashboard/applied-trainers",
             element: (
               <AdminRoute>
@@ -146,18 +157,32 @@ const router = createBrowserRouter([
             path: "/dashboard/my-profile",
             element: <Profile></Profile>,
           },
+
           // Trainer Dashboard Menus
           {
             path: "/dashboard/manage-slot",
-            element: <ManageSlot></ManageSlot>,
+            element: (
+              <TrainerRoute>
+                <ManageSlot></ManageSlot>
+              </TrainerRoute>
+            ),
           },
           {
             path: "/dashboard/add-slot",
-            element: <AddSlot></AddSlot>,
+            element: (
+              <TrainerRoute>
+                <AddSlot></AddSlot>
+              </TrainerRoute>
+            ),
           },
+          // Admin and Trainer Route
           {
             path: "/dashboard/add-forum",
-            element: <AddForum></AddForum>,
+            element: (
+              <CombinedRoute>
+                <AddForum></AddForum>
+              </CombinedRoute>
+            ),
           },
         ],
       },

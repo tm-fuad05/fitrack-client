@@ -3,10 +3,15 @@ import React from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import SectionTitle from "../Shared/SectionTitle";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const RecentCommunity = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const location = useLocation();
   const { data: communities = [], refetch } = useQuery({
     queryKey: ["community"],
     queryFn: async () => {
@@ -14,6 +19,30 @@ const RecentCommunity = () => {
       return data;
     },
   });
+
+  const handleUpVote = (id) => {
+    if (user && user?.email) {
+      axiosSecure.patch(`/community/upvote/${id}`).then((res) => {
+        if (res.data.modifiedCount) {
+          refetch();
+        }
+      });
+    } else {
+      navigate("/login", { state: location.pathname });
+    }
+  };
+
+  const handleDownVote = (id) => {
+    if (user && user?.email) {
+      axiosSecure.patch(`/community/downvote/${id}`).then((res) => {
+        if (res.data.modifiedCount) {
+          refetch();
+        }
+      });
+    } else {
+      navigate("/login", { state: location.pathname });
+    }
+  };
 
   return (
     <div className="w-10/12 mx-auto my-10 mb-20">

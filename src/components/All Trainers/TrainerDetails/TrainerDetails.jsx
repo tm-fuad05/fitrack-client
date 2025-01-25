@@ -1,10 +1,19 @@
 import React from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import BeATrainer from "./BeATariner";
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../../hooks/useAuth";
 
 const TrainerDetails = () => {
   const trainer = useLoaderData();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className="pt-20 ">
@@ -84,7 +93,11 @@ const TrainerDetails = () => {
             <div className="flex gap-4">
               {trainer.availableDays?.map((day) => (
                 <Link
-                  to={`/trainer-booking/${trainer.fullName}/${day} (${trainer.availableTime})/${trainer.skills}`}
+                  to={`${
+                    user && user?.email
+                      ? `/trainer-booking/${trainer.fullName}/${day} (${trainer.availableTime})/${trainer.skills}`
+                      : "/login"
+                  }`}
                   className="bg-blue-500 text-white font-medium py-2 px-4 text-center rounded-lg hover:bg-blue-600 transition duration-200"
                 >
                   {day} ({trainer.availableTime})
