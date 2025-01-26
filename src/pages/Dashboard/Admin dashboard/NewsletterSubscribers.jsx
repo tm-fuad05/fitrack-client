@@ -3,7 +3,7 @@ import useNewsletter from "../../../hooks/useNewsletter";
 import { Helmet } from "react-helmet-async";
 
 const NewsletterSubscribers = () => {
-  const newsletters = useNewsletter();
+  const { newsletters } = useNewsletter();
   return (
     <div>
       <Helmet>

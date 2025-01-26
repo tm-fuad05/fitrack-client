@@ -52,11 +52,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/trainer-booking/:trainerName/:slot/:skills",
-        element: <TrainerBooking></TrainerBooking>,
+        element: (
+          <PrivateRoute>
+            <TrainerBooking></TrainerBooking>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment/:trainerName/:slot/:membershipType/:price",
-        element: <Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-classes",

@@ -24,7 +24,9 @@ const BookedTrainer = () => {
   const { data: payments = [] } = useQuery({
     queryKey: [user?.email, "payments"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/payments?email=${user?.email}`);
+      const { data } = await axiosSecure.get(
+        `/payments/user?email=${user?.email}`
+      );
       return data;
     },
   });

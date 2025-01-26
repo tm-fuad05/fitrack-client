@@ -13,7 +13,7 @@ const useNewsletter = () => {
       return data;
     },
   });
-  return newsletters;
+  return { newsletters };
 };
 
 export default useNewsletter;
