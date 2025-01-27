@@ -14,7 +14,7 @@ const TrainerDetails = () => {
   const { user } = useAuth();
 
   return (
-    <div className="pt-20 ">
+    <div className="pt-10">
       <Helmet>
         <title>FitRack | Details</title>
       </Helmet>
@@ -79,7 +79,7 @@ const TrainerDetails = () => {
           <div className="bg-white shadow-xl rounded-lg p-6  border">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Available Slots{" "}
-              <span className="font-[300]">
+              <span className="font-[300] flex flex-wrap">
                 {" "}
                 (
                 {trainer.availableDays.map((day, idx) => (
@@ -88,7 +88,7 @@ const TrainerDetails = () => {
                 <span>{trainer.availableTime}</span>)
               </span>
             </h2>
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4">
               {trainer.availableDays?.map((day) => (
                 <Link
                   to={`${
