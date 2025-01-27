@@ -43,7 +43,7 @@ const TrainerCard = ({ trainer }) => {
           </span>
         </p>
         <div className="mt-2">
-          <Link to={`${trainer.fullName}`}>
+          <Link to={`${encodeURIComponent(trainer.fullName)}`}>
             <Button text={"know more"} hoverText={"white"}></Button>
           </Link>
         </div>
