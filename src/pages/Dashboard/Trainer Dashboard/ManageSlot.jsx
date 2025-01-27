@@ -38,7 +38,7 @@ const ManageSlot = () => {
     e.preventDefault();
     const managedSlots = formData;
     axiosSecure
-      .patch(`/trainers/${currentTrainer._id}`, managedSlots)
+      .patch(`/trainers/deleteSlot/${currentTrainer._id}`, managedSlots)
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           refetch();
