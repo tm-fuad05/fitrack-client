@@ -22,7 +22,6 @@ const Profile = () => {
   const { users, refetch } = useUser();
 
   const currentUser = users.find((u) => u.email === user.email);
-  console.log(currentUser);
 
   const handleUpdate = (e) => {
     handleOpen();

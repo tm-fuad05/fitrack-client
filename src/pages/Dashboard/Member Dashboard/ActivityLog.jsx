@@ -34,7 +34,6 @@ const ActivityLog = () => {
   const { appliedTrainers, refetch } = useAppliedTrainer();
 
   const currentUser = appliedTrainers.find((u) => u.email === user.email);
-  console.log(currentUser);
 
   const [open, setOpen] = React.useState(false);
 

@@ -17,7 +17,6 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
 
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", { price }).then((res) => {
-      console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
   }, [axiosSecure]);
@@ -44,7 +43,6 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
     if (error) {
       setError(error.message);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
       setError("");
     }
 
@@ -61,9 +59,8 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
       });
 
     if (confirmError) {
-      console.log("Confirm Error");
+      alert(confirmError);
     } else {
-      console.log("payment", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTransaction(paymentIntent.id);
         const date = new Date();

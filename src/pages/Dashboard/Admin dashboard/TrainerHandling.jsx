@@ -26,7 +26,6 @@ const TrainerHandling = () => {
       if (result.isConfirmed) {
         axiosSecure.patch(`/users/make-member/${trainer._id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
-            console.log(res.data);
             refetch();
             Swal.fire({
               title: `${trainer.name} is now a member!`,

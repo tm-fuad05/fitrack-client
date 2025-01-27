@@ -45,7 +45,7 @@ const BookedTrainer = () => {
       review: feedback,
       rating: ratingValue,
     };
-    console.log(review);
+
     axiosSecure.post("/reviews", review).then((res) => {
       if (res.data.insertedId) {
         Swal.fire({

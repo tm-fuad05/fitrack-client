@@ -19,7 +19,6 @@ const Balance = () => {
     (accum, total) => accum + parseInt(total.price),
     0
   );
-  console.log(totalBalance);
 
   return (
     <div>

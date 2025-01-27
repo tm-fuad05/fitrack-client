@@ -9,7 +9,7 @@ import CheckoutForm from "./CheckoutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_gateaway_PK);
 const Payment = () => {
   const { slot, membershipType, price, trainerName } = useParams();
-  console.log(slot, membershipType, price);
+
   const { user } = useAuth();
 
   return (

@@ -26,7 +26,7 @@ const ManageSlot = () => {
   const [formData, setFormData] = useState({
     availableDays: [],
   });
-  console.log(formData);
+
   const bookingSlots = payments.filter((p) => p.trainer === user.displayName);
 
   const selectedSlots = currentTrainer?.availableDays?.map((d) => ({

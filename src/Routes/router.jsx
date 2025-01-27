@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/all-trainer/:trainerName",
+        path: "/all-trainer/trainer/:trainerName",
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/trainers/${params.trainerName}`),

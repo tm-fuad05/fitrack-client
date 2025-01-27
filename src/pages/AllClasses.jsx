@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
-  console.log(search);
+
   const { classes } = useClass({ search });
 
   const [currentPage, setCurrentPage] = useState(0);

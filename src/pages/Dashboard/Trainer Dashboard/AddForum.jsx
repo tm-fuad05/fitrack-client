@@ -15,7 +15,7 @@ const AddForum = () => {
   const currentUser = users.find((u) => u.email === user.email);
   const axiosSecure = useAxiosSecure();
   // const axiosPublic = useAxiosPublic();
-  console.log(currentUser);
+
   const date = new Date();
   const [formData, setFormData] = useState({
     title: "",

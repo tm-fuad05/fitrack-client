@@ -252,7 +252,7 @@ const Dashboard = () => {
         </div>
 
         <aside
-          className={` lg:hidden bg-gray-900  w-full p-5 absolute  z-50 ${
+          className={` lg:hidden bg-gray-900  w-full p-5 fixed  z-20 ${
             mobileSidebarOpen ? "top-[90px]" : "hidden opacity-0 z-[1]"
           } `}
         >

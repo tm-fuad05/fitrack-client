@@ -3,10 +3,14 @@ import { motion } from "framer-motion";
 import { Card, CardBody, Button } from "@material-tailwind/react";
 import { LucideDumbbell, LucideHeart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   return (
     <div className="bg-gray-100 min-h-screen text-gray-800">
+      <Helmet>
+        <title>FitRack | About Us</title>
+      </Helmet>
       <header className="bg-gradient-to-r from-primary to-secondary text-white py-10">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">About FitRack</h1>

@@ -21,7 +21,7 @@ const CommunityCards = () => {
     // Scroll to top when page changes
     window.scrollTo(0, 0);
   };
-  console.log(communities);
+
   return (
     <div>
       <div className="my-10 grid grid-cols-1 lg:grid-cols-2  gap-5 ">

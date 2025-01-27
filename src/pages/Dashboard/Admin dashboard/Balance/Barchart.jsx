@@ -11,7 +11,7 @@ import useNewsletter from "../../../../hooks/useNewsletter";
 import usePayment from "../../../../hooks/usePayment";
 const Barchart = () => {
   const { newsletters } = useNewsletter();
-  console.log(newsletters);
+
   const { payments } = usePayment();
 
   const data = [
