@@ -6,6 +6,7 @@ import { LuNotebookPen } from "react-icons/lu";
 import { FaDumbbell } from "react-icons/fa6";
 import Button from "../Shared/Button";
 import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Feaatured = () => {
   const cards = [
@@ -58,12 +59,14 @@ const Feaatured = () => {
                 {card.description}
               </p>
               <div>
-                <button
-                  className={`mt-2 capitalize flex justify-center items-center gap-3 py-2 px-4 font-medium bg-transparent rounded-full text-black hover:translate-x-2 duration-300  group  group-hover:text-white group-hover:bg-black border border-black  `}
-                >
-                  read more
-                  <FiArrowRight className="text-3xl p-1 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:translate-x-2 duration-300 text-white" />
-                </button>
+                <Link to={"/all-classes"}>
+                  <button
+                    className={`mt-2 capitalize flex justify-center items-center gap-3 py-2 px-4 font-medium bg-transparent rounded-full text-black hover:translate-x-2 duration-300  group  group-hover:text-white group-hover:bg-black border border-black  `}
+                  >
+                    read more
+                    <FiArrowRight className="text-3xl p-1 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:translate-x-2 duration-300 text-white" />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

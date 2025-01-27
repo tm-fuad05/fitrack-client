@@ -56,6 +56,10 @@ const ApplicationForTrainer = () => {
     { value: "Friday", label: "Friday" },
     { value: "Saturday", label: "Saturday" },
   ];
+  const defaultValue = [
+    { value: "Mobility Enhancement", label: "Mobility Enhancement" },
+    { value: "Injury Prevention", label: "Injury Prevention" },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -178,6 +182,7 @@ const ApplicationForTrainer = () => {
           <label className="block text-gray-700 font-medium mb-2">Skills</label>
           <Select
             isMulti
+            defaultValue={defaultValue}
             options={skillsOptions}
             className="w-full"
             onChange={(selected) =>

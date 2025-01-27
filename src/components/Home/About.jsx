@@ -1,6 +1,7 @@
 import React from "react";
 import aboutbg from "../../assets/aboutbg.png";
 import Button from "../Shared/Button";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -24,7 +25,9 @@ const About = () => {
             empowering you to live a healthier, happier life
           </p>
           <div className="w-fit mx-auto lg:mx-0">
-            <Button textColor={"white"} text={"read more"}></Button>
+            <Link to={"about-us"}>
+              <Button textColor={"white"} text={"read more"}></Button>
+            </Link>
           </div>
         </div>
       </div>

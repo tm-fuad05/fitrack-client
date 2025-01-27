@@ -12,8 +12,6 @@ import useAuth from "../../../hooks/useAuth";
 const TrainerDetails = () => {
   const trainer = useLoaderData();
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   return (
     <div className="pt-20 ">

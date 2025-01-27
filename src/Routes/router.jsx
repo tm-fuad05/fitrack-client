@@ -29,11 +29,18 @@ import Payment from "../pages/Payment/Payment";
 import TrainerRoute from "./TrainerRoute";
 import CombinedRoute from "./CombinedRoute";
 import Balance from "../pages/Dashboard/Admin dashboard/Balance/Balance";
+import AboutUs from "../pages/AboutUs";
+import ScrollToTop from "./ScrollToTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root></Root>,
+    element: (
+      <>
+        <ScrollToTop />
+        <Root></Root>
+      </>
+    ),
     errorElement: <Error></Error>,
     children: [
       {
@@ -44,6 +51,11 @@ const router = createBrowserRouter([
         path: "/all-trainer",
         element: <AllTrainers></AllTrainers>,
       },
+      {
+        path: "/about-us",
+        element: <AboutUs></AboutUs>,
+      },
+
       {
         path: "/all-trainer/:trainerName",
         element: <TrainerDetails></TrainerDetails>,
@@ -86,6 +98,7 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
+            <ScrollToTop />
             <Dashboard></Dashboard>
           </PrivateRoute>
         ),

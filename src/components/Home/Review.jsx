@@ -68,6 +68,7 @@ const Review = () => {
                   initialRating={review.rating}
                   emptySymbol={<FaRegStar className="text-xl text-secondary" />}
                   fullSymbol={<FaStar className="text-xl text-secondary" />}
+                  readonly
                 />
               </div>
               <p className="text-sm  lg:text-md ">{review.review}</p>

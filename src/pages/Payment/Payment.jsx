@@ -17,16 +17,19 @@ const Payment = () => {
       <Helmet>
         <title>FitRack | Payment</title>
       </Helmet>
-      <div className="bg-gray-200 p-5 lg:w-1/2">
-        <h2 className="flex flex-col">
+      <div className="bg-gray-200 p-5 lg:w-1/2 font-poppins">
+        <div className="flex flex-col mb-3">
           <span className="text-sm">Package price</span>{" "}
-          <span className="text-4xl font-bold">${price}</span>
-        </h2>
+          <span className="text-4xl font-bold text-primary">${price}</span>
+        </div>
         <p>
           <span className="font-semibold">Name:</span> {user?.displayName}
         </p>
         <p>
           <span className="font-semibold">Email:</span> {user?.email}
+        </p>
+        <p>
+          <span className="font-semibold">Trainer name:</span> {trainerName}
         </p>
         <p>
           <span className="font-semibold">Selected Slot:</span> {slot}

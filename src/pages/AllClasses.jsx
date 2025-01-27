@@ -87,7 +87,7 @@ const AllClasses = () => {
 
                 <ul className="text-xs list-decimal text-gray-600 pl-3">
                   {classItem.trainers.slice(0, 5).map((trainer) => (
-                    <li key={trainer.id} className="group cursor-pointer">
+                    <li key={trainer._id} className="group cursor-pointer">
                       <Link
                         to={`/all-trainer/${trainer}`}
                         className="  mt-1  group-hover:text-blue-500"

@@ -30,7 +30,7 @@ const Navbar = () => {
 
   // Dashboard Routes according to role
   const roleRoutes = {
-    admin: "newsletter",
+    admin: "balance",
     trainer: "manage-slot",
     member: "my-profile",
   };
@@ -48,6 +48,7 @@ const Navbar = () => {
     member: "my-profile",
   };
 
+  // Scroll behaviour with navbar
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -111,18 +112,24 @@ const Navbar = () => {
       >
         Community
       </NavLink>
+      <NavLink
+        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
+        to={"about-us"}
+      >
+        About Us
+      </NavLink>
     </>
   );
 
   return (
     <div
-      className={` z-50  ${
+      className={`  ${
         pathname === "/" || pathname === "/all-trainer"
-          ? `fixed z-50 ${scrolled ? "bg-black bg-opacity-80" : ""}`
+          ? `fixed ${scrolled ? "bg-black bg-opacity-80" : "bg-transparent"}`
           : `sticky top-0 bg-gray-900  ${
               scrolled ? "bg-opacity-80" : "bg-opacity-100"
             }`
-      } z-20 w-full duration-300`}
+      } z-50 w-full duration-300`}
     >
       <nav className="flex items-center justify-between relative w-11/12 mx-auto py-6 ">
         <Logo />
@@ -205,7 +212,7 @@ const Navbar = () => {
             mobileSidebarOpen
               ? "translate-x-0 opacity-100 z-20"
               : "hidden opacity-0 z-[-1]"
-          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[90px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
+          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[98px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
         >
           <ul
             id="home-nav"

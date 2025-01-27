@@ -57,24 +57,28 @@ const Newsletter = () => {
           placeholder="Name"
           name="name"
           className=" rounded-md pl-4 py-3 focus:outline-none w-full "
+          required
         />
         <input
           type="text"
           name="phone"
           placeholder="Phone"
           className="rounded-md pl-4 py-3 focus:outline-none w-full "
+          required
         />
         <input
           type="email"
           name="email"
           placeholder="Email"
           className="rounded-md pl-4 py-3 focus:outline-none w-full "
+          required
         />
         <input
           type="text"
           placeholder="Subject"
           name="subject"
           className="rounded-md pl-4 py-3 focus:outline-none w-full "
+          required
         />
         <textarea
           type="text"
@@ -82,6 +86,7 @@ const Newsletter = () => {
           placeholder="Send a message"
           className="rounded-md pl-4 pt-2 focus:outline-none w-full md:col-span-2"
           rows={6}
+          required
         />
         <Button text={"subscribe now"} textColor={"white"}></Button>
       </form>

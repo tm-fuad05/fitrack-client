@@ -52,7 +52,10 @@ const RecentCommunity = () => {
       ></SectionTitle>
       <div className="my-10 grid grid-cols-1 lg:grid-cols-2  gap-5 ">
         {communities.map((post) => (
-          <div className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border">
+          <div
+            key={post._id}
+            className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border"
+          >
             <div className="flex justify-between gap-5 pb-2 border-b mb-auto flex-grow">
               <h2 className="text-lg lg:text-xl font-bold">{post.title}</h2>
               <span
@@ -78,13 +81,13 @@ const RecentCommunity = () => {
               </span>
               <div className="space-x-2 text-xl font-semibold">
                 <button
-                  onClick={() => handleUpVote(_id)}
+                  onClick={() => handleUpVote(post._id)}
                   className="px-3 py-2 rounded-full "
                 >
                   <AiOutlineLike />
                 </button>
                 <button
-                  onClick={() => handleDownVote(_id)}
+                  onClick={() => handleDownVote(post._id)}
                   className="px-3 py-2 rounded-full "
                 >
                   <AiOutlineDislike />

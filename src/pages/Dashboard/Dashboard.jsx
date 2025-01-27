@@ -38,6 +38,16 @@ const Dashboard = () => {
             className={
               " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
             }
+            to={"/dashboard/balance"}
+          >
+            {" "}
+            <RiMoneyDollarCircleLine className="text-xl" />
+            Balance
+          </NavLink>
+          <NavLink
+            className={
+              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+            }
             to={"/dashboard/newsletter"}
           >
             {" "}
@@ -62,16 +72,6 @@ const Dashboard = () => {
           >
             <CgGym className="text-xl" />
             Trainers
-          </NavLink>
-          <NavLink
-            className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
-            }
-            to={"/dashboard/balance"}
-          >
-            {" "}
-            <RiMoneyDollarCircleLine className="text-xl" />
-            Balance
           </NavLink>
           <NavLink
             className={
