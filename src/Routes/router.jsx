@@ -13,6 +13,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import NewsletterSubscribers from "../pages/Dashboard/Admin dashboard/NewsletterSubscribers";
 import TrainerHandling from "../pages/Dashboard/Admin dashboard/TrainerHandling";
 import ManageUsers from "../pages/Dashboard/Admin dashboard/ManageUsers";
+import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 import ActivityLog from "../pages/Dashboard/Member Dashboard/ActivityLog";
 import BookedTrainer from "../pages/Dashboard/Member Dashboard/BookedTrainer";
 import Profile from "../pages/Dashboard/Member Dashboard/Profile";
@@ -20,7 +21,6 @@ import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
 import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
 import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
-import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 import AdminRoute from "./AdminRoute";
 import Community from "../pages/Community";
@@ -60,7 +60,9 @@ const router = createBrowserRouter([
         path: "/all-trainer/trainer/:trainerName",
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/trainers/${params.trainerName}`),
+          fetch(
+            `https://fitrack-server.vercel.app/trainers/${params.trainerName}`
+          ),
       },
       {
         path: "/trainer-booking/:trainerName/:slot/:skills",
@@ -158,11 +160,13 @@ const router = createBrowserRouter([
             path: "/dashboard/applied-trainers/:id",
             element: (
               <AdminRoute>
-                <AppliedTrainerDetails></AppliedTrainerDetails>
+                <AppliedTrainerDetails />
               </AdminRoute>
             ),
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/applied-as-trainer/${params.id}`),
+              fetch(
+                `https://fitrack-server.vercel.app/applied-as-trainer/${params.id}`
+              ),
           },
 
           // Member Dashboard Menus

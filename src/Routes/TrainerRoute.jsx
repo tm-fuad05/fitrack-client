@@ -6,7 +6,7 @@ import Loader from "../components/Shared/Loader";
 import useTrainerCheck from "../hooks/useTrainerCheck";
 
 const TrainerRoute = ({ children }) => {
-  const { user, loader } = useAuth();
+  const { user, loader, signOutUser } = useAuth();
   const { isTrainer, trainerLoading } = useTrainerCheck();
 
   if (loader || trainerLoading) {
@@ -16,7 +16,10 @@ const TrainerRoute = ({ children }) => {
   if (user && isTrainer) {
     return children;
   }
-  return <Navigate to="/login" />;
+  signOutUser();
+  setTimeout(() => {
+    return <Navigate to="/login" />;
+  }, 1000);
 };
 
 export default TrainerRoute;

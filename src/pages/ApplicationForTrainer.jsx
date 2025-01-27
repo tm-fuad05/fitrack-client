@@ -6,10 +6,12 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 const ApplicationForTrainer = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: user.displayName,
@@ -70,7 +72,12 @@ const ApplicationForTrainer = () => {
           Swal.fire({
             title: "Successfully Applied",
             icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
           });
+          setTimeout(() => {
+            navigate("/dashboard/activity-log");
+          }, 1500);
         }
       });
   };

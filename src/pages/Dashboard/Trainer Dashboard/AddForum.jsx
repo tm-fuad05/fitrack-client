@@ -7,14 +7,18 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment/moment";
+import { useNavigate } from "react-router-dom";
+import useAdmin from "../../../hooks/useAdmin";
+import useTrainerCheck from "../../../hooks/useTrainerCheck";
 // import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 const AddForum = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  const { users } = useUser();
-  const currentUser = users.find((u) => u.email === user.email);
+
+  const { isAdmin } = useAdmin();
+
   const axiosSecure = useAxiosSecure();
-  // const axiosPublic = useAxiosPublic();
 
   const date = new Date();
   const [formData, setFormData] = useState({
@@ -22,7 +26,7 @@ const AddForum = () => {
     author: user?.displayName,
     date: moment(date).format("MMM DD YYYY"),
     category: "",
-    role: currentUser?.role,
+    role: `${isAdmin ? "admin" : "trainer"}`,
     description: "",
     votes: 0,
   });
@@ -38,6 +42,9 @@ const AddForum = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setTimeout(() => {
+          navigate("/community");
+        }, 1500);
       }
     });
   };

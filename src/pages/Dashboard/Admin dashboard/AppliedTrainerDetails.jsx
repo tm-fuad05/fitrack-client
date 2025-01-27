@@ -1,9 +1,11 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import Back from "../../../components/Shared/Back";
+import { Helmet } from "react-helmet-async";
 
 const AppliedTrainerDetails = () => {
   const appliedTrainer = useLoaderData();
+  console.log(appliedTrainer);
 
   return (
     <div>
@@ -25,7 +27,7 @@ const AppliedTrainerDetails = () => {
             {appliedTrainer.fullName}
           </h2>
           <p className=" mt-2 text-sm px-3 py-2 bg-secondary w-fit text-white bg-opacity-80 rounded-full font-semibold">
-            {appliedTrainer.email}
+            {appliedTrainer?.email}
           </p>
           <p className="mt-6 text-gray-700">
             <span className="font-semibold ">Age:</span> {appliedTrainer.age}
@@ -44,7 +46,7 @@ const AppliedTrainerDetails = () => {
             <span className="font-semibold ">Skills:</span>{" "}
             <ul className="list-decimal pl-7 mt-1">
               {" "}
-              {appliedTrainer.skills.map((skill, index) => (
+              {appliedTrainer?.skills?.map((skill, index) => (
                 <li key={index}>{skill}</li>
               ))}
             </ul>
@@ -55,7 +57,7 @@ const AppliedTrainerDetails = () => {
             <span className="font-semibold ">Available Days:</span>{" "}
             <ul className="mt-1 flex flex-wrap gap-1">
               {" "}
-              {appliedTrainer.availableDays.map((day, index) => (
+              {appliedTrainer?.availableDays?.map((day, index) => (
                 <li
                   className="bg-gray-500 rounded-full text-white font-[500] p-2 px-3"
                   key={index}

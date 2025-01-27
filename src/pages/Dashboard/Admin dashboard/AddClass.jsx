@@ -5,8 +5,10 @@ import "sweetalert2/src/sweetalert2.scss";
 import useTrainer from "../../../hooks/useTrainer";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 const AddClass = () => {
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { trainers } = useTrainer();
   const [formData, setFormData] = useState({
@@ -31,6 +33,9 @@ const AddClass = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setTimeout(() => {
+          navigate("/all-classes");
+        }, 1500);
       }
     });
   };

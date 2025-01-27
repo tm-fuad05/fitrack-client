@@ -6,13 +6,14 @@ import Select from "react-select";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { useNavigate } from "react-router-dom";
 
 const AddSlot = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { trainers, refetch } = useTrainer();
   const currentTrainer = trainers.find((t) => t.email === user.email);
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: user.displayName,
     email: user?.email,
@@ -77,6 +78,9 @@ const AddSlot = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          setTimeout(() => {
+            navigate("/dashboard/manage-slot");
+          }, 1500);
         }
       });
   };

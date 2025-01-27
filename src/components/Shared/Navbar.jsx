@@ -16,37 +16,20 @@ import "./navbar.css";
 
 import Logo from "./logo";
 import useUser from "../../hooks/useUser";
+import useAdmin from "../../hooks/useAdmin";
+import useTrainerCheck from "../../hooks/useTrainerCheck";
+
+import MiniLoader from "./MiniLoader";
 
 const Navbar = () => {
+  const { isAdmin } = useAdmin();
+  const { isTrainer } = useTrainerCheck();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { pathname } = useLocation();
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 
-  const { user, signOutUser } = useAuth();
-
-  const { users } = useUser();
-  const currentUser = users.find((u) => u.email === user?.email);
-
-  // Dashboard Routes according to role
-  const roleRoutes = {
-    admin: "balance",
-    trainer: "manage-slot",
-    member: "my-profile",
-  };
-
-  //ConditionalLink Link show according to role
-  const conditionalLink = {
-    admin: "Manage Users",
-    trainer: "Manage Slot",
-    member: "View Profile",
-  };
-  // Conditional Navigate according to role
-  const conditionalNavigate = {
-    admin: "manage-users",
-    trainer: "manage-slot",
-    member: "my-profile",
-  };
+  const { user, signOutUser, loader } = useAuth();
 
   // Scroll behaviour with navbar
   const [scrolled, setScrolled] = useState(false);
@@ -101,7 +84,9 @@ const Navbar = () => {
       {user && user?.email && (
         <NavLink
           className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-          to={`/dashboard/${roleRoutes[currentUser?.role]}`}
+          to={`/dashboard/${
+            isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"
+          }`}
         >
           Dashboard
         </NavLink>
@@ -153,6 +138,7 @@ const Navbar = () => {
                     alt="avatar"
                     className="w-[35px] h-[35px] rounded-full object-cover"
                   />
+
                   <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
                 </div>
 
@@ -168,10 +154,20 @@ const Navbar = () => {
                   } bg-white w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
                 >
                   <Link
-                    to={`/dashboard/${conditionalNavigate[currentUser?.role]}`}
+                    to={`/dashboard/${
+                      isAdmin
+                        ? "manage-users"
+                        : isTrainer
+                        ? "manage-slot"
+                        : "my-profile"
+                    }`}
                     className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100"
                   >
-                    {conditionalLink[currentUser?.role]}
+                    {isAdmin
+                      ? "Manage User"
+                      : isTrainer
+                      ? "Manage Slot"
+                      : "View Profile"}
                   </Link>
 
                   <div
@@ -193,11 +189,17 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <Link to={"/login"}>
-              <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] px-4 py-3 font-medium rounded-md text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b] border-none">
-                Login
-              </button>
-            </Link>
+            <div>
+              <Link to={"/login"}>
+                {loader ? (
+                  <MiniLoader />
+                ) : (
+                  <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] px-4 py-3 font-medium rounded-md text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b] border-none">
+                    Login
+                  </button>
+                )}
+              </Link>
+            </div>
           )}
           <div
             className="text-3xl cursor-pointer lg:hidden text-white"

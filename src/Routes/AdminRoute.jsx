@@ -5,7 +5,7 @@ import useAdmin from "../hooks/useAdmin";
 import Loader from "../components/Shared/Loader";
 
 const AdminRoute = ({ children }) => {
-  const { user, loader } = useAuth();
+  const { user, loader, signOutUser } = useAuth();
   const { isAdmin, adminLoading } = useAdmin();
 
   if (loader || adminLoading) {
@@ -15,7 +15,10 @@ const AdminRoute = ({ children }) => {
   if (user && isAdmin) {
     return children;
   }
-  return <Navigate to="/login" />;
+  signOutUser();
+  setTimeout(() => {
+    return <Navigate to="/login" />;
+  }, 1000);
 };
 
 export default AdminRoute;

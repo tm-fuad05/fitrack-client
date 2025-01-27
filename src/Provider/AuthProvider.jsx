@@ -9,7 +9,6 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
-import useUser from "../hooks/useUser";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext();
@@ -52,17 +51,18 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoader(false);
 
       if (currentUser) {
         const userInfo = { email: currentUser.email };
-        axiosPublic.post("jwt", userInfo).then((res) => {
+        axiosPublic.post("/jwt", userInfo).then((res) => {
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
+            setLoader(false);
           }
         });
       } else {
         localStorage.removeItem("token");
+        setLoader(false);
       }
     });
 

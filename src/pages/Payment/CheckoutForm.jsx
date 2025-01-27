@@ -5,8 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -81,6 +83,9 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
               showConfirmButton: false,
               timer: 2000,
             });
+            setTimeout(() => {
+              navigate("/dashboard/booked-trainers");
+            }, 1500);
           }
         });
       }
