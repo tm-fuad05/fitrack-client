@@ -50,7 +50,7 @@ const AddForum = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto bg-white rounded-lg p-8">
+    <div className="w-11/12 mx-auto bg-white rounded-lg lg:p-8">
       <Helmet>
         <title>FitRack | Add Forum</title>
       </Helmet>
