@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Card, CardBody, Button } from "@material-tailwind/react";
+import { Card, CardBody } from "@material-tailwind/react";
 import { LucideDumbbell, LucideHeart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -11,7 +11,7 @@ const AboutUs = () => {
       <Helmet>
         <title>FitRack | About Us</title>
       </Helmet>
-      <header className="bg-gradient-to-r from-primary to-secondary text-white py-10">
+      <header className="bg-gradient-to-r from-primary to-secondary text-white py-10 px-5">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4">About FitRack</h1>
           <p className="text-lg max-w-2xl mx-auto">
@@ -22,7 +22,7 @@ const AboutUs = () => {
       </header>
 
       <motion.section
-        className="py-16 container mx-auto px-4"
+        className="py-16 container mx-auto px-5"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -59,7 +59,7 @@ const AboutUs = () => {
       </motion.section>
 
       <section className="bg-white py-16">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-5">
           <h2 className="text-3xl font-bold text-center mb-10">
             Why Choose FitRack?
           </h2>
