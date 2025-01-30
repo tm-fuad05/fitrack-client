@@ -31,11 +31,12 @@ const AddForum = () => {
     votes: 0,
   });
 
-  const handlePost = (e) => {
+  const handlePost = async (e) => {
     e.preventDefault();
     const forumInfo = formData;
-    axiosSecure.post("/community", forumInfo).then((res) => {
-      if (res.data.insertedId) {
+    try {
+      const { data } = await axiosSecure.post("/community", forumInfo);
+      if (data.insertedId) {
         Swal.fire({
           title: "Successfully Added",
           icon: "success",
@@ -46,7 +47,9 @@ const AddForum = () => {
           navigate("/community");
         }, 1500);
       }
-    });
+    } catch (error) {
+      alert("Failed to post", error);
+    }
   };
 
   return (

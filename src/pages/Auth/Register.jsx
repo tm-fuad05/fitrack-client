@@ -21,7 +21,7 @@ const Register = () => {
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -39,29 +39,25 @@ const Register = () => {
       return;
     }
 
-    registerUser(email, password)
-      .then(() => {
-        updateUserProfile({ displayName: name, photoURL: photo })
-          .then(() => {
-            const userInfo = { name: name, email: email, role: "member" };
+    try {
+      await registerUser(email, password);
 
-            axiosPublic.post("/users", userInfo).then((res) => {
-              if (res.data.insertedId) {
-                toast.success("Successfully registered");
-              }
-            });
-            signOutUser()
-              .then(() => {
-                navigate("/login");
-              })
-              .catch((error) => alert(error));
-          })
-          .catch(() => alert("Something went wrong!"));
-      })
-      .catch((error) => setError(error));
+      await updateUserProfile({ displayName: name, photoURL: photo });
+
+      const userInfo = { name: name, email: email, role: "member" };
+      const { data } = await axiosPublic.post("/users", userInfo);
+      if (data.insertedId) {
+        toast.success("Successfully registered");
+      }
+      await signOutUser();
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      setError(error.message || "Something went wrong! Please try again.");
+    }
   };
   if (user) {
-    return <Navigate to={location.state ? location.state : "/login"} />;
+    return <Navigate to={location?.state || "/login"} />;
   }
 
   return (

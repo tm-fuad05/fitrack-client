@@ -4,7 +4,6 @@ import { TbTreadmill } from "react-icons/tb";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { LuNotebookPen } from "react-icons/lu";
 import { FaDumbbell } from "react-icons/fa6";
-import Button from "../Shared/Button";
 import { FiArrowRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 

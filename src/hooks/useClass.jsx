@@ -8,8 +8,12 @@ const useClass = ({ search }) => {
   const { data: classes = [], refetch } = useQuery({
     queryKey: [search, "classes"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/classes?search=${search}`);
-      return data;
+      try {
+        const { data } = await axiosPublic.get(`/classes?search=${search}`);
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { classes, refetch };

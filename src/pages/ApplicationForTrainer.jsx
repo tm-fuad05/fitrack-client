@@ -67,27 +67,32 @@ const ApplicationForTrainer = () => {
     { value: "Saturday", label: "Saturday" },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const trainerInfo = formData;
 
-    axiosSecure
-      .post("/applied-as-trainer", { ...trainerInfo, status: "pending" })
-      .then((res) => {
-        if (res.data.insertedId) {
-          const form = e.target;
-          form.reset();
-          Swal.fire({
-            title: "Successfully Applied",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            navigate("/dashboard/activity-log");
-          }, 1500);
-        }
+    try {
+      const { data } = await axiosSecure.post("/applied-as-trainer", {
+        ...trainerInfo,
+        status: "pending",
       });
+
+      if (data.insertedId) {
+        const form = e.target;
+        form.reset();
+        Swal.fire({
+          title: "Successfully Applied",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          navigate("/dashboard/activity-log");
+        }, 1500);
+      }
+    } catch (error) {
+      alert(`Failed to apply : ${error.message || error}`);
+    }
   };
 
   return (

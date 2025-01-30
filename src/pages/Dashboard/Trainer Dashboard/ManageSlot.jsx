@@ -34,22 +34,27 @@ const ManageSlot = () => {
     label: d,
   }));
 
-  const handleManageSlots = (e) => {
+  const handleManageSlots = async (e) => {
     e.preventDefault();
     const managedSlots = formData;
-    axiosSecure
-      .patch(`/trainers/deleteSlot/${currentTrainer._id}`, managedSlots)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            title: "Slot Deleted",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      });
+    try {
+      const { data } = await axiosSecure.patch(
+        `/trainers/deleteSlot/${currentTrainer._id}`,
+        managedSlots
+      );
+
+      if (data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: "Slot Deleted",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      alert(`Failed to delete slot: ${error.message || error}`);
+    }
   };
   return (
     <div>

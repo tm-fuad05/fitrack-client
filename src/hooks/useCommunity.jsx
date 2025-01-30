@@ -7,8 +7,12 @@ const useCommunity = () => {
   const { data: communities = [], refetch } = useQuery({
     queryKey: ["community"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/community");
-      return data;
+      try {
+        const { data } = await axiosPublic.get("/community");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { communities, refetch };

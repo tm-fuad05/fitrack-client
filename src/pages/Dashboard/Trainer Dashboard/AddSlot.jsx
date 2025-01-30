@@ -64,25 +64,30 @@ const AddSlot = () => {
     { value: "functional_training", label: "Functional Training" },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const addedSlot = formData;
-    axiosSecure
-      .patch(`/trainers/addSlot/${currentTrainer._id}`, addedSlot)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            title: "Slot Added Successfully",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          setTimeout(() => {
-            navigate("/dashboard/manage-slot");
-          }, 1500);
-        }
-      });
+    try {
+      const { data } = await axiosSecure.patch(
+        `/trainers/addSlot/${currentTrainer._id}`,
+        addedSlot
+      );
+
+      if (data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: "Slot Added Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          navigate("/dashboard/manage-slot");
+        }, 1500);
+      }
+    } catch (error) {
+      alert("Failed to add slot", error);
+    }
   };
 
   return (

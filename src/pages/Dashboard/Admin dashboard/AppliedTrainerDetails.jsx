@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet-async";
 
 const AppliedTrainerDetails = () => {
   const appliedTrainer = useLoaderData();
-  console.log(appliedTrainer);
 
   return (
     <div>

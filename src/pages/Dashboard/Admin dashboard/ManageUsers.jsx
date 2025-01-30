@@ -14,8 +14,8 @@ const ManageUsers = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  const handleDelete = (user) => {
-    Swal.fire({
+  const handleDelete = async (user) => {
+    const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -23,25 +23,26 @@ const ManageUsers = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete ",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${user._id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: "Deleted User!",
-              text: `${user.name} has been deleted.`,
-              icon: "success",
-            });
-          }
-        });
-        // axiosSecure.delete(`/confirmed-trainer`)
-      }
     });
+
+    if (!result.isConfirmed) return;
+    try {
+      const { data } = await axiosSecure.delete(`/users/${user._id}`);
+      if (data.deletedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: "Deleted User!",
+          text: `${user.name} has been deleted.`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to delete user", error);
+    }
   };
 
-  const handleRole = (user) => {
-    Swal.fire({
+  const handleRole = async (user) => {
+    const result = await Swal.fire({
       title: "Are you sure?",
       text: `Would you want to make ${user.name} Admin?`,
       icon: "warning",
@@ -49,19 +50,21 @@ const ManageUsers = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Make Admin",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.patch(`/users/make-admin/${user._id}`).then((res) => {
-          if (res.data.modifiedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: `${user.name} is now Admin!`,
-              icon: "success",
-            });
-          }
+    });
+    if (!result.isConfirmed) return;
+    try {
+      const { data } = await axiosSecure.patch(`/users/make-admin/${user._id}`);
+
+      if (data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: `${user.name} is now Admin!`,
+          icon: "success",
         });
       }
-    });
+    } catch (error) {
+      console.error("Failed to promote", error);
+    }
   };
 
   return (

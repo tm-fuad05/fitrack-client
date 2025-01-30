@@ -13,8 +13,8 @@ const TrainerHandling = () => {
   const axiosSecure = useAxiosSecure();
   const trainers = users.filter((u) => u.role === "trainer");
 
-  const handleRemoveTrainerRole = (trainer) => {
-    Swal.fire({
+  const handleRemoveTrainerRole = async (trainer) => {
+    const result = await Swal.fire({
       title: "Are you sure?",
       text: `Would you want to make ${trainer.name} member?`,
       icon: "warning",
@@ -22,24 +22,22 @@ const TrainerHandling = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Delete",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.patch(`/users/make-member/${trainer._id}`).then((res) => {
-          if (res.data.modifiedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: `${trainer.name} is now a member!`,
-              icon: "success",
-            });
-          }
-        });
-        // axiosSecure.delete(`/users/${trainer._id}`).then((res) => {
-        //   if (res.data.deletedCount > 0) {
-        //     refetch();
-        //   }
-        // });
-      }
     });
+    if (!result.isConfirmed) return;
+    try {
+      const { data } = await axiosSecure.patch(
+        `/users/make-member/${trainer._id}`
+      );
+      if (data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+          title: `${trainer.name} is now a member!`,
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to remove trainer role", error);
+    }
   };
 
   return (

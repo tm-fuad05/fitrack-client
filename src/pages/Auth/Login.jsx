@@ -19,7 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -29,14 +29,20 @@ const Login = () => {
 
     setError("");
 
-    signInUser(email, password)
-      .then((result) => {
-        toast.success("Successfully signed in");
-        setUser(result.user);
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch(() => setError("Invalid email or password.Try again!"));
+    try {
+      const result = await signInUser(email, password);
+
+      // Successfully signed in
+      toast.success("Successfully signed in");
+      setUser(result.user);
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.error("Login error:", error);
+
+      setError("Invalid email or password. Try again!");
+    }
   };
+
   if (user) {
     return <Navigate to={location.state ? location.state : "/"} />;
   }

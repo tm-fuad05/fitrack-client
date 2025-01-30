@@ -24,9 +24,8 @@ const AppliedTrainer = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
 
-  const handleConfirmTrainer = (trainer) => {
+  const handleConfirmTrainer = async (trainer) => {
     const currentTrainer = users.find((u) => u.email === trainer.email);
-
     const confirmedTrainer = {
       fullName: trainer.fullName,
       email: trainer.email,
@@ -36,7 +35,8 @@ const AppliedTrainer = () => {
       availableDays: trainer.availableDays,
       availableTime: trainer.availableTime,
     };
-    Swal.fire({
+
+    const result = await Swal.fire({
       title: "Are you sure?",
       text: `You want to confirm ${trainer.fullName} as trainer?`,
       icon: "warning",
@@ -44,40 +44,39 @@ const AppliedTrainer = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Confirm",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Post to allTrainer
-        axiosSecure.post("/trainers", confirmedTrainer).then((res) => {
-          if (res.data.insertedId) {
-          }
-        });
-
-        // Delete from appliedTrainer
-        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-          }
-        });
-
-        // Role Change from users
-        axiosSecure
-          .patch(`/users/make-trainer/${currentTrainer._id}`)
-          .then((res) => {
-            if (res.data.modifiedCount > 0) {
-              refetch();
-              Swal.fire({
-                title: "Confirmed!",
-                text: `${trainer.fullName} is Trainer now.`,
-                icon: "success",
-              });
-            }
-          });
-      }
     });
+    if (!result.isConfirmed) return;
+    try {
+      const [postRes, deleteRes, patchRes] = await Promise.all([
+        axiosSecure.post("/trainers", confirmedTrainer), // Add trainer
+        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`), // Remove application
+        axiosSecure.patch(`/users/make-trainer/${currentTrainer._id}`), // Update role
+      ]);
+
+      if (!postRes.data.insertedId) aler("Failed to confirm trainer.");
+      if (deleteRes.data.deletedCount === 0)
+        alert("Failed to remove trainer application.");
+      if (patchRes.data.modifiedCount === 0)
+        alert("Failed to update trainer role.");
+
+      refetch();
+      Swal.fire({
+        title: "Confirmed!",
+        text: `${trainer.fullName} is Trainer now.`,
+        icon: "success",
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: "Something went wrong!",
+        text: `${error}`,
+        icon: "error",
+      });
+    }
   };
 
   //   Rejecting feedback
-  const handleSendFeedback = (e) => {
+  const handleSendFeedback = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -86,8 +85,12 @@ const AppliedTrainer = () => {
       email,
       feedback,
     };
-    axiosSecure.post("/rejection-feedback", rejectionFeedback).then((res) => {
-      if (res.data.insertedId) {
+    try {
+      const { data } = await axiosSecure.post(
+        "/rejection-feedback",
+        rejectionFeedback
+      );
+      if (data.insertedId) {
         Swal.fire({
           title: "Feedback Sent",
           icon: "success",
@@ -95,18 +98,25 @@ const AppliedTrainer = () => {
           timer: 1500,
         });
       }
-    });
+    } catch (error) {
+      console.error("Failed to send feedback:", error);
+    }
   };
 
-  const handleReject = (trainer) => {
+  const handleReject = async (trainer) => {
     handleOpen();
 
     // Delete from appliedTrainer
-    axiosSecure.patch(`/applied-as-trainer/${trainer._id}`).then((res) => {
-      if (res.data.modifiedCount > 0) {
+    try {
+      const { data } = await axiosSecure.patch(
+        `/applied-as-trainer/${trainer._id}`
+      );
+      if (data.modifiedCount > 0) {
         refetch();
       }
-    });
+    } catch (error) {
+      console.error("Failed to reject:", error);
+    }
   };
 
   return (

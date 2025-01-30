@@ -23,30 +23,31 @@ const Profile = () => {
 
   const currentUser = users.find((u) => u.email === user.email);
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     handleOpen();
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const photo = form.photo.value;
-    const updateProfile = { name };
-    updateUserProfile({ displayName: name, photoURL: photo })
-      .then(() => {
-        Swal.fire({
-          title: "Profile updated",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        axiosSecure
-          .patch(`/users/${currentUser._id}`, updateProfile)
-          .then((res) => {
-            if (res.data.modifiedCount > 0) {
-              refetch();
-            }
-          });
-      })
-      .catch(() => alert("something went wrong!"));
+
+    try {
+      await updateUserProfile({ displayName: name, photoURL: photo });
+      Swal.fire({
+        title: "Profile updated",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      const { data } = await axiosSecure.patch(`/users/${currentUser._id}`, {
+        name,
+      });
+      if (data.modifiedCount > 0) {
+        refetch();
+      }
+    } catch (error) {
+      alert("Failed to update profile", error);
+    }
   };
   return (
     <div className="relative">

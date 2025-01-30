@@ -24,10 +24,14 @@ const BookedTrainer = () => {
   const { data: payments = [] } = useQuery({
     queryKey: [user?.email, "payments"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(
-        `/payments/user?email=${user?.email}`
-      );
-      return data;
+      try {
+        const { data } = await axiosSecure.get(
+          `/payments/user?email=${user?.email}`
+        );
+        return data;
+      } catch (error) {
+        console.error("Failed to load data", error);
+      }
     },
   });
 
@@ -37,7 +41,7 @@ const BookedTrainer = () => {
     setRatingValue(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const feedback = e.target.feedback.value;
     const review = {
@@ -46,8 +50,10 @@ const BookedTrainer = () => {
       rating: ratingValue,
     };
 
-    axiosSecure.post("/reviews", review).then((res) => {
-      if (res.data.insertedId) {
+    try {
+      const { data } = await axiosSecure.post("/reviews", review);
+
+      if (data.insertedId) {
         Swal.fire({
           title: "Feedback Sent",
           icon: "success",
@@ -55,7 +61,9 @@ const BookedTrainer = () => {
           timer: 1500,
         });
       }
-    });
+    } catch (error) {
+      console.error("Failed to give review", error);
+    }
   };
 
   return (

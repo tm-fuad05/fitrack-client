@@ -15,30 +15,40 @@ const RecentCommunity = () => {
   const { data: communities = [], refetch } = useQuery({
     queryKey: ["community"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/recent-community");
-      return data;
+      try {
+        const { data } = await axiosPublic.get("/recent-community");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
-  const handleUpVote = (id) => {
+  const handleUpVote = async (id) => {
     if (user && user?.email) {
-      axiosSecure.patch(`/community/upvote/${id}`).then((res) => {
-        if (res.data.modifiedCount) {
+      try {
+        const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
+        if (data.modifiedCount) {
           refetch();
         }
-      });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       navigate("/login", { state: location.pathname });
     }
   };
 
-  const handleDownVote = (id) => {
+  const handleDownVote = async (id) => {
     if (user && user?.email) {
-      axiosSecure.patch(`/community/downvote/${id}`).then((res) => {
-        if (res.data.modifiedCount) {
+      try {
+        const { data } = await axiosSecure.patch(`/community/downvote/${id}`);
+        if (data.modifiedCount) {
           refetch();
         }
-      });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       navigate("/login", { state: location.pathname });
     }

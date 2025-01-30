@@ -22,11 +22,12 @@ const AddClass = () => {
     label: trainer.fullName,
   }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const classesInfo = formData;
-    axiosSecure.post("/classes", classesInfo).then((res) => {
-      if (res.data.insertedId) {
+    try {
+      const classesInfo = formData;
+      const { data } = await axiosSecure.post("/classes", classesInfo);
+      if (data.insertedId) {
         Swal.fire({
           title: "Successfully Added Class",
           icon: "success",
@@ -37,7 +38,9 @@ const AddClass = () => {
           navigate("/all-classes");
         }, 1500);
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

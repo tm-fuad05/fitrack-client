@@ -116,7 +116,7 @@ const Navbar = () => {
             }`
       } z-50 w-full duration-300`}
     >
-      <nav className="flex items-center justify-between relative w-11/12 mx-auto py-6 ">
+      <nav className="flex items-center justify-between relative px-6 py-5 ">
         <Logo />
         <ul
           id="home-nav"
@@ -136,7 +136,7 @@ const Navbar = () => {
                   <img
                     src={user?.photoURL}
                     alt="avatar"
-                    className="w-[35px] h-[35px] rounded-full object-cover"
+                    className="w-[30px] h-[30px] md:w-[35px] md:h-[35px] rounded-full object-cover"
                   />
 
                   <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
@@ -212,9 +212,9 @@ const Navbar = () => {
         <aside
           className={` ${
             mobileSidebarOpen
-              ? "translate-x-0 opacity-100 z-20"
-              : "hidden opacity-0 z-[-1]"
-          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute top-[98px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
+              ? "opacity-100 z-20"
+              : "-right-[1000px] opacity-100 z-[-1]"
+          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute right-0 top-[71px] sm:top-[90px] w-full rounded-md rounded-t-none transition-all duration-200`}
         >
           <ul
             id="home-nav"

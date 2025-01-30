@@ -8,8 +8,12 @@ const useTrainer = () => {
   const { data: trainers = [], refetch } = useQuery({
     queryKey: ["trainers"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/trainers");
-      return data;
+      try {
+        const { data } = await axiosPublic.get("/trainers");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { trainers, refetch };

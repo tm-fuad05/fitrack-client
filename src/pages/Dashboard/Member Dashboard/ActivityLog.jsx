@@ -24,8 +24,12 @@ const ActivityLog = () => {
   const { data: rejectionFeedback = [] } = useQuery({
     queryKey: ["feedback"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/rejection-feedback");
-      return data;
+      try {
+        const { data } = await axiosSecure.get("/rejection-feedback");
+        return data;
+      } catch (error) {
+        console.error("Failed to load data", error);
+      }
     },
   });
 
@@ -39,9 +43,12 @@ const ActivityLog = () => {
 
   const handleOpen = () => setOpen(!open);
 
-  const handleDelete = () => {
-    axiosSecure.delete(`/applied-as-trainer/${currentUser._id}`).then((res) => {
-      if (res.data.deletedCount > 0) {
+  const handleDelete = async () => {
+    try {
+      const { data } = await axiosSecure.delete(
+        `/applied-as-trainer/${currentUser._id}`
+      );
+      if (data.deletedCount > 0) {
         refetch();
         Swal.fire({
           title: "Deleted",
@@ -50,7 +57,9 @@ const ActivityLog = () => {
           timer: 1500,
         });
       }
-    });
+    } catch (error) {
+      console.error("Failed to delete", error);
+    }
   };
 
   return (

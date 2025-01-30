@@ -7,8 +7,12 @@ const useAppliedTrainer = () => {
   const { data: appliedTrainers = [], refetch } = useQuery({
     queryKey: ["appliedTrainers"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/applied-as-trainer");
-      return data;
+      try {
+        const { data } = await axiosSecure.get("/applied-as-trainer");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { appliedTrainers, refetch };

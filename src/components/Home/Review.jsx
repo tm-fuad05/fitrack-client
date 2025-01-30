@@ -18,8 +18,12 @@ const Review = () => {
   const { data: reviews = [] } = useQuery({
     queryKey: ["review"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/reviews");
-      return data;
+      try {
+        const { data } = await axiosPublic.get("/reviews");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 

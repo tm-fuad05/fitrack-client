@@ -9,8 +9,12 @@ const useNewsletter = () => {
   const { data: newsletters = [] } = useQuery({
     queryKey: ["newsletters"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get("/newsletter");
-      return data;
+      try {
+        const { data } = await axiosSecure.get("/newsletter");
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { newsletters };

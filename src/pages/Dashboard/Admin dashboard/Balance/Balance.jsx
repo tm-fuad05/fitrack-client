@@ -10,8 +10,12 @@ const Balance = () => {
   const { data: recentPayments = [] } = useQuery({
     queryKey: [" recent payments"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/recent-payments`);
-      return data;
+      try {
+        const { data } = await axiosSecure.get(`/recent-payments`);
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   const { payments } = usePayment();

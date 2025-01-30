@@ -9,7 +9,7 @@ import "sweetalert2/src/sweetalert2.scss";
 const Newsletter = () => {
   const axiosPublic = useAxiosPublic();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -25,8 +25,9 @@ const Newsletter = () => {
       message,
     };
 
-    axiosPublic.post("/newsletter", newsLetterInfo).then((res) => {
-      if (res.data.insertedId) {
+    try {
+      const { data } = await axiosPublic.post("/newsletter", newsLetterInfo);
+      if (data.insertedId) {
         form.reset();
         Swal.fire({
           title: "Message Sent",
@@ -35,7 +36,9 @@ const Newsletter = () => {
           timer: 1500,
         });
       }
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

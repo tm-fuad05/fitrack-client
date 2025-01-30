@@ -252,8 +252,10 @@ const Dashboard = () => {
         </div>
 
         <aside
-          className={` lg:hidden bg-gray-900  w-full p-5 fixed  z-20 ${
-            mobileSidebarOpen ? "top-[90px]" : "hidden opacity-0 z-[1]"
+          className={`lg:hidden bg-gray-900 w-full p-5 fixed z-20 duration-200 ${
+            mobileSidebarOpen
+              ? "top-[71px] opacity-100 sm:top-[90px]"
+              : "-top-[1000px] opacity-0 z-[1]"
           } `}
         >
           {/* NavMenu */}

@@ -10,25 +10,30 @@ const SocialLogin = () => {
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
 
-  const handleGoogleSignIn = () => {
-    googleSignIn()
-      .then((result) => {
-        const userInfo = {
-          name: result.user?.displayName,
-          email: result.user?.email,
-          role: "member",
-        };
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await googleSignIn();
 
-        axiosPublic.post("/users", userInfo).then((res) => {
-          if (res.data.insertedId) {
-            navigate(location.state ? location.state : "/");
-          }
-        });
-        setUser(result.user);
-        toast.success("Successfully signed in");
-        navigate(location.state ? location.state : "/");
-      })
-      .catch((error) => alert(error));
+      if (!result.user) alert("Google sign in failed");
+
+      const userInfo = {
+        name: result.user?.displayName,
+        email: result.user?.email,
+        role: "member",
+      };
+
+      const { data } = await axiosPublic.post("/users", userInfo);
+      if (data.insertedId) {
+        navigate(location?.state || "/");
+      }
+
+      setUser(result.user);
+      toast.success("Successfully signed in");
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.error("Google sign-in error", error);
+      alert(error);
+    }
   };
 
   return (

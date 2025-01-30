@@ -75,8 +75,9 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
           trainer: trainerName,
           date: moment(date).format("MMM DD ,YYYY"),
         };
-        axiosSecure.post("/payments", paymentInfo).then((res) => {
-          if (res.data.insertedId) {
+        try {
+          const { data } = await axiosSecure.post("/payments", paymentInfo);
+          if (data.insertedId) {
             Swal.fire({
               title: "Payment Successfull",
               icon: "success",
@@ -87,7 +88,9 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
               navigate("/dashboard/booked-trainers");
             }, 1500);
           }
-        });
+        } catch (error) {
+          alert(`Failed to pay : ${error.message || error}`);
+        }
       }
     }
   };

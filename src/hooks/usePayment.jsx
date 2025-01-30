@@ -6,8 +6,12 @@ const usePayment = () => {
   const { data: payments = [] } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/payments`);
-      return data;
+      try {
+        const { data } = await axiosSecure.get(`/payments`);
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
   return { payments };
