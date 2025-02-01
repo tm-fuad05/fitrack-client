@@ -46,7 +46,7 @@ const Register = () => {
 
       const userInfo = { name: name, email: email, role: "member" };
       const { data } = await axiosPublic.post("/users", userInfo);
-      if (data.insertedId) {
+      if (data.success) {
         toast.success("Successfully registered");
       }
       await signOutUser();

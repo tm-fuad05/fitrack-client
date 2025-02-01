@@ -10,12 +10,13 @@ const useUser = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get("/users");
-        return data;
+        return data.data;
       } catch (error) {
         console.error(error);
       }
     },
   });
+
   return { users, refetch };
 };
 

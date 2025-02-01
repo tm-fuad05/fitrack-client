@@ -28,7 +28,7 @@ const ManageUsers = () => {
     if (!result.isConfirmed) return;
     try {
       const { data } = await axiosSecure.delete(`/users/${user._id}`);
-      if (data.deletedCount > 0) {
+      if (data.success > 0) {
         refetch();
         Swal.fire({
           title: "Deleted User!",
@@ -55,7 +55,7 @@ const ManageUsers = () => {
     try {
       const { data } = await axiosSecure.patch(`/users/make-admin/${user._id}`);
 
-      if (data.modifiedCount > 0) {
+      if (data.success > 0) {
         refetch();
         Swal.fire({
           title: `${user.name} is now Admin!`,
@@ -96,7 +96,7 @@ const ManageUsers = () => {
             </thead>
             <tbody>
               {users &&
-                users.map((user) => (
+                users?.map((user) => (
                   <tr key={user._id} className="border even:bg-gray-50">
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>

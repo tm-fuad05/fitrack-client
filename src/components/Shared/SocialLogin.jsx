@@ -23,7 +23,7 @@ const SocialLogin = () => {
       };
 
       const { data } = await axiosPublic.post("/users", userInfo);
-      if (data.insertedId) {
+      if (data.success) {
         navigate(location?.state || "/");
       }
 
@@ -32,7 +32,6 @@ const SocialLogin = () => {
       navigate(location?.state || "/");
     } catch (error) {
       console.error("Google sign-in error", error);
-      alert(error);
     }
   };
 

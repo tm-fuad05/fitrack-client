@@ -60,9 +60,7 @@ const router = createBrowserRouter([
         path: "/all-trainer/trainer/:trainerName",
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
-          fetch(
-            `https://fitrack-server.vercel.app/trainers/${params.trainerName}`
-          ),
+          fetch(`http://localhost:5000/trainers/${params.trainerName}`),
       },
       {
         path: "/trainer-booking/:trainerName/:slot/:skills",
@@ -164,9 +162,7 @@ const router = createBrowserRouter([
               </AdminRoute>
             ),
             loader: ({ params }) =>
-              fetch(
-                `https://fitrack-server.vercel.app/applied-as-trainer/${params.id}`
-              ),
+              fetch(`http://localhost:5000/applied-as-trainer/${params.id}`),
           },
 
           // Member Dashboard Menus

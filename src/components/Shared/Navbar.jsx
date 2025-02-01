@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
-
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
@@ -13,12 +12,9 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import "./navbar.css";
-
 import Logo from "./logo";
-import useUser from "../../hooks/useUser";
 import useAdmin from "../../hooks/useAdmin";
 import useTrainerCheck from "../../hooks/useTrainerCheck";
-
 import MiniLoader from "./MiniLoader";
 
 const Navbar = () => {
@@ -209,7 +205,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <aside
+        {/* <aside
           className={` ${
             mobileSidebarOpen
               ? "opacity-100 z-20"
@@ -222,7 +218,7 @@ const Navbar = () => {
           >
             {navMenu}
           </ul>
-        </aside>
+        </aside> */}
       </nav>
     </div>
   );

@@ -56,8 +56,7 @@ const AppliedTrainer = () => {
       if (!postRes.data.insertedId) aler("Failed to confirm trainer.");
       if (deleteRes.data.deletedCount === 0)
         alert("Failed to remove trainer application.");
-      if (patchRes.data.modifiedCount === 0)
-        alert("Failed to update trainer role.");
+      if (patchRes.data.success === 0) alert("Failed to update trainer role.");
 
       refetch();
       Swal.fire({

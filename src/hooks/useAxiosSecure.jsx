@@ -6,7 +6,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
 const axiosSecure = axios.create({
-  baseURL: "https://fitrack-server.vercel.app/",
+  baseURL: "http://localhost:5000/",
 });
 
 const useAxiosSecure = () => {

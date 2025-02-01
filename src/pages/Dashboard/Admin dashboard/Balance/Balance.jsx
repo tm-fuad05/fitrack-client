@@ -4,9 +4,12 @@ import usePayment from "../../../../hooks/usePayment";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Barchart from "./Barchart";
+import useUser from "../../../../hooks/useUser";
 
 const Balance = () => {
   const axiosSecure = useAxiosSecure();
+  const { users } = useUser();
+  console.log(users);
   const { data: recentPayments = [] } = useQuery({
     queryKey: [" recent payments"],
     queryFn: async () => {

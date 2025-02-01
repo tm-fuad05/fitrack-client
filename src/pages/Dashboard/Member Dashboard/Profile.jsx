@@ -42,7 +42,7 @@ const Profile = () => {
       const { data } = await axiosSecure.patch(`/users/${currentUser._id}`, {
         name,
       });
-      if (data.modifiedCount > 0) {
+      if (data.success > 0) {
         refetch();
       }
     } catch (error) {
