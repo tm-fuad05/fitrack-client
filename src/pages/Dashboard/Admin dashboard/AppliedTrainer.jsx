@@ -53,10 +53,10 @@ const AppliedTrainer = () => {
         axiosSecure.patch(`/users/make-trainer/${currentTrainer._id}`), // Update role
       ]);
 
-      if (!postRes.data.insertedId) aler("Failed to confirm trainer.");
-      if (deleteRes.data.deletedCount === 0)
+      if (!postRes.data.success) aler("Failed to confirm trainer.");
+      if (!deleteRes.data.success)
         alert("Failed to remove trainer application.");
-      if (patchRes.data.success === 0) alert("Failed to update trainer role.");
+      if (!patchRes.data.success) alert("Failed to update trainer role.");
 
       refetch();
       Swal.fire({

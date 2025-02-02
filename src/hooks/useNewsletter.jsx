@@ -11,7 +11,7 @@ const useNewsletter = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get("/newsletter");
-        return data;
+        return data.data;
       } catch (error) {
         console.error(error);
       }

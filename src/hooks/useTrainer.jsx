@@ -10,7 +10,7 @@ const useTrainer = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosPublic.get("/trainers");
-        return data;
+        return data.data;
       } catch (error) {
         console.error(error);
       }

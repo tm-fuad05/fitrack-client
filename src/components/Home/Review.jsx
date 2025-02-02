@@ -20,6 +20,7 @@ const Review = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosPublic.get("/reviews");
+        console.log(data);
         return data;
       } catch (error) {
         console.error(error);
@@ -59,7 +60,7 @@ const Review = () => {
         modules={[Navigation, FreeMode, Pagination, Autoplay]}
         className="mySwiper w-10/12 mx-auto"
       >
-        {reviews.map((review) => (
+        {reviews?.map((review) => (
           <SwiperSlide key={review._id}>
             <div
               key={review._id}

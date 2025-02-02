@@ -8,7 +8,7 @@ const usePayment = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get(`/payments`);
-        return data;
+        return data.data;
       } catch (error) {
         console.error(error);
       }

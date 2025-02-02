@@ -27,7 +27,7 @@ const Newsletter = () => {
 
     try {
       const { data } = await axiosPublic.post("/newsletter", newsLetterInfo);
-      if (data.insertedId) {
+      if (data.success) {
         form.reset();
         Swal.fire({
           title: "Message Sent",

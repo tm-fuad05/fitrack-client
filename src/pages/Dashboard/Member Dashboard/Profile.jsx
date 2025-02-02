@@ -32,21 +32,21 @@ const Profile = () => {
 
     try {
       await updateUserProfile({ displayName: name, photoURL: photo });
-      Swal.fire({
-        title: "Profile updated",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500,
-      });
 
       const { data } = await axiosSecure.patch(`/users/${currentUser._id}`, {
         name,
       });
-      if (data.success > 0) {
+      if (data.success) {
         refetch();
+        Swal.fire({
+          title: "Profile updated",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
-      alert("Failed to update profile", error);
+      console.error(error);
     }
   };
   return (

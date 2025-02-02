@@ -15,7 +15,7 @@ const Balance = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get(`/recent-payments`);
-        return data;
+        return data.data;
       } catch (error) {
         console.error(error);
       }
