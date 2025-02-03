@@ -27,7 +27,7 @@ const AddClass = () => {
     try {
       const classesInfo = formData;
       const { data } = await axiosSecure.post("/classes", classesInfo);
-      if (data.insertedId) {
+      if (data.success) {
         Swal.fire({
           title: "Successfully Added Class",
           icon: "success",

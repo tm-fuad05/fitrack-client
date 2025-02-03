@@ -10,7 +10,7 @@ const useUser = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get("/users");
-        return data.data;
+        return data;
       } catch (error) {
         console.error(error);
       }

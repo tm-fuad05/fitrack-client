@@ -11,27 +11,33 @@ const CommunityCard = ({ post, refetch }) => {
   const { _id, author, category, date, description, role, title, votes } = post;
   const axiosSecure = useAxiosSecure();
 
-  const handleUpVote = (id) => {
-    if (user && user?.email) {
-      axiosSecure.patch(`/community/upvote/${id}`).then((res) => {
-        if (res.data.modifiedCount) {
+  const handleUpVote = async (id) => {
+    try {
+      if (user && user?.email) {
+        const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
+        if (data.success) {
           refetch();
         }
-      });
-    } else {
-      navigate("/login", { state: location.pathname });
+      } else {
+        navigate("/login", { state: location.pathname });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleDownVote = (id) => {
-    if (user && user?.email) {
-      axiosSecure.patch(`/community/downvote/${id}`).then((res) => {
-        if (res.data.modifiedCount) {
+  const handleDownVote = async (id) => {
+    try {
+      if (user && user?.email) {
+        const { data } = await axiosSecure.patch(`/community/downvote/${id}`);
+        if (data.success) {
           refetch();
         }
-      });
-    } else {
-      navigate("/login", { state: location.pathname });
+      } else {
+        navigate("/login", { state: location.pathname });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 

@@ -36,7 +36,7 @@ const AddForum = () => {
     const forumInfo = formData;
     try {
       const { data } = await axiosSecure.post("/community", forumInfo);
-      if (data.insertedId) {
+      if (data.success) {
         Swal.fire({
           title: "Successfully Added",
           icon: "success",

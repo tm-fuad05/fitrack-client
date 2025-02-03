@@ -138,7 +138,7 @@ const Navbar = () => {
                   <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
                 </div>
 
-                <h1 className="text-[1rem] font-[400] text-white sm:block hidden">
+                <h1 className="text-[1rem] font-[400] text-white md:block hidden">
                   {user?.displayName}
                 </h1>
 
@@ -205,12 +205,12 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* <aside
+        <aside
           className={` ${
             mobileSidebarOpen
-              ? "opacity-100 z-20"
-              : "-right-[1000px] opacity-100 z-[-1]"
-          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute right-0 top-[71px] sm:top-[90px] w-full rounded-md rounded-t-none transition-all duration-200`}
+              ? "right-0 opacity-100 z-20"
+              : "right-[1000px] opacity-0 z-[-1]"
+          } lg:hidden shadow-xl bg-white boxShadow p-4 text-center absolute right-0 top-[71px] sm:top-[90px] w-full rounded-md rounded-t-none transition-all duration-300`}
         >
           <ul
             id="home-nav"
@@ -218,7 +218,7 @@ const Navbar = () => {
           >
             {navMenu}
           </ul>
-        </aside> */}
+        </aside>
       </nav>
     </div>
   );

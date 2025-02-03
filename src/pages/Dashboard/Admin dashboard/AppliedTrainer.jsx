@@ -17,7 +17,7 @@ import { Helmet } from "react-helmet-async";
 
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch } = useAppliedTrainer();
-  const pendingFilter = appliedTrainers.filter((p) => p.status === "pending");
+  const pendingFilter = appliedTrainers?.filter((p) => p.status === "pending");
   const axiosSecure = useAxiosSecure();
   const { users } = useUser();
 
