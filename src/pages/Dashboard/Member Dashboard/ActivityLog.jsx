@@ -16,14 +16,16 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTrash } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import Loader from "../../../components/Shared/Loader";
 
 const ActivityLog = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   // Feedback
-  const { data: rejectionFeedback = [] } = useQuery({
+  const { data: rejectionFeedback = [], isLoading } = useQuery({
     queryKey: ["feedback"],
     queryFn: async () => {
+      1;
       try {
         const { data } = await axiosSecure.get("/rejection-feedback");
         return data;
@@ -61,6 +63,10 @@ const ActivityLog = () => {
       console.error("Failed to delete", error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

@@ -5,7 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 const useClass = ({ search }) => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: classes = [], refetch } = useQuery({
+  const {
+    data: classes = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: [search, "classes"],
     queryFn: async () => {
       try {
@@ -16,7 +20,7 @@ const useClass = ({ search }) => {
       }
     },
   });
-  return { classes, refetch };
+  return { classes, refetch, isLoading };
 };
 
 export default useClass;

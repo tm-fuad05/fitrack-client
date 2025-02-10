@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import useNewsletter from "../../../hooks/useNewsletter";
 import { Helmet } from "react-helmet-async";
+import Loader from "../../../components/Shared/Loader";
 
 const NewsletterSubscribers = () => {
-  const { newsletters } = useNewsletter();
+  const { newsletters, isLoading } = useNewsletter();
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <Helmet>

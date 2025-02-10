@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import useClass from "../hooks/useClass";
 import { IoSearch } from "react-icons/io5";
 import { Helmet } from "react-helmet-async";
+import Loader from "../components/Shared/Loader";
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
 
-  const { classes } = useClass({ search });
+  const { classes, isLoading } = useClass({ search });
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -25,6 +26,10 @@ const AllClasses = () => {
     // Scroll to top when page changes
     window.scrollTo(0, 0);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -5,7 +5,11 @@ import useAxiosPublic from "./useAxiosPublic";
 const useTrainer = () => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: trainers = [], refetch } = useQuery({
+  const {
+    data: trainers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["trainers"],
     queryFn: async () => {
       try {
@@ -16,7 +20,7 @@ const useTrainer = () => {
       }
     },
   });
-  return { trainers, refetch };
+  return { trainers, refetch, isLoading };
 };
 
 export default useTrainer;

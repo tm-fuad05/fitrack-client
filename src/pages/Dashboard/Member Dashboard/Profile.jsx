@@ -12,6 +12,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import useUser from "../../../hooks/useUser";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import Loader from "../../../components/Shared/Loader";
 
 const Profile = () => {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +20,7 @@ const Profile = () => {
   const handleOpen = () => setOpen(!open);
 
   const { user, updateUserProfile } = useAuth();
-  const { users, refetch } = useUser();
+  const { users, refetch, isLoading } = useUser();
 
   const currentUser = users.find((u) => u.email === user.email);
 
@@ -49,6 +50,11 @@ const Profile = () => {
       console.error(error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="relative">
       <Helmet>

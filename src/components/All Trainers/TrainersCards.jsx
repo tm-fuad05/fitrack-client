@@ -1,9 +1,14 @@
 import React from "react";
 import useTrainer from "../../hooks/useTrainer";
 import TrainerCard from "./TrainerCard";
+import Loader from "../Shared/Loader";
 
 const TrainersCards = () => {
-  const { trainers } = useTrainer();
+  const { trainers, isLoading } = useTrainer();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className=" w-11/12 mx-auto my-20">

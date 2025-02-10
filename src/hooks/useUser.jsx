@@ -5,7 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 const useUser = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [], refetch } = useQuery({
+  const {
+    data: users = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       try {
@@ -17,7 +21,7 @@ const useUser = () => {
     },
   });
 
-  return { users, refetch };
+  return { users, refetch, isLoading };
 };
 
 export default useUser;

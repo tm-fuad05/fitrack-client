@@ -14,9 +14,10 @@ import Back from "../../../components/Shared/Back";
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import Loader from "../../../components/Shared/Loader";
 
 const AppliedTrainer = () => {
-  const { appliedTrainers, refetch } = useAppliedTrainer();
+  const { appliedTrainers, refetch, isLoading } = useAppliedTrainer();
   const pendingFilter = appliedTrainers?.filter((p) => p.status === "pending");
   const axiosSecure = useAxiosSecure();
   const { users } = useUser();
@@ -117,6 +118,10 @@ const AppliedTrainer = () => {
       console.error("Failed to reject:", error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

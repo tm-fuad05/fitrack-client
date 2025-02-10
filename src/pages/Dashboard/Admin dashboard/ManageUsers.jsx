@@ -8,9 +8,10 @@ import "sweetalert2/src/sweetalert2.scss";
 import Back from "../../../components/Shared/Back";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import Loader from "../../../components/Shared/Loader";
 
 const ManageUsers = () => {
-  const { users, refetch } = useUser();
+  const { users, refetch, isLoading } = useUser();
 
   const axiosSecure = useAxiosSecure();
 
@@ -66,6 +67,10 @@ const ManageUsers = () => {
       console.error("Failed to promote", error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

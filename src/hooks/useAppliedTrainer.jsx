@@ -4,7 +4,11 @@ import useAxiosSecure from "./useAxiosSecure";
 const useAppliedTrainer = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: appliedTrainers = [], refetch } = useQuery({
+  const {
+    data: appliedTrainers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["appliedTrainers"],
     queryFn: async () => {
       try {
@@ -15,7 +19,7 @@ const useAppliedTrainer = () => {
       }
     },
   });
-  return { appliedTrainers, refetch };
+  return { appliedTrainers, refetch, isLoading };
 };
 
 export default useAppliedTrainer;

@@ -10,6 +10,7 @@ import Select from "react-select";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import Loader from "../../../components/Shared/Loader";
 
 const ManageSlot = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,7 +19,7 @@ const ManageSlot = () => {
   const handleOpen = () => setOpen(!open);
 
   const { user } = useAuth();
-  const { trainers, refetch } = useTrainer();
+  const { trainers, refetch, isLoading } = useTrainer();
   const { payments } = usePayment();
 
   const currentTrainer = trainers.find((t) => t.email === user.email);
@@ -56,6 +57,11 @@ const ManageSlot = () => {
       alert(`Failed to delete slot: ${error.message || error}`);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <Helmet>

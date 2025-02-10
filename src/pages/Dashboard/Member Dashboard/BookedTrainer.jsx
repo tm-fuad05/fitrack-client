@@ -13,6 +13,7 @@ import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import Loader from "../../../components/Shared/Loader";
 
 const BookedTrainer = () => {
   const [open, setOpen] = React.useState(false);
@@ -21,7 +22,7 @@ const BookedTrainer = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: payments = [] } = useQuery({
+  const { data: payments = [], isLoading } = useQuery({
     queryKey: [user?.email, "payments"],
     queryFn: async () => {
       try {
@@ -65,6 +66,10 @@ const BookedTrainer = () => {
       console.error("Failed to give review", error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

@@ -6,7 +6,7 @@ import useAxiosSecure from "./useAxiosSecure";
 const useNewsletter = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: newsletters = [] } = useQuery({
+  const { data: newsletters = [], isLoading } = useQuery({
     queryKey: ["newsletters"],
     queryFn: async () => {
       try {
@@ -17,7 +17,7 @@ const useNewsletter = () => {
       }
     },
   });
-  return { newsletters };
+  return { newsletters, isLoading };
 };
 
 export default useNewsletter;

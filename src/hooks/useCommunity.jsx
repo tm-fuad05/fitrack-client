@@ -4,7 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 const useCommunity = () => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: communities = [], refetch } = useQuery({
+  const {
+    data: communities = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["community"],
     queryFn: async () => {
       try {
@@ -15,7 +19,7 @@ const useCommunity = () => {
       }
     },
   });
-  return { communities, refetch };
+  return { communities, refetch, isLoading };
 };
 
 export default useCommunity;

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import useCommunity from "../../hooks/useCommunity";
 import CommunityCard from "./CommunityCard";
 import ReactPaginate from "react-paginate";
+import Loader from "../Shared/Loader";
 
 const CommunityCards = () => {
-  const { communities, refetch } = useCommunity();
+  const { communities, refetch, isLoading } = useCommunity();
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -21,6 +22,10 @@ const CommunityCards = () => {
     // Scroll to top when page changes
     window.scrollTo(0, 0);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

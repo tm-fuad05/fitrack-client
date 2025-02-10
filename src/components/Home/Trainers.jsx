@@ -4,6 +4,7 @@ import SectionTitle from "../Shared/SectionTitle";
 const Trainers = () => {
   const trainers = [
     {
+      id: 1,
       name: "Dr. Ayesha Rahman",
       bio: "Dr. Ayesha Rahman is a seasoned educator with over 5 years of experience in academic counseling and leadership training. She has worked with various educational institutions to design effective learning modules and mentoring systems.",
       expertise: [
@@ -15,6 +16,7 @@ const Trainers = () => {
         "https://media.istockphoto.com/id/856797530/photo/portrait-of-a-beautiful-woman-at-the-gym.jpg?s=612x612&w=0&k=20&c=0wMa1MYxt6HHamjd66d5__XGAKbJFDFQyu9LCloRsYU=",
     },
     {
+      id: 2,
       name: "Mr. Tariq Hasan",
       bio: "Tariq Hasan is a tech entrepreneur and software engineer who has spent a decade mentoring students in programming, web development, and tech startups. He regularly speaks at international tech conferences.",
       expertise: [
@@ -26,6 +28,7 @@ const Trainers = () => {
         "https://media.istockphoto.com/id/1324042769/photo/confident-gym-owner.jpg?s=612x612&w=0&k=20&c=2ARveP6nctKY2V1180dCOXS7yJrZjRg-TTIDkazond8=",
     },
     {
+      id: 3,
       name: "Ms. Nazia Hossain",
       bio: "Nazia Hossain is a public speaking coach and communication expert with a strong background in media and public relations. She has helped over 500 individuals build confidence and improve their public speaking skills.",
       expertise: [
@@ -43,9 +46,9 @@ const Trainers = () => {
       <SectionTitle title={"TEAM OF EXPERT COACHES"} subtitle={"our team"} />
       <div className="bg-gradient-to-b from-primary to-secondary  py-16 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 w-10/12 mx-auto">
-          {trainers.map((trainer, idx) => (
+          {trainers.map((trainer) => (
             <div
-              key={idx}
+              key={trainer.id}
               className="text-white space-y-3 flex flex-col justify-center items-center group"
             >
               <img
@@ -61,8 +64,8 @@ const Trainers = () => {
               </p>
               <p className="font-bold ">Expertise in:</p>
               <ul className="text-sm lg:text-md list-disc">
-                {trainer.expertise.map((point) => (
-                  <li>{point}</li>
+                {trainer.expertise.map((point, idx) => (
+                  <li key={idx}>{point}</li>
                 ))}
               </ul>
             </div>
