@@ -20,6 +20,9 @@ const TrainerCard = ({ trainer }) => {
         <p className="text-gray-600 mt-2 text-sm ">
           {trainer.yearsOfExperience} Years of Experience
         </p>
+        <p className="text-gray-700 mt-2 ">
+          <span className="font-semibold">Age:</span> {trainer.age}
+        </p>
         <p className="text-gray-700 mt-2 flex-grow">
           <span className="font-semibold">Expertise:</span>{" "}
           {trainer.skills.map((skill, index) => (
