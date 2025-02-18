@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 // react icons
-
+import { MdDarkMode } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
 import { IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { TbLogout2 } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
@@ -18,12 +19,25 @@ import useTrainerCheck from "../../hooks/useTrainerCheck";
 import MiniLoader from "./MiniLoader";
 
 const Navbar = () => {
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.querySelector("html").classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
   const { isAdmin } = useAdmin();
   const { isTrainer } = useTrainerCheck();
-  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const { pathname } = useLocation();
-
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
 
   const { user, signOutUser, loader } = useAuth();
 
@@ -197,6 +211,12 @@ const Navbar = () => {
               </Link>
             </div>
           )}
+          <div
+            onClick={() => setDarkMode(!darkMode)}
+            className="text-white text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-1000"
+          >
+            {darkMode ? <MdLightMode /> : <MdDarkMode />}
+          </div>
           <div
             className="text-3xl cursor-pointer lg:hidden text-white"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
