@@ -16,11 +16,15 @@ const TrainersCards = () => {
   return (
     <div className=" w-11/12 mx-auto my-20">
       <div className="flex justify-between items-cente items-center  mb-5">
-        <h2 className="text-xl lg:text-3xl font-semibold">
+        <h2 className="text-xl dark:text-white lg:text-3xl font-semibold">
           Trainers ({trainers?.length})
         </h2>
         <div>
-          <Select onChange={(value) => setSort(value)} label="Sort by">
+          <Select
+            className="dark:text-white"
+            onChange={(value) => setSort(value)}
+            label="Sort by"
+          >
             <Option value="age">Age</Option>
             <Option value="trainer experience">Trainer experience</Option>
           </Select>

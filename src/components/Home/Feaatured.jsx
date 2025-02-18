@@ -36,10 +36,11 @@ const Feaatured = () => {
   ];
 
   return (
-    <div className="bg-background min-h-screen py-20">
+    <div className="min-h-screen py-20">
       <SectionTitle
         title={"Transform Your Health and Elevate Your Fitness Journey"}
         subtitle={"our services"}
+        dark={"white"}
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-10/12 mx-auto mt-10">
         {cards.map((card, idx) => (
@@ -51,16 +52,16 @@ const Feaatured = () => {
               {card.icons}
             </div>
             <div className="flex flex-col gap-2 group-hover:text-white duration-300">
-              <h3 className="uppercase text-xl lg:text-2xl font-bold  flex-grow">
+              <h3 className="uppercase text-xl lg:text-2xl font-bold dark:text-white  flex-grow">
                 {card.name}
               </h3>
-              <p className="font-poppins text-md lg:text-lg text-gray-500 group-hover:text-white font-light duration-300  ">
+              <p className="font-poppins text-md lg:text-lg text-gray-500 group-hover:text-white dark:text-gray-400 font-light duration-300  ">
                 {card.description}
               </p>
               <div>
                 <Link to={"/all-classes"}>
                   <button
-                    className={`mt-2 capitalize flex justify-center items-center gap-3 py-2 px-4 font-medium bg-transparent rounded-full text-black hover:translate-x-2 duration-300  group  group-hover:text-white group-hover:bg-black border border-black  `}
+                    className={`mt-2 capitalize flex justify-center items-center gap-3 py-2 px-4 font-medium bg-transparent rounded-full text-black hover:translate-x-2 duration-300  group  group-hover:text-white group-hover:bg-black border border-black dark:group-hover:border-black dark:border-white dark:text-white  `}
                   >
                     read more
                     <FiArrowRight className="text-3xl p-1 rounded-full bg-gradient-to-r from-primary to-secondary group-hover:translate-x-2 duration-300 text-white" />

@@ -59,15 +59,18 @@ const RecentCommunity = () => {
       <SectionTitle
         subtitle={"Our Community"}
         title={"Recent Posts"}
+        dark={"white"}
       ></SectionTitle>
       <div className="my-10 grid grid-cols-1 lg:grid-cols-2  gap-5 ">
         {communities.map((post) => (
           <div
             key={post._id}
-            className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border"
+            className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border dark:border-none dark:bg-gray-900"
           >
             <div className="flex justify-between gap-5 pb-2 border-b mb-auto flex-grow">
-              <h2 className="text-lg lg:text-xl font-bold">{post.title}</h2>
+              <h2 className="text-lg lg:text-xl font-bold dark:text-white">
+                {post.title}
+              </h2>
               <span
                 className={`text-xs h-fit px-2 py-0.5 rounded-full font-semibold ${
                   post.role === "trainer"
@@ -78,18 +81,20 @@ const RecentCommunity = () => {
                 {post.role}
               </span>
             </div>
-            <div className="flex justify-between py-2 text-gray-600">
+            <div className="flex justify-between py-2 text-gray-600 dark:text-gray-500">
               <p> By {post.author}</p>
               <p>Date: {post.date}</p>
             </div>
-            <p className="text-gray-600">Category: {post.category}</p>
-            <p className="flex-grow">{post.description}</p>
-            <div className="flex justify-between items-center border-t pt-3">
+            <p className="text-gray-600 dark:text-gray-500">
+              Category: {post.category}
+            </p>
+            <p className="flex-grow dark:text-white">{post.description}</p>
+            <div className="flex justify-between items-center border-t pt-3 dark:text-white">
               <span className="text-sm">
                 {" "}
-                <span className="font-semibold">Votes:</span> {post.votes}
+                <span className="font-semibold ">Votes:</span> {post.votes}
               </span>
-              <div className="space-x-2 text-xl font-semibold">
+              <div className="space-x-2 text-xl font-semibold dark:text-white">
                 <button
                   onClick={() => handleUpVote(post._id)}
                   className="px-3 py-2 rounded-full "

@@ -43,7 +43,11 @@ const Trainers = () => {
 
   return (
     <div>
-      <SectionTitle title={"TEAM OF EXPERT COACHES"} subtitle={"our team"} />
+      <SectionTitle
+        title={"TEAM OF EXPERT COACHES"}
+        subtitle={"our team"}
+        dark={"white"}
+      />
       <div className="bg-gradient-to-b from-primary to-secondary  py-16 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 w-10/12 mx-auto">
           {trainers.map((trainer) => (

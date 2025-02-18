@@ -34,8 +34,10 @@ const AllClasses = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">All Classes</h1>
-        <p className="text-gray-600">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2 dark:text-white">
+          All Classes
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Explore our comprehensive selection of classes
         </p>
       </div>
@@ -49,7 +51,7 @@ const AllClasses = () => {
           onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Search by class name"
-          className="border border-[#e5eaf2] py-3 pl-4 pr-[65px] outline-none w-full rounded-md"
+          className="border border-[#e5eaf2] py-3 pl-4 pr-[65px] outline-none w-full rounded-md dark:bg-gray-900 dark:border-gray-900 dark:text-gray-400"
         />
 
         <span className="bg-gray-300 text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center rounded-r-md cursor-pointer hover:bg-gray-400 group">
@@ -63,11 +65,13 @@ const AllClasses = () => {
             key={classItem.id}
             className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200"
           >
-            <div className="p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            <div className="p-6 border-b border-gray-200 dark:bg-gray-900">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2 dark:text-white">
                 {classItem.name}
               </h2>
-              <p className="text-gray-600 text-sm">{classItem.description}</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                {classItem.description}
+              </p>
             </div>
 
             <div className="p-6">
@@ -143,11 +147,11 @@ const AllClasses = () => {
         onPageChange={handlePageChange}
         containerClassName="flex items-center justify-center gap-2 mt-8"
         pageClassName="rounded-md"
-        pageLinkClassName="px-4 py-2 rounded-md border hover:bg-gray-50 block"
-        activeClassName="bg-blue-500 text-white border-blue-500"
+        pageLinkClassName="px-4 py-2 rounded-md border hover:bg-gray-50 dark:hover:text-black block dark:text-white"
+        activeClassName="bg-primary text-white border-blue-500"
         activeLinkClassName="hover:bg-blue-500 text-white"
-        previousClassName="rounded-md border p-2 hover:bg-gray-50"
-        nextClassName="rounded-md border p-2 hover:bg-gray-50"
+        previousClassName="rounded-md border p-2 hover:bg-gray-50 dark:text-white dark:hover:text-black"
+        nextClassName="rounded-md border p-2 hover:bg-gray-50 dark:text-white dark:hover:text-black"
         disabledClassName="opacity-50 cursor-not-allowed hover:bg-white"
         breakClassName="px-4 py-2"
       />
