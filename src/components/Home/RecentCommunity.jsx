@@ -59,13 +59,12 @@ const RecentCommunity = () => {
       <SectionTitle
         subtitle={"Our Community"}
         title={"Recent Posts"}
-        dark={"white"}
       ></SectionTitle>
       <div className="my-10 grid grid-cols-1 lg:grid-cols-2  gap-5 ">
         {communities.map((post) => (
           <div
             key={post._id}
-            className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border dark:border-none dark:bg-gray-900"
+            className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border"
           >
             <div className="flex justify-between gap-5 pb-2 border-b mb-auto flex-grow">
               <h2 className="text-lg lg:text-xl font-bold dark:text-white">

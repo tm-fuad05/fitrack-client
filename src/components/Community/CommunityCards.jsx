@@ -73,13 +73,13 @@ const CommunityCards = () => {
         onPageChange={handlePageChange}
         containerClassName="flex items-center justify-center gap-2 mt-8"
         pageClassName="rounded-md"
-        pageLinkClassName="px-4 py-2 rounded-md border hover:bg-gray-50 block"
-        activeClassName="bg-blue-500 text-white border-blue-500"
+        pageLinkClassName="px-4 py-2 rounded-md border hover:bg-gray-50 dark:hover:text-black block dark:text-white"
+        activeClassName="bg-primary text-white border-blue-500"
         activeLinkClassName="hover:bg-blue-500 text-white"
-        previousClassName="rounded-md border p-2 hover:bg-gray-50"
-        nextClassName="rounded-md border p-2 hover:bg-gray-50"
+        previousClassName="rounded-md border p-2 hover:bg-gray-50 dark:text-white dark:hover:text-black"
+        nextClassName="rounded-md border p-2 hover:bg-gray-50 dark:text-white dark:hover:text-black"
         disabledClassName="opacity-50 cursor-not-allowed hover:bg-white"
-        breakClassName="px-4 py-2"
+        breakClassName="px-4 py-2 dark:text-white"
       />
     </div>
   );

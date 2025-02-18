@@ -63,20 +63,20 @@ const AllClasses = () => {
         {currentClasses.map((classItem) => (
           <div
             key={classItem.id}
-            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200"
+            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 flex flex-col"
           >
-            <div className="p-6 border-b border-gray-200 dark:bg-gray-900">
+            <div className="p-6 border-b border-gray-200 dark:bg-gray-900 flex-grow">
               <h2 className="text-2xl font-semibold text-gray-800 mb-2 dark:text-white">
                 {classItem.name}
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-gray-600 dark:text-gray-400 text-sm flex-grow">
                 {classItem.description}
               </p>
             </div>
 
-            <div className="p-6">
+            <div className="p-6 dark:bg-gray-900">
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
@@ -94,7 +94,7 @@ const AllClasses = () => {
                   <span>Trainers ({classItem.trainers.length})</span>
                 </div>
 
-                <ul className="text-xs list-decimal text-gray-600 pl-3">
+                <ul className="text-xs list-decimal text-gray-600 pl-3 dark:text-gray-400">
                   {classItem.trainers.slice(0, 5).map((trainer) => (
                     <li key={trainer._id} className="group cursor-pointer">
                       <Link

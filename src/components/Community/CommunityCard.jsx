@@ -44,7 +44,9 @@ const CommunityCard = ({ post, refetch }) => {
   return (
     <div className="flex flex-col gap-2 shadow-xl p-5 rounded-lg border">
       <div className="flex justify-between gap-5 pb-2 border-b mb-auto flex-grow">
-        <h2 className="text-lg lg:text-xl font-bold">{title}</h2>
+        <h2 className="text-lg lg:text-xl font-bold dark:text-white">
+          {title}
+        </h2>
         <span
           className={`text-xs h-fit px-2 py-0.5 rounded-full font-semibold ${
             role === "trainer"
@@ -55,13 +57,13 @@ const CommunityCard = ({ post, refetch }) => {
           {role}
         </span>
       </div>
-      <div className="flex justify-between py-2 text-gray-600">
+      <div className="flex justify-between py-2 text-gray-600 dark:text-gray-500">
         <p> By {author}</p>
         <p>Date: {date}</p>
       </div>
-      <p className="text-gray-600">Category: {category}</p>
-      <p className="flex-grow">{description}</p>
-      <div className="flex justify-between items-center border-t pt-3">
+      <p className="text-gray-600 dark:text-gray-500">Category: {category}</p>
+      <p className="flex-grow dark:text-white">{description}</p>
+      <div className="flex justify-between items-center border-t pt-3 dark:text-white">
         <span className="text-sm">
           {" "}
           <span className="font-semibold">Votes:</span> {votes}

@@ -40,7 +40,6 @@ const Feaatured = () => {
       <SectionTitle
         title={"Transform Your Health and Elevate Your Fitness Journey"}
         subtitle={"our services"}
-        dark={"white"}
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-10/12 mx-auto mt-10">
         {cards.map((card, idx) => (
