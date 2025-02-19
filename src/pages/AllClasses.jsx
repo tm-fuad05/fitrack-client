@@ -63,9 +63,9 @@ const AllClasses = () => {
         {currentClasses.map((classItem) => (
           <div
             key={classItem.id}
-            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 flex flex-col"
+            className=" rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 flex flex-col"
           >
-            <div className="p-6 border-b border-gray-200 dark:bg-gray-900 flex-grow">
+            <div className="p-6 border-b border-gray-200  flex-grow">
               <h2 className="text-2xl font-semibold text-gray-800 mb-2 dark:text-white">
                 {classItem.name}
               </h2>
@@ -74,7 +74,7 @@ const AllClasses = () => {
               </p>
             </div>
 
-            <div className="p-6 dark:bg-gray-900">
+            <div className="p-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                   <svg

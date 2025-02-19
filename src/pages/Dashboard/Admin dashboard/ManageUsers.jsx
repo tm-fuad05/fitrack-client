@@ -80,11 +80,13 @@ const ManageUsers = () => {
       <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">All Users</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">All Users</h1>
 
         {/* Total Count */}
         <div className="mb-4">
-          <p className="text-gray-600">Total users: {users?.length}</p>
+          <p className="text-gray-600 dark:text-gray-500">
+            Total users: {users?.length}
+          </p>
         </div>
 
         {/* Simple Table */}
@@ -102,7 +104,10 @@ const ManageUsers = () => {
             <tbody>
               {users &&
                 users?.map((user) => (
-                  <tr key={user._id} className="border even:bg-gray-50">
+                  <tr
+                    key={user._id}
+                    className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
+                  >
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td
@@ -111,7 +116,7 @@ const ManageUsers = () => {
                           ? "text-green-500"
                           : user.role === "trainer"
                           ? "text-red-500"
-                          : "text-black"
+                          : "text-black dark:text-white"
                       }`}
                     >
                       {user.role}

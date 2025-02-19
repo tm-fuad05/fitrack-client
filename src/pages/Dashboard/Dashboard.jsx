@@ -19,6 +19,7 @@ import { TbLogout2 } from "react-icons/tb";
 import useAdmin from "../../hooks/useAdmin";
 
 import useTrainerCheck from "../../hooks/useTrainerCheck";
+import fitrack from "../../assets/fitrack.png";
 
 const Dashboard = () => {
   const { signOutUser } = useAuth();
@@ -233,7 +234,7 @@ const Dashboard = () => {
   return (
     <div className="grid grid-cols-12 relative">
       {/* SideBar */}
-      <aside className="hidden lg:block lg:col-span-3 bg-gray-100 dark:bg-gray-900 min-h-screen p-5">
+      <aside className="hidden lg:block lg:col-span-3 bg-gray-100 dark:bg-gray-900 duration-300 min-h-screen p-5">
         <div className="mb-4 w-fit">
           <Logo></Logo>
         </div>
@@ -259,18 +260,28 @@ const Dashboard = () => {
           {darkMode ? <MdLightMode /> : <MdDarkMode />}
         </div>
         {/* Small device navbar */}
-        <div className="bg-gray-900 lg:hidden sticky top-0 z-50">
+        <div className="bg-gray-200 dark:bg-gray-900 duration-300 lg:hidden sticky top-0 z-50">
           <div className="flex justify-between items-center w-11/12 mx-auto py-5">
-            <Logo></Logo>
+            {/* Logo */}
+            <a href="/">
+              <div className="flex items-center gap-1">
+                <img className="w-10 md:w-16" src={fitrack} alt="logo" />
+                <h2
+                  className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-gray-900/90 dark:text-white`}
+                >
+                  Fit<span className="text-primary">Rack</span>
+                </h2>
+              </div>
+            </a>
             <div className="flex items-center gap-3">
               <div
                 onClick={() => setDarkMode(!darkMode)}
-                className="text-white text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-1000"
+                className={`text-gray-800 dark:text-white dar text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-300`}
               >
                 {darkMode ? <MdLightMode /> : <MdDarkMode />}
               </div>
               <div
-                className="text-3xl cursor-pointer text-white lg:hidden w-fit"
+                className="text-3xl cursor-pointer dark:text-white lg:hidden w-fit text-gray-800"
                 onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
               >
                 {mobileSidebarOpen ? <IoMdClose /> : <RiMenuFill />}
@@ -280,7 +291,7 @@ const Dashboard = () => {
         </div>
 
         <aside
-          className={`lg:hidden bg-gray-900 w-full p-5 fixed z-20 duration-200 ${
+          className={`lg:hidden bg-gray-100 dark:bg-gray-900 min-h-screen w-full p-5 fixed z-20 duration-300 ${
             mobileSidebarOpen
               ? "top-[71px] opacity-100 sm:top-[90px]"
               : "-top-[1000px] opacity-0 z-[1]"
