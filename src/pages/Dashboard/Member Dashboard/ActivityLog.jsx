@@ -50,7 +50,7 @@ const ActivityLog = () => {
       const { data } = await axiosSecure.delete(
         `/applied-as-trainer/${currentUser._id}`
       );
-      if (data.deletedCount > 0) {
+      if (data.success) {
         refetch();
         Swal.fire({
           title: "Deleted",
@@ -76,7 +76,9 @@ const ActivityLog = () => {
       <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">Activity Log</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">
+          Activity Log
+        </h1>
 
         {/* Simple Table */}
         {currentUser ? (
@@ -96,7 +98,7 @@ const ActivityLog = () => {
               </thead>
               <tbody>
                 {currentUser && (
-                  <tr className="border even:bg-gray-50">
+                  <tr className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90">
                     <td className="p-3">{currentUser?.fullName}</td>
                     <td className="p-3">{currentUser?.email}</td>
                     <td className="p-3 text-green-500 font-[600]">trainer</td>
@@ -143,7 +145,7 @@ const ActivityLog = () => {
             </table>
           </div>
         ) : (
-          <p className="text-center mt-10">No Activities</p>
+          <p className="text-center mt-10 dark:text-gray-500">No Activities</p>
         )}
       </div>
     </div>

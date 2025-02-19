@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import useAxiosPublic from "./useAxiosPublic";
 
-const useTrainer = ({ sort }) => {
+const useTrainer = () => {
   const axiosPublic = useAxiosPublic();
 
   const {
@@ -10,10 +10,10 @@ const useTrainer = ({ sort }) => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["trainers", sort],
+    queryKey: ["trainers"],
     queryFn: async () => {
       try {
-        const { data } = await axiosPublic.get(`/trainers?sort=${sort}`);
+        const { data } = await axiosPublic.get("/trainers");
         return data;
       } catch (error) {
         console.error(error);

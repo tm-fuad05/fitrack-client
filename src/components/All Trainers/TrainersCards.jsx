@@ -3,11 +3,29 @@ import useTrainer from "../../hooks/useTrainer";
 import TrainerCard from "./TrainerCard";
 import Loader from "../Shared/Loader";
 import { Select, Option } from "@material-tailwind/react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const TrainersCards = () => {
   const [sort, setSort] = useState("");
   console.log(sort);
-  const { trainers, isLoading } = useTrainer({ sort });
+  const axiosPublic = useAxiosPublic();
+
+  const {
+    data: trainers = [],
+
+    isLoading,
+  } = useQuery({
+    queryKey: ["trainers", sort],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosPublic.get(`/trainers?sort=${sort}`);
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
 
   if (isLoading) {
     return <Loader />;

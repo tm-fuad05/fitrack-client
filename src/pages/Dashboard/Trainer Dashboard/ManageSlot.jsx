@@ -44,7 +44,7 @@ const ManageSlot = () => {
         managedSlots
       );
 
-      if (data.modifiedCount > 0) {
+      if (data.success) {
         refetch();
         Swal.fire({
           title: "Slot Deleted",
@@ -70,7 +70,7 @@ const ManageSlot = () => {
 
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">My Slots</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">My Slots</h1>
 
         {/* Total Count */}
         <div className="mb-4">
@@ -88,7 +88,7 @@ const ManageSlot = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90">
                 <td className="p-3">{user?.displayName}</td>
                 <td className="p-3">
                   {currentTrainer?.availableDays?.map((d) => (

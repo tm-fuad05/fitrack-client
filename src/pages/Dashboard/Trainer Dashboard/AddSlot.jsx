@@ -91,23 +91,23 @@ const AddSlot = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-md rounded-lg p-8">
       <Helmet>
         <title>FitRack | Add Slots</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Apply to Be a Trainer
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+        Add slot
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Full Name */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Full Name
           </label>
           <input
             type="text"
             placeholder="Enter your full name"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border dark:border-gray-900 dark:bg-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             defaultValue={formData.fullName}
             onChange={(e) =>
               setFormData({ ...formData, fullName: e.target.value })
@@ -118,13 +118,13 @@ const AddSlot = () => {
 
         {/* Email */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Email (Read-Only)
           </label>
           <input
             type="email"
             placeholder="Your email"
-            className="w-full border rounded-lg px-4 py-2 bg-gray-100"
+            className="w-full border rounded-lg px-4 py-2 bg-gray-100 dark:border-gray-900"
             defaultValue={formData.email}
             disabled
           />
@@ -132,11 +132,13 @@ const AddSlot = () => {
 
         {/* Age */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Age</label>
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
+            Age
+          </label>
           <input
             type="number"
             placeholder="Enter your age"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border dark:border-gray- dark:bg-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             defaultValue={formData.age}
             onChange={(e) => setFormData({ ...formData, age: e.target.value })}
             disabled
@@ -144,11 +146,13 @@ const AddSlot = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Photo</label>
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
+            Photo
+          </label>
           <input
             type="text"
             placeholder="Photo URL"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border dark:border-gray-900 dark:bg-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             defaultValue={formData.profileImage}
             onChange={(e) =>
               setFormData({ ...formData, profileImage: e.target.value })
@@ -159,7 +163,9 @@ const AddSlot = () => {
 
         {/* Skills */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Skills</label>
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
+            Skills
+          </label>
           <Select
             isMulti
             defaultValue={selectedSkills}
@@ -173,7 +179,7 @@ const AddSlot = () => {
 
         {/* Available Days */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Available Days in a Week
           </label>
           <Select
@@ -191,7 +197,7 @@ const AddSlot = () => {
         </div>
         {/* Classes */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Classes
           </label>
           <Select
@@ -209,7 +215,7 @@ const AddSlot = () => {
 
         {/* Slot Name */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Slot Name
           </label>
           <input
@@ -225,13 +231,13 @@ const AddSlot = () => {
         </div>
         {/* Available Time */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 font-medium mb-2 dark:text-gray-500">
             Available Time in a Day (Include AM/PM)
           </label>
           <input
             type="text"
             placeholder="e.g., 9:00 AM - 5:00 PM"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border dark:border-gray-900 dark:bg-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
             defaultValue={formData.availableTime}
             onChange={(e) =>
               setFormData({ ...formData, availableTime: e.target.value })

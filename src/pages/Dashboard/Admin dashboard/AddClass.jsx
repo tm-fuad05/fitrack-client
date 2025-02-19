@@ -10,17 +10,17 @@ import { useNavigate } from "react-router-dom";
 const AddClass = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  // const { trainers } = useTrainer({ sort });
+  const { trainers } = useTrainer();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     trainers: [],
   });
 
-  // const trainersName = trainers.map((trainer) => ({
-  //   value: trainer.fullName,
-  //   label: trainer.fullName,
-  // }));
+  const trainersName = trainers.map((trainer) => ({
+    value: trainer.fullName,
+    label: trainer.fullName,
+  }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,7 +84,7 @@ const AddClass = () => {
           />
         </div>
         {/* Trainers Specialize */}
-        {/* <div>
+        <div>
           <label className="block text-gray-700 font-medium mb-2">
             Trainers For this Class
           </label>
@@ -99,7 +99,7 @@ const AddClass = () => {
               })
             }
           />
-        </div> */}
+        </div>
 
         {/* Submit Button */}
         <div className="text-center">

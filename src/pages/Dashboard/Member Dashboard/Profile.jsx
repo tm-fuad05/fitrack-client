@@ -62,21 +62,25 @@ const Profile = () => {
       </Helmet>
       <h1 className="text-2xl font-bold mb-4">Your Profile</h1>
       <div className="bg-gradient-to-t from-primary to-secondary min-h-[300px] rounded-xl"></div>
-      <div className="rounded-xl  bg-white shadow-2xl w-9/12 relative p-5 pt-0 -translate-x-1/2 left-1/2 -top-24 z-10">
-        <img
-          className="rounded-full lg:h-32 lg:w-32 h-24 w-24 object-cover mx-auto absolute -translate-x-1/2 left-1/2 -top-12 lg:-top-16"
-          src={user?.photoURL}
-          alt=""
-        />
+      <div className="rounded-xl  bg-white dark:bg-gray-900 shadow-2xl w-9/12 relative p-5 pt-0 -translate-x-1/2 left-1/2 -top-24 z-10">
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <img
+            className="rounded-full lg:h-32 lg:w-32 h-24 w-24 object-cover mx-auto absolute -translate-x-1/2 left-1/2 -top-12 lg:-top-16"
+            src={user?.photoURL}
+            alt=""
+          />
+        )}
         <div className="pt-16 lg:pt-24 text-center space-y-1">
-          <h3 className=" font-bold text-xl md:text-2xl lg:text-3xl text-gray-800">
+          <h3 className=" font-bold text-xl md:text-2xl lg:text-3xl text-gray-800 dark:text-white">
             {user?.displayName}
           </h3>
           <p className="text-gray-500 text-sm md:text-md lg:text-lg">
             {user?.email}
           </p>
           <p className="text-gray-500 text-sm md:text-md lg:text-lg">
-            <span className="font-semibold text-gray-800">
+            <span className="font-semibold text-gray-800 dark:text-gray-500">
               Last Login time: <br />
             </span>{" "}
             {user.metadata.lastSignInTime}{" "}

@@ -54,7 +54,7 @@ const BookedTrainer = () => {
     try {
       const { data } = await axiosSecure.post("/reviews", review);
 
-      if (data.insertedId) {
+      if (data.success) {
         Swal.fire({
           title: "Feedback Sent",
           icon: "success",
@@ -77,18 +77,22 @@ const BookedTrainer = () => {
         <title>FitRack | Booked</title>
       </Helmet>
       {/* Simple Header */}
-      <h1 className="text-2xl font-bold mb-4">Booked Trainers</h1>
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">
+        Booked Trainers
+      </h1>
 
       {/* Total Count */}
       {payments?.length > 0 && (
         <div className="mb-4">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-500">
             Total Booked Trainers: {payments?.length}
           </p>
         </div>
       )}
       {payments.length === 0 ? (
-        <p className="text-center mt-5">No Trainers Booked</p>
+        <p className="text-center mt-5 dark:text-gray-500">
+          No Trainers Booked
+        </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {payments.map((p) => (

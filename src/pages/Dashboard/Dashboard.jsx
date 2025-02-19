@@ -49,6 +49,7 @@ const Dashboard = () => {
       {isAdmin ? (
         <>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -59,6 +60,7 @@ const Dashboard = () => {
             Balance
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -69,6 +71,7 @@ const Dashboard = () => {
             Newsletter Subscribers
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -79,6 +82,7 @@ const Dashboard = () => {
             Applied Trainers
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -88,6 +92,7 @@ const Dashboard = () => {
             Trainers
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -98,6 +103,7 @@ const Dashboard = () => {
             Add Forum
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -107,8 +113,9 @@ const Dashboard = () => {
             Add Class
           </NavLink>
           {/* Devider */}
-          <div className="border-b mb-5"></div>
+          <div className="border-b mb-5 border-gray-300 dark:border-gray-100"></div>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -119,7 +126,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2"
             }
             to={"/"}
           >
@@ -131,6 +138,7 @@ const Dashboard = () => {
         <>
           {" "}
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -141,6 +149,7 @@ const Dashboard = () => {
             Manage Slot
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -151,6 +160,7 @@ const Dashboard = () => {
             Add Slot
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -161,7 +171,7 @@ const Dashboard = () => {
             Add forum
           </NavLink>
           {/* Devider */}
-          <div className="border-b mb-5"></div>
+          <div className="border-b mb-5 border-gray-300 dark:border-gray-100"></div>
           <NavLink
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
@@ -175,6 +185,7 @@ const Dashboard = () => {
       ) : (
         <>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -185,6 +196,7 @@ const Dashboard = () => {
             Profile
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -195,6 +207,7 @@ const Dashboard = () => {
             Activity Log
           </NavLink>
           <NavLink
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
@@ -205,7 +218,7 @@ const Dashboard = () => {
             Booked Trainers
           </NavLink>
           {/* Devider */}
-          <div className="border-b mb-5"></div>
+          <div className="border-b mb-5 border-gray-300 dark:border-gray-100"></div>
           <NavLink
             className={
               "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
@@ -260,7 +273,7 @@ const Dashboard = () => {
           {darkMode ? <MdLightMode /> : <MdDarkMode />}
         </div>
         {/* Small device navbar */}
-        <div className="bg-gray-200 dark:bg-gray-900 duration-300 lg:hidden sticky top-0 z-50">
+        <div className="bg-gray-100 dark:bg-gray-900 duration-300 lg:hidden sticky top-0 z-50">
           <div className="flex justify-between items-center w-11/12 mx-auto py-5">
             {/* Logo */}
             <a href="/">

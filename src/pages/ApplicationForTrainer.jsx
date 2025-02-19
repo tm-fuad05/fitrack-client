@@ -77,7 +77,7 @@ const ApplicationForTrainer = () => {
         status: "pending",
       });
 
-      if (data.insertedId) {
+      if (data.success) {
         const form = e.target;
         form.reset();
         Swal.fire({

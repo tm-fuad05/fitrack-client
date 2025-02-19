@@ -90,7 +90,7 @@ const AppliedTrainer = () => {
         "/rejection-feedback",
         rejectionFeedback
       );
-      if (data.insertedId) {
+      if (data.success) {
         Swal.fire({
           title: "Feedback Sent",
           icon: "success",
@@ -111,7 +111,7 @@ const AppliedTrainer = () => {
       const { data } = await axiosSecure.patch(
         `/applied-as-trainer/${trainer._id}`
       );
-      if (data.modifiedCount > 0) {
+      if (data.success) {
         refetch();
       }
     } catch (error) {
