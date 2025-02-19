@@ -6,9 +6,7 @@ const Logo = () => {
       <div className="flex items-center gap-1">
         <img className="w-10 md:w-16" src={fitrack} alt="logo" />
         <h2
-          className={
-            "font-bold text-xl md:text-2xl lg:text-3xl italic text-white"
-          }
+          className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-gray-900/90 dark:text-white`}
         >
           Fit<span className="text-primary">Rack</span>
         </h2>

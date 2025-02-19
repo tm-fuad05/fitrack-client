@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import fitrack from "../../assets/fitrack.png";
 
 // react icons
 import { MdDarkMode } from "react-icons/md";
@@ -21,6 +22,7 @@ import MiniLoader from "./MiniLoader";
 const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
+
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
@@ -127,7 +129,17 @@ const Navbar = () => {
       } z-50 w-full duration-300`}
     >
       <nav className="flex items-center justify-between relative px-6 py-5 ">
-        <Logo />
+        {/* Logo */}
+        <a href="/">
+          <div className="flex items-center gap-1">
+            <img className="w-10 md:w-16" src={fitrack} alt="logo" />
+            <h2
+              className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-white`}
+            >
+              Fit<span className="text-primary">Rack</span>
+            </h2>
+          </div>
+        </a>
         <ul
           id="home-nav"
           className="items-center gap-[40px] text-[1rem] text-white lg:flex hidden p-2"

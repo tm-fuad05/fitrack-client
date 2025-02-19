@@ -8,7 +8,7 @@ import Logo from "./logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 pt-10 pb-3">
+    <footer className="bg-gray-100 dark:bg-gray-900 text-gray-300 pt-10 pb-3">
       <div className="container mx-auto px-6 md:px-12">
         {/* Top Section */}
         <div className="flex flex-wrap justify-between items-center">
@@ -20,7 +20,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-secondary"
+              className="text-gray-900 dark:text-gray-300 hover:text-secondary"
               aria-label="Facebook"
             >
               <IoLogoFacebook className="text-3xl" />
@@ -29,7 +29,7 @@ const Footer = () => {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-secondary"
+              className="text-gray-900 dark:text-gray-300 hover:text-secondary"
               aria-label="Twitter"
             >
               <IoLogoTwitter className="text-3xl" />
@@ -38,7 +38,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-secondary"
+              className="text-gray-900 dark:text-gray-300 hover:text-secondary"
               aria-label="Instagram"
             >
               <IoLogoInstagram className="text-3xl" />
@@ -56,12 +56,12 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 my-6"></div>
+        <div className="border-t border-gray-400 dark:border-gray-700 my-6"></div>
 
         {/* Bottom Section */}
         <div className="flex flex-wrap justify-between items-center">
           {/* Contact Information */}
-          <div>
+          <div className="text-gray-900 dark:text-gray-300">
             <p className="text-sm">
               <strong>Address:</strong> 123 Main Street, Suite 456, City,
               Country
@@ -70,7 +70,7 @@ const Footer = () => {
               <strong>Email:</strong>{" "}
               <a
                 href="mailto:contact@mywebsite.com"
-                className="text-gray-300 hover:text-secondary"
+                className="text-gray-900 dark:text-gray-300 hover:text-secondary"
               >
                 fitrack.admin@gmail.com
               </a>
@@ -79,7 +79,7 @@ const Footer = () => {
               <strong>Phone:</strong>{" "}
               <a
                 href="tel:+1234567890"
-                className="text-gray-300 hover:text-secondary"
+                className="text-gray-900 dark:text-gray-300 hover:text-secondary"
               >
                 +123 456 7890
               </a>
@@ -88,9 +88,9 @@ const Footer = () => {
         </div>
       </div>
       {/* Divider */}
-      <div className="border-t border-gray-700 my-3"></div>
+      <div className="border-t border-gray-400 dark:border-gray-700 my-3"></div>
       {/* Copyright */}
-      <div className="mt-4 md:mt-0 text-sm text-gray-400 text-center">
+      <div className="mt-4 md:mt-0 text-sm text-gray-700 dark:text-gray-400 text-center">
         &copy; {new Date().getFullYear()} FitRack. All Rights Reserved.
       </div>
     </footer>

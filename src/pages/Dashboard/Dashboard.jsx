@@ -49,7 +49,7 @@ const Dashboard = () => {
         <>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/balance"}
           >
@@ -59,7 +59,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/newsletter"}
           >
@@ -69,7 +69,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/applied-trainers"}
           >
@@ -79,7 +79,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/trainers"}
           >
@@ -88,7 +88,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/add-forum"}
           >
@@ -98,7 +98,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/add-class"}
           >
@@ -109,7 +109,7 @@ const Dashboard = () => {
           <div className="border-b mb-5"></div>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2"
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/manage-users"}
           >
@@ -118,7 +118,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/"}
           >
@@ -131,7 +131,7 @@ const Dashboard = () => {
           {" "}
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/manage-slot"}
           >
@@ -141,7 +141,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/add-slot"}
           >
@@ -151,7 +151,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/add-forum"}
           >
@@ -163,7 +163,7 @@ const Dashboard = () => {
           <div className="border-b mb-5"></div>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/"}
           >
@@ -175,7 +175,7 @@ const Dashboard = () => {
         <>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/my-profile"}
           >
@@ -185,7 +185,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/activity-log"}
           >
@@ -195,7 +195,7 @@ const Dashboard = () => {
           </NavLink>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/dashboard/booked-trainers"}
           >
@@ -207,7 +207,7 @@ const Dashboard = () => {
           <div className="border-b mb-5"></div>
           <NavLink
             className={
-              " py-3 px-2 rounded-md w-full  hover:bg-gray-600 flex  gap-2 "
+              "text-black dark:text-white  py-3 px-2 rounded-md w-full  hover:bg-gray-200  dark:hover:bg-gray-600 flex  gap-2 "
             }
             to={"/"}
           >
@@ -233,18 +233,18 @@ const Dashboard = () => {
   return (
     <div className="grid grid-cols-12 relative">
       {/* SideBar */}
-      <aside className="hidden lg:block lg:col-span-3 bg-gray-900 min-h-screen p-5">
+      <aside className="hidden lg:block lg:col-span-3 bg-gray-100 dark:bg-gray-900 min-h-screen p-5">
         <div className="mb-4 w-fit">
           <Logo></Logo>
         </div>
         {/* Devider */}
-        <div className="border-b mb-5"></div>
+        <div className="border-b border-gray-300 dark:border-gray-100 mb-5"></div>
         {/* NavMenu */}
         {navMenu}
         {/* Logout */}
         <button
           onClick={handleSignOut}
-          className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-600"
+          className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-200"
         >
           <TbLogout2 />
           Logout
@@ -291,7 +291,7 @@ const Dashboard = () => {
           {/* Logout */}
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-600"
+            className="flex items-center gap-[5px] w-full py-3 px-2 rounded-md  text-red-500 hover:bg-gray-200"
           >
             <TbLogout2 />
             Logout
