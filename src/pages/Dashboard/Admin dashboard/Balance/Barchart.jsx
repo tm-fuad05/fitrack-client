@@ -27,7 +27,7 @@ const Barchart = () => {
 
   return (
     <div className="mt-10">
-      <h3 className="text-xl font-semibold mb-8">
+      <h3 className="text-xl font-semibold mb-8 dark:text-white">
         Newsletter Subscribers vs Paid Members
       </h3>
       <ResponsiveContainer width="50%" aspect={3}>

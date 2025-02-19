@@ -131,12 +131,14 @@ const AppliedTrainer = () => {
       <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">Applied Trainers</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">
+          Applied Trainers
+        </h1>
 
         {/* Total Count */}
         {pendingFilter?.length > 0 && (
           <div className="mb-4">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-500">
               Total Applied Trainers: {pendingFilter?.length}
             </p>
           </div>
@@ -161,7 +163,10 @@ const AppliedTrainer = () => {
               <tbody>
                 {pendingFilter &&
                   pendingFilter.map((trainer) => (
-                    <tr key={trainer._id} className="border even:bg-gray-50">
+                    <tr
+                      key={trainer._id}
+                      className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
+                    >
                       <td className="p-3">{trainer.fullName}</td>
                       <td className="p-3">{trainer.email}</td>
                       <td className={`p-3 font-semibold text-primary`}>

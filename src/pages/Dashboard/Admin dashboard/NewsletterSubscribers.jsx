@@ -16,11 +16,15 @@ const NewsletterSubscribers = () => {
         <title>FitRack | Newsletters</title>
       </Helmet>
       {/* Simple Header */}
-      <h1 className="text-2xl font-bold mb-4">Newsletter Subscribers</h1>
+      <h1 className="text-2xl font-bold mb-4 dark:text-white">
+        Newsletter Subscribers
+      </h1>
 
       {/* Total Count */}
       <div className="mb-4">
-        <p className="text-gray-600">Total Subscribers: {newsletters.length}</p>
+        <p className="text-gray-600 dark:text-gray-500">
+          Total Subscribers: {newsletters.length}
+        </p>
       </div>
 
       {/* Simple Table */}
@@ -40,7 +44,10 @@ const NewsletterSubscribers = () => {
             </thead>
             <tbody>
               {newsletters.map((subscriber) => (
-                <tr key={subscriber.id} className="border-t hover:bg-gray-50">
+                <tr
+                  key={subscriber.id}
+                  className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
+                >
                   <td className="p-3">{subscriber.name}</td>
                   <td className="p-3">{subscriber.email}</td>
                   <td className="p-3">{subscriber.phone}</td>

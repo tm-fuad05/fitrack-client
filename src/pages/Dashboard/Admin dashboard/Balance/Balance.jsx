@@ -40,7 +40,9 @@ const Balance = () => {
       <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">Total: ${totalBalance}</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">
+          Total: ${totalBalance}
+        </h1>
 
         {/* Simple Table */}
         {recentPayments?.length === 0 ? (
@@ -59,7 +61,10 @@ const Balance = () => {
               <tbody>
                 {recentPayments &&
                   recentPayments.map((p) => (
-                    <tr key={p._id} className="border even:bg-gray-50">
+                    <tr
+                      key={p._id}
+                      className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
+                    >
                       <td className="p-3">{p.name}</td>
                       <td className="p-3">{p.membershipType}</td>
                       <td className={`p-3 font-semibold text-primary`}>

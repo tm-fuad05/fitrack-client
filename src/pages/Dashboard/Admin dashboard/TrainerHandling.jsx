@@ -48,12 +48,14 @@ const TrainerHandling = () => {
       <Back></Back>
       <div>
         {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4">Trainers</h1>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">Trainers</h1>
 
         {/* Total Count */}
         {trainers?.length > 0 && (
           <div className="mb-4">
-            <p className="text-gray-600">Total Trainers: {trainers?.length}</p>
+            <p className="text-gray-600 dark:text-gray-500">
+              Total Trainers: {trainers?.length}
+            </p>
           </div>
         )}
 
@@ -74,7 +76,10 @@ const TrainerHandling = () => {
               <tbody>
                 {trainers &&
                   trainers.map((trainer) => (
-                    <tr key={trainer._id} className="border-t even:bg-gray-50">
+                    <tr
+                      key={trainer._id}
+                      className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
+                    >
                       <td className="p-3">{trainer.name}</td>
                       <td className="p-3">{trainer.email}</td>
                       <td className="p-3 text-red-500 font-semibold">

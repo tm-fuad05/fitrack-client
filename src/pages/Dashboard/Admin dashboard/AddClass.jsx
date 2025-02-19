@@ -10,17 +10,17 @@ import { useNavigate } from "react-router-dom";
 const AddClass = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const { trainers } = useTrainer();
+  // const { trainers } = useTrainer({ sort });
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     trainers: [],
   });
 
-  const trainersName = trainers.map((trainer) => ({
-    value: trainer.fullName,
-    label: trainer.fullName,
-  }));
+  // const trainersName = trainers.map((trainer) => ({
+  //   value: trainer.fullName,
+  //   label: trainer.fullName,
+  // }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,23 +44,23 @@ const AddClass = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto bg-white rounded-lg lg:p-8">
+    <div className="w-11/12 mx-auto rounded-lg lg:p-8">
       <Helmet>
         <title>FitRack | Add class</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
         Add Class
       </h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Class Name */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 dark:text-gray-500 font-medium mb-2">
             Class Name
           </label>
           <input
             type="text"
             placeholder="Class Name"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-400 dark:border-gray-900 dark:placeholder-gray-800"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
@@ -68,13 +68,13 @@ const AddClass = () => {
         </div>
         {/* Details */}
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-700 dark:text-gray-500 font-medium mb-2">
             Details
           </label>
           <textarea
             type="text"
             placeholder="Class Details"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-400 dark:border-gray-900 dark:placeholder-gray-800"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -84,7 +84,7 @@ const AddClass = () => {
           />
         </div>
         {/* Trainers Specialize */}
-        <div>
+        {/* <div>
           <label className="block text-gray-700 font-medium mb-2">
             Trainers For this Class
           </label>
@@ -99,7 +99,7 @@ const AddClass = () => {
               })
             }
           />
-        </div>
+        </div> */}
 
         {/* Submit Button */}
         <div className="text-center">
