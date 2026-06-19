@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { AiFillDislike, AiFillLike } from "react-icons/ai";
+import {
+  HiOutlineUser,
+  HiOutlineCalendar,
+  HiOutlineTag,
+} from "react-icons/hi2";
 import SectionTitle from "../Shared/SectionTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -13,7 +18,7 @@ const RecentCommunity = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate(); // Added missing navigation reference
+  const navigate = useNavigate();
 
   const { data: communities = [], refetch } = useQuery({
     queryKey: ["community"],
@@ -23,6 +28,7 @@ const RecentCommunity = () => {
         return data;
       } catch (error) {
         console.error(error);
+        return [];
       }
     },
   });
@@ -31,7 +37,7 @@ const RecentCommunity = () => {
     if (user && user?.email) {
       try {
         const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
-        if (data.modifiedCount) {
+        if (data.success || data.modifiedCount) {
           refetch();
         }
       } catch (error) {
@@ -46,7 +52,7 @@ const RecentCommunity = () => {
     if (user && user?.email) {
       try {
         const { data } = await axiosSecure.patch(`/community/downvote/${id}`);
-        if (data.modifiedCount) {
+        if (data.success || data.modifiedCount) {
           refetch();
         }
       } catch (error) {
@@ -77,7 +83,7 @@ const RecentCommunity = () => {
   };
 
   return (
-    <div className="w-11/12 xl:w-10/12 mx-auto my-16 mb-28 overflow-hidden">
+    <div className="w-11/12 xl:w-10/12 mx-auto my-16 mb-28">
       <SectionTitle subtitle={"Our Community"} title={"Recent Posts"} />
 
       {/* Animated Layout Grid Container */}
@@ -86,87 +92,100 @@ const RecentCommunity = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.05 }}
-        className="my-12 grid grid-cols-1 lg:grid-cols-2 gap-6"
+        className="my-12 grid grid-cols-1 lg:grid-cols-2 gap-6 p-4"
       >
         {communities.map((post) => (
           <motion.div
             key={post._id}
             variants={cardVariants}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="flex flex-col gap-4 shadow-xl p-6 md:p-8 rounded-2xl border border-white/5 dark:border-gray-800 bg-surface/60 dark:bg-surface-dark/40 backdrop-blur-md relative overflow-hidden group"
+            className="flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-neutral-900/60 backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 group relative overflow-hidden"
           >
-            {/* Top Row: Title & Badges */}
-            <div className="flex justify-between items-start gap-4 pb-3 border-b border-gray-100 dark:border-gray-800/60">
-              <h2 className="text-lg lg:text-xl font-bold font-oxanium text-foreground dark:text-foreground-dark tracking-wide leading-snug">
+            {/* Header Area: Title & Role Badge */}
+            <div className="flex justify-between items-start gap-4 pb-3 border-b border-white/5">
+              <h2 className="text-lg lg:text-xl font-bold text-black dark:text-foreground-dark tracking-wide leading-snug group-hover:text-primary transition-colors">
                 {post.title}
               </h2>
               <span
-                className={`text-[10px] uppercase tracking-wider h-fit px-3 py-1 rounded-full font-bold shadow-sm ${
+                className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg font-bold shrink-0 ${
                   post.role === "trainer"
-                    ? "bg-gradient-to-r from-primary/20 to-primary/30 text-primary border border-primary/20"
-                    : "bg-gradient-to-r from-secondary/20 to-secondary/30 text-secondary border border-secondary/20"
+                    ? "bg-primary/10 border border-primary/20 text-primary"
+                    : "bg-emerald-500/10 border border-gray-600 dark:text-gray-500 text-emerald-400"
                 }`}
               >
                 {post.role}
               </span>
             </div>
 
-            {/* Meta Info Row */}
-            <div className="flex flex-wrap justify-between text-xs font-poppins text-foreground-muted dark:text-foreground-muted-dark opacity-80">
-              <p>
-                By{" "}
-                <span className="font-medium text-foreground dark:text-foreground-dark">
-                  {post.author}
+            {/* Meta Info Area */}
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-gray-700 font-medium">
+              <div className="flex items-center gap-1.5">
+                <HiOutlineUser className="text-sm text-gray-700 dark:text-gray-500" />
+                <span>
+                  By{" "}
+                  <span className="text-gray-700 dark:text-gray-300 font-bold">
+                    {post.author}
+                  </span>
                 </span>
-              </p>
-              <p>{post.date}</p>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <HiOutlineCalendar className="text-sm text-gray-500" />
+                <span>{post.date}</span>
+              </div>
             </div>
 
-            {/* Content & Category */}
-            <div className="flex flex-col gap-2 flex-grow">
-              <span className="text-xs font-semibold w-fit px-2 py-0.5 rounded bg-gray-100 dark:bg-white/5 text-foreground-muted dark:text-foreground-muted-dark font-poppins">
-                #{post.category}
-              </span>
-              <p className="text-sm md:text-base leading-relaxed text-foreground/90 dark:text-foreground-dark/90 font-poppins font-light mt-1">
-                {post.description}
-              </p>
+            {/* Category Tag */}
+            <div className="inline-flex items-center gap-1.5 w-fit text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300市 bg-transparent">
+              <HiOutlineTag className="text-primary text-sm" />
+              <span className="font-medium capitalize">{post.category}</span>
             </div>
 
-            {/* Footer Interactive Actions */}
-            <div className="flex justify-between items-center border-t border-gray-100 dark:border-gray-800/60 pt-4 mt-2">
-              <span className="text-sm font-poppins text-foreground-muted dark:text-foreground-muted-dark">
-                Total{" "}
-                <span className="font-semibold text-foreground dark:text-foreground-dark">
-                  Votes:
-                </span>{" "}
-                <motion.span
-                  key={post.votes}
-                  initial={{ scale: 1.2, color: "var(--primary)" }}
-                  animate={{ scale: 1, color: "currentColor" }}
-                  className="inline-block font-bold"
-                >
-                  {post.votes}
-                </motion.span>
-              </span>
+            {/* Description Text */}
+            <p className="text-sm text-gray-800 dark:text-foreground-dark leading-relaxed flex-grow line-clamp-3">
+              {post.description}
+            </p>
 
-              {/* Like / Dislike Micro-Interactions */}
-              <div className="flex items-center gap-1 font-semibold text-foreground dark:text-foreground-dark">
+            {/* Footer Area: Voting System */}
+            <div className="flex justify-between items-center border-t border-white/5 pt-4 mt-2">
+              <div className="flex flex-col">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-gray-700 dark:text-gray-500">
+                  Total Feedback
+                </span>
+                <span className="text-sm font-bold text-gray-700 dark:text-white">
+                  Votes:{" "}
+                  <motion.span
+                    key={post.votes}
+                    initial={{ scale: 1.2, color: "var(--primary)" }}
+                    animate={{ scale: 1, color: "currentColor" }}
+                    className={`inline-block font-bold ${post.votes >= 0 ? "text-primary" : "text-red-400"}`}
+                  >
+                    {post.votes}
+                  </motion.span>
+                </span>
+              </div>
+
+              {/* Like / Dislike Micro-Interactions in Floating Dock */}
+              <div className="flex items-center gap-1 bg-neutral-950/40 border border-white/5 rounded-xl p-1 shadow-inner">
                 <motion.button
-                  whileHover={{ scale: 1.15, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleUpVote(post._id)}
-                  className="p-2.5 rounded-xl hover:bg-primary/10 hover:text-primary transition-colors duration-200"
+                  className="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-white/5 transition-all"
+                  aria-label="Upvote"
                 >
-                  <AiOutlineLike className="text-xl" />
+                  <AiFillLike className="text-xl" />
                 </motion.button>
 
+                <div className="w-[1px] h-4 bg-white/10"></div>
+
                 <motion.button
-                  whileHover={{ scale: 1.15, y: 2 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1, y: 1 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleDownVote(post._id)}
-                  className="p-2.5 rounded-xl hover:bg-rose-500/10 hover:text-rose-500 transition-colors duration-200"
+                  className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-all"
+                  aria-label="Downvote"
                 >
-                  <AiOutlineDislike className="text-xl" />
+                  <AiFillDislike className="text-xl" />
                 </motion.button>
               </div>
             </div>
@@ -180,8 +199,8 @@ const RecentCommunity = () => {
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
       >
-        <Link to={"all-classes"}>
-          <button className="relative bg-gradient-to-r from-primary to-secondary px-6 py-3 text-white rounded-xl font-medium font-poppins shadow-lg shadow-primary/20 hover:shadow-secondary/30 transition-all duration-300 overflow-hidden group/btn">
+        <Link to={"/community"}>
+          <button className="relative bg-gradient-to-r from-primary to-secondary px-6 py-3 text-white rounded-xl font-medium shadow-lg shadow-primary/20 hover:shadow-secondary/30 transition-all duration-300 overflow-hidden group/btn">
             <span className="relative z-10">See All Posts</span>
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
           </button>

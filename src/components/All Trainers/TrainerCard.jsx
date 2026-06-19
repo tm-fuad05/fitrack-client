@@ -28,7 +28,10 @@ const TrainerCard = ({ trainer }) => {
         <p className="text-foreground-muted dark:text-foreground-muted-dark mt-2 flex-grow">
           <span className="font-semibold">Expertise:</span>{" "}
           {trainer.skills.map((skill, index) => (
-            <span key={index} className="text-foreground-muted dark:text-foreground-muted-dark">
+            <span
+              key={index}
+              className="text-foreground-muted dark:text-foreground-muted-dark"
+            >
               {skill}
               {index < trainer.skills.length - 1 && ", "}
             </span>

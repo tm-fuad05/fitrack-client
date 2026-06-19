@@ -29,7 +29,7 @@ const CommunityCards = () => {
 
   return (
     <div>
-      <div className="my-10 grid grid-cols-1 lg:grid-cols-2  gap-5 ">
+      <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
         {currentCommunities.map((post) => (
           <CommunityCard
             refetch={refetch}
@@ -75,7 +75,7 @@ const CommunityCards = () => {
         pageClassName="rounded-md"
         pageLinkClassName="pagination-link"
         activeClassName="bg-primary text-white border-blue-500"
-        activeLinkClassName="hover:bg-blue-500 text-white"
+        activeLinkClassName="hover:bg-gray-500 text-white"
         previousClassName="pagination-nav"
         nextClassName="pagination-nav"
         disabledClassName="opacity-50 cursor-not-allowed hover:bg-transparent"

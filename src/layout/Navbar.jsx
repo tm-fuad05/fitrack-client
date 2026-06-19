@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import fitrack from "../assets/fitrack.png";
 
 // react icons
-import { MdDarkMode } from "react-icons/md";
-import { MdLightMode } from "react-icons/md";
-import { IoIosArrowUp, IoMdClose } from "react-icons/io";
-import { TbLogout2 } from "react-icons/tb";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { IoIosArrowDown, IoMdClose } from "react-icons/io";
+import { TbLogout2, TbDashboard } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -21,7 +20,9 @@ import MiniLoader from "../components/Shared/MiniLoader";
 
 const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState();
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const dropdownRef = useRef(null);
 
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -36,6 +37,19 @@ const Navbar = () => {
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setAccountMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const { isAdmin } = useAdmin();
   const { isTrainer } = useTrainerCheck();
@@ -59,126 +73,139 @@ const Navbar = () => {
 
   const navMenu = (
     <>
-      <NavLink
-        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-        to={"/"}
-      >
-        Home
-      </NavLink>
-      <NavLink
-        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-        to={"all-trainer"}
-      >
-        All Trainer
-      </NavLink>
-      <NavLink
-        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-        to={"all-classes"}
-      >
-        All Classes
-      </NavLink>
+      {["Home", "All Trainer", "All Classes", "Community", "About Us"].map(
+        (item) => {
+          const path =
+            item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`;
+          return (
+            <NavLink
+              key={item}
+              className={({ isActive }) =>
+                `before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-medium tracking-wide text-sm ${
+                  isActive
+                    ? "text-primary font-semibold before:w-full"
+                    : "text-white/90 hover:text-primary"
+                }`
+              }
+              to={path}
+            >
+              {item}
+            </NavLink>
+          );
+        },
+      )}
+
       {user && user?.email && (
         <NavLink
-          className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-          to={`/dashboard/${
-            isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"
-          }`}
+          className={({ isActive }) =>
+            `before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-medium tracking-wide text-sm ${
+              isActive
+                ? "text-primary font-semibold before:w-full"
+                : "text-white/90 hover:text-primary"
+            }`
+          }
+          to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
         >
           Dashboard
         </NavLink>
       )}
-      <NavLink
-        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-        to={"community"}
-      >
-        Community
-      </NavLink>
-      <NavLink
-        className="before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-primary transition-all duration-300 before:left-0 cursor-pointer capitalize"
-        to={"about-us"}
-      >
-        About Us
-      </NavLink>
     </>
   );
 
   return (
     <div
-      className={`  ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         pathname === "/" || pathname === "/all-trainer"
-          ? `fixed ${scrolled ? "bg-black bg-opacity-80" : "bg-transparent"}`
-          : `sticky top-0 bg-gray-900  ${
-              scrolled ? "bg-opacity-80" : "bg-opacity-100"
-            }`
-      } z-50 w-full duration-300`}
+          ? scrolled
+            ? "bg-black/80 dark:bg-background-dark/80 backdrop-blur-xl shadow-lg py-4"
+            : "bg-transparent py-5"
+          : scrolled
+            ? "bg-black/90 dark:bg-background-dark/90 backdrop-blur-xl shadow-md py-4"
+            : "bg-black dark:bg-background-dark py-4"
+      } text-white`}
     >
-      <nav className="flex items-center justify-between relative px-6 py-5 ">
+      <nav className="flex items-center justify-between relative px-6 max-w-7xl mx-auto">
         {/* Logo */}
-        <a href="/">
-          <div className="flex items-center gap-1">
-            <img className="w-10 md:w-16" src={fitrack} alt="logo" />
-            <h2
-              className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-white`}
-            >
-              Fit<span className="text-primary">Rack</span>
-            </h2>
-          </div>
-        </a>
-        <ul
-          id="home-nav"
-          className="items-center gap-[40px] text-[1rem] text-white lg:flex hidden p-2"
+        <a
+          href="/"
+          className="group flex items-center gap-2 transition-transform active:scale-95"
         >
+          <img
+            className="w-10 md:w-12 object-contain group-hover:rotate-6 transition-transform duration-300"
+            src={fitrack}
+            alt="logo"
+          />
+          <h2 className="font-black text-xl md:text-2xl italic tracking-tight text-white">
+            Fit
+            <span className="text-primary group-hover:text-secondary transition-colors">
+              Rack
+            </span>
+          </h2>
+        </a>
+
+        {/* Desktop Nav Links */}
+        <ul id="home-nav" className="items-center gap-8 lg:flex hidden p-1">
           {navMenu}
         </ul>
 
+        {/* Action Controls */}
         <div className="flex items-center gap-4">
-          <div
+          {/* Theme Toggle Button */}
+          <button
             onClick={() => setDarkMode(!darkMode)}
-            className="text-white text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-1000"
+            className="relative flex items-center justify-center text-xl p-2 rounded-xl border border-white/10 bg-white/5 text-white dark:text-amber-400 hover:text-primary dark:hover:text-primary hover:border-primary/30 dark:hover:border-primary/30 shadow-sm transition-all duration-300 active:scale-90"
+            aria-label="Toggle Theme"
           >
             {darkMode ? (
-              <MdLightMode className="hover:rotate-90 duration-300" />
+              <MdLightMode className="animate-spin-slow" />
             ) : (
-              <MdDarkMode className="hover:rotate-90 duration-300" />
+              <MdDarkMode className="hover:animate-pulse" />
             )}
-          </div>
+          </button>
+
+          {/* User Section / Login */}
           {user && user?.email ? (
-            <div className="flex items-center gap-[15px]">
-              <div
-                className="flex items-center gap-[10px] cursor-pointer relative"
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all shadow-sm active:scale-98"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   <img
                     src={user?.photoURL}
                     alt="avatar"
-                    className="w-[30px] h-[30px] md:w-[35px] md:h-[35px] rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
                   />
-
-                  <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute bottom-[0px] right-0 border-2 border-white"></div>
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute bottom-0 right-0 border-2 border-black dark:border-background-dark"></span>
                 </div>
+                <span className="text-xs font-semibold text-white md:block hidden max-w-[120px] truncate">
+                  {user?.displayName.split(" ")[0]}
+                </span>
+                <IoIosArrowDown
+                  className={`text-xs text-gray-400 transition-transform duration-300 ${
+                    accountMenuOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
 
-                <h1 className="text-[1rem] font-[400] text-white md:block hidden">
-                  {user?.displayName}
-                </h1>
+              {/* Profile Dropdown */}
+              {accountMenuOpen && (
+                <div className="absolute top-[48px] right-0 w-52 bg-neutral-900 dark:bg-surface-dark border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                  <div className="px-3 py-2 border-b border-white/5 mb-1 md:hidden">
+                    <p className="text-xs font-bold text-white truncate">
+                      {user?.displayName}
+                    </p>
+                    <p className="text-[10px] text-gray-400 truncate">
+                      {user?.email}
+                    </p>
+                  </div>
 
-                <div
-                  className={`${
-                    accountMenuOpen
-                      ? "translate-y-0 opacity-100 z-[1]"
-                      : "hidden opacity-0 z-[-1]"
-                  } bg-surface dark:bg-surface-elevated w-max rounded-md boxShadow absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
-                >
                   <Link
-                    to={`/dashboard/${
-                      isAdmin
-                        ? "manage-users"
-                        : isTrainer
-                          ? "manage-slot"
-                          : "my-profile"
-                    }`}
-                    className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-foreground dark:text-foreground-dark hover:bg-gray-100 dark:hover:bg-surface-dark"
+                    to={`/dashboard/${isAdmin ? "manage-users" : isTrainer ? "manage-slot" : "my-profile"}`}
+                    onClick={() => setAccountMenuOpen(false)}
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-gray-300 hover:bg-white/5 font-medium transition-colors"
                   >
+                    <TbDashboard className="text-lg text-primary" />
                     {isAdmin
                       ? "Manage User"
                       : isTrainer
@@ -186,57 +213,49 @@ const Navbar = () => {
                         : "View Profile"}
                   </Link>
 
-                  <div
-                    onClick={handleSignOut}
-                    className="mt-3 border-t border-gray-200 pt-[5px]"
+                  <button
+                    onClick={() => {
+                      setAccountMenuOpen(false);
+                      handleSignOut();
+                    }}
+                    className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 font-medium transition-colors text-left border-none bg-transparent"
                   >
-                    <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-red-500 hover:bg-red-50">
-                      <TbLogout2 />
-                      Logout
-                    </p>
-                  </div>
+                    <TbLogout2 className="text-lg" />
+                    Logout
+                  </button>
                 </div>
-
-                <IoIosArrowUp
-                  className={`${
-                    accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
-                  } transition-all duration-300 text-white sm:block hidden`}
-                />
-              </div>
+              )}
             </div>
           ) : (
-            <div>
-              <Link to={"/login"}>
-                {loader ? (
-                  <MiniLoader />
-                ) : (
-                  <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] px-4 py-3 font-medium rounded-md text-white hover:bg-gradient-to-r hover:from-[#e96d4c] hover:to-[#e13a3b] border-none">
-                    Login
-                  </button>
-                )}
-              </Link>
-            </div>
+            <Link to={"/login"}>
+              {loader ? (
+                <MiniLoader />
+              ) : (
+                <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] px-5 py-2 text-sm font-semibold rounded-xl text-white hover:shadow-lg hover:shadow-primary/20 hover:opacity-95 active:scale-95 transition-all border-none">
+                  Login
+                </button>
+              )}
+            </Link>
           )}
 
-          <div
-            className="text-3xl cursor-pointer lg:hidden text-white"
+          {/* Mobile Hamburger Toggle */}
+          <button
+            className="text-2xl p-1.5 rounded-xl lg:hidden text-white hover:bg-white/5 transition-colors border-none bg-transparent"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           >
             {mobileSidebarOpen ? <IoMdClose /> : <RiMenuFill />}
-          </div>
+          </button>
         </div>
 
+        {/* Mobile Sidebar Menu */}
         <aside
-          className={` ${
+          className={`fixed lg:hidden left-0 right-0 top-[65px] w-full bg-black/95 dark:bg-background-dark/95 backdrop-blur-xl shadow-2xl p-6 text-center transition-all duration-300 ${
             mobileSidebarOpen
-              ? "right-0 opacity-100 z-20"
-              : "right-[1000px] opacity-0 z-[-1]"
-          } lg:hidden shadow-xl bg-surface dark:bg-surface-dark boxShadow p-4 text-center absolute right-0 top-[71px] sm:top-[90px] w-full rounded-md rounded-t-none transition-all duration-300`}
+              ? "translate-y-0 opacity-100 z-40"
+              : "-translate-y-10 opacity-0 pointer-events-none"
+          }`}
         >
-          <ul
-            id="home-nav"
-            className="items-center gap-[20px] text-[1rem] text-foreground dark:text-foreground-dark flex flex-col"
-          >
+          <ul className="items-center gap-5 flex flex-col font-medium">
             {navMenu}
           </ul>
         </aside>
