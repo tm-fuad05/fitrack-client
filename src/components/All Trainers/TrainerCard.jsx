@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const TrainerCard = ({ trainer }) => {
   return (
-    <div className="bg-surface dark:bg-surface-dark shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+    <div className="bg-surface dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col">
       <img
         className="w-full h-[340px] md:h-64 object-cover"
         src={trainer.profileImage}
@@ -43,7 +43,8 @@ const TrainerCard = ({ trainer }) => {
           <IoLogoTwitter className="hover:opacity-50 cursor-pointer" />
         </div>
       </div>
-      <div className="bg-surface dark:bg-surface-elevated p-4">
+      <div className="w-full h-px bg-gray-200 dark:bg-gray-800"></div>
+      <div className="bg-surface dark:bg-gray-900 p-4">
         <p className="text-foreground dark:text-foreground-dark font-medium">
           Available Slots:{" "}
           <span className="text-secondary font-semibold">

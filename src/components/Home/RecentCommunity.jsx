@@ -103,7 +103,7 @@ const RecentCommunity = () => {
           >
             {/* Header Area: Title & Role Badge */}
             <div className="flex justify-between items-start gap-4 pb-3 border-b border-white/5">
-              <h2 className="text-lg lg:text-xl font-bold text-black dark:text-foreground-dark tracking-wide leading-snug group-hover:text-primary transition-colors">
+              <h2 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-foreground-dark tracking-wide leading-snug group-hover:text-primary transition-colors">
                 {post.title}
               </h2>
               <span
