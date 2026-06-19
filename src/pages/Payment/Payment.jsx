@@ -17,7 +17,7 @@ const Payment = () => {
       <Helmet>
         <title>FitRack | Payment</title>
       </Helmet>
-      <div className="bg-gray-200 p-5 lg:w-1/2 font-poppins">
+      <div className="bg-surface dark:bg-surface-elevated text-foreground dark:text-foreground-dark p-5 lg:w-1/2 font-poppins rounded-lg">
         <div className="flex flex-col mb-3">
           <span className="text-sm">Package price</span>{" "}
           <span className="text-4xl font-bold text-primary">${price}</span>
@@ -38,7 +38,7 @@ const Payment = () => {
           <span className="font-semibold">Package:</span> {membershipType}
         </p>
       </div>
-      <div className="bg-gray-200 p-5 lg:w-1/2">
+      <div className="bg-surface dark:bg-surface-elevated text-foreground dark:text-foreground-dark p-5 lg:w-1/2 rounded-lg">
         <Elements stripe={stripePromise}>
           <CheckoutForm
             slot={slot}

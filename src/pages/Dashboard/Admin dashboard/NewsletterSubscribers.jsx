@@ -22,7 +22,7 @@ const NewsletterSubscribers = () => {
 
       {/* Total Count */}
       <div className="mb-4">
-        <p className="text-gray-600 dark:text-gray-500">
+        <p className="text-foreground-muted dark:text-foreground-muted-dark">
           Total Subscribers: {newsletters.length}
         </p>
       </div>
@@ -32,7 +32,7 @@ const NewsletterSubscribers = () => {
         <p className="text-center mt-5">No newsletters found</p>
       ) : (
         <div className="overflow-x-auto  ">
-          <table className="w-full bg-white border">
+          <table className="data-table">
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-3 text-left">Name</th>

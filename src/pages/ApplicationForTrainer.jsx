@@ -96,11 +96,11 @@ const ApplicationForTrainer = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+    <div className="max-w-4xl mx-auto bg-surface dark:bg-surface-dark shadow-md rounded-lg p-8 my-10">
       <Helmet>
         <title>FitRack | Become a trainer</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+      <h1 className="text-3xl font-bold mb-6 text-center text-foreground dark:text-foreground-dark">
         Apply to Be a Trainer
       </h1>
       {isAdmin || isTrainer ? (
@@ -115,13 +115,13 @@ const ApplicationForTrainer = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Full Name */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Full Name
             </label>
             <input
               type="text"
               placeholder="Enter your full name"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
               value={formData.fullName}
               onChange={(e) =>
                 setFormData({ ...formData, fullName: e.target.value })
@@ -132,13 +132,13 @@ const ApplicationForTrainer = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Email (Read-Only)
             </label>
             <input
               type="email"
               placeholder="Your email"
-              className="w-full border rounded-lg px-4 py-2 bg-gray-100 cursor-not-allowed"
+              className="form-input rounded-lg px-4 py-2 cursor-not-allowed opacity-80"
               value={formData.email}
               readOnly
             />
@@ -146,11 +146,11 @@ const ApplicationForTrainer = () => {
 
           {/* Age */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Age</label>
+            <label className="block form-label font-medium mb-2">Age</label>
             <input
               type="number"
               placeholder="Enter your age"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
               value={formData.age}
               onChange={(e) =>
                 setFormData({ ...formData, age: e.target.value })
@@ -175,13 +175,13 @@ const ApplicationForTrainer = () => {
           />
         </div> */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Photo
             </label>
             <input
               type="text"
               placeholder="Photo URL"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
               value={formData.profileImage}
               onChange={(e) =>
                 setFormData({ ...formData, profileImage: e.target.value })
@@ -191,13 +191,13 @@ const ApplicationForTrainer = () => {
           </div>
           {/* Years of exp */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Years of Experience
             </label>
             <input
               type="text"
               placeholder="Years"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
               value={formData.yearsOfExperience}
               onChange={(e) =>
                 setFormData({ ...formData, yearsOfExperience: e.target.value })
@@ -208,13 +208,14 @@ const ApplicationForTrainer = () => {
 
           {/* Skills */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Skills
             </label>
             <Select
               isMulti
               options={skillsOptions}
               className="w-full"
+              classNamePrefix="fitrack-select"
               onChange={(selected) =>
                 setFormData({
                   ...formData,
@@ -226,13 +227,14 @@ const ApplicationForTrainer = () => {
 
           {/* Available Days */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Available Days in a Week
             </label>
             <Select
               isMulti
               options={daysOptions}
               className="w-full"
+              classNamePrefix="fitrack-select"
               onChange={(selected) =>
                 setFormData({
                   ...formData,
@@ -244,13 +246,13 @@ const ApplicationForTrainer = () => {
 
           {/* Available Time */}
           <div>
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block form-label font-medium mb-2">
               Available Time in a Day (Include AM/PM)
             </label>
             <input
               type="text"
               placeholder="e.g., 9:00 AM - 5:00 PM"
-              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
               value={formData.availableTime}
               onChange={(e) =>
                 setFormData({ ...formData, availableTime: e.target.value })

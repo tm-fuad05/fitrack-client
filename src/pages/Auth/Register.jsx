@@ -71,20 +71,16 @@ const Register = () => {
           src={authbg}
           alt=""
         />
-        <div className="w-1/2 flex flex-col px-6 py-7 lg:py-0 justify-center lg:rounded-r-xl bg-gray-100 flex-grow">
-          {/* <h3 className="font-bold text-lg lg:text-xl text-center mt-5">
-            Welcome!
-          </h3> */}
-          {/* Content */}
+        <div className="w-1/2 flex flex-col px-6 py-7 lg:py-0 justify-center lg:rounded-r-xl bg-surface dark:bg-surface-dark flex-grow">
           <div className="flex flex-col gap-2 mb-4">
-            <h2 className="font-bold text-2xl lg:text-3xl mt-2">
+            <h2 className="font-bold text-2xl lg:text-3xl mt-2 text-foreground dark:text-foreground-dark">
               Register to Fit<span className="text-secondary">Rack</span>
             </h2>
           </div>
           <form onSubmit={handleRegister} className="space-y-2">
             {/* Name */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="name" className="text-[15px] font-[400] form-label">
                 Name
               </label>
               <input
@@ -92,12 +88,11 @@ const Register = () => {
                 name="name"
                 id="name"
                 placeholder="Name "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
+                className="form-input border-[#e5eaf2] pl-4 pr-4 py-3 focus:ring-0"
               />
             </div>
-            {/* Photo */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="photo" className="text-[15px] font-[400] form-label">
                 Your Photo
               </label>
               <input
@@ -105,12 +100,11 @@ const Register = () => {
                 name="photo"
                 id="photo"
                 placeholder="Photo URL"
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
+                className="form-input border-[#e5eaf2] pl-4 pr-4 py-3 focus:ring-0"
               />
             </div>
-            {/* email */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="email" className="text-[15px] font-[400] form-label">
                 Email
               </label>
               <input
@@ -118,12 +112,11 @@ const Register = () => {
                 name="email"
                 id="email"
                 placeholder="Email "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
+                className="form-input border-[#e5eaf2] pl-4 pr-4 py-3 focus:ring-0"
               />
             </div>
-            {/* password */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="password" className="text-[15px] font-[400] form-label">
                 Password
               </label>
               <div className="w-full relative">
@@ -132,16 +125,16 @@ const Register = () => {
                   name="password"
                   id="password"
                   placeholder="Password"
-                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-primary transition-colors duration-300 mb-2"
+                  className="form-input border-[#e5eaf2] pl-4 pr-12 py-3 mt-1 mb-2 focus:ring-0"
                 />
                 {isEyeOpen ? (
                   <IoEyeOutline
-                    className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                    className="absolute top-4 right-4 text-[1.5rem] text-foreground-muted dark:text-foreground-muted-dark cursor-pointer"
                     onClick={() => setIsEyeOpen(false)}
                   />
                 ) : (
                   <IoEyeOffOutline
-                    className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                    className="absolute top-4 right-4 text-[1.5rem] text-foreground-muted dark:text-foreground-muted-dark cursor-pointer"
                     onClick={() => setIsEyeOpen(true)}
                   />
                 )}
@@ -159,7 +152,7 @@ const Register = () => {
             <SocialLogin></SocialLogin>
           </div>
           <div className="mt-3 text-center">
-            <p>
+            <p className="text-foreground-muted dark:text-foreground-muted-dark">
               Already have an account?{" "}
               <Link className="hover:underline text-secondary" to="/login">
                 Login

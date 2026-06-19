@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 const Community = () => {
   return (
-    <div className="my-10 w-10/12 mx-auto">
+    <div className="my-10 w-10/12 mx-auto bg-background dark:bg-background-dark">
       <Helmet>
         <title>FitRack | Community</title>
       </Helmet>

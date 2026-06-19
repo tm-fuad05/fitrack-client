@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 
 const AboutUs = () => {
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen text-gray-800">
+    <div className="bg-background text-foreground transition-colors duration-300 min-h-screen dark:bg-background-dark dark:text-foreground-dark">
       <Helmet>
         <title>FitRack | About Us</title>
       </Helmet>
@@ -29,10 +29,10 @@ const AboutUs = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <h2 className="text-3xl font-bold mb-6 dark:text-white">
+            <h2 className="text-3xl font-bold mb-6 text-foreground dark:text-foreground-dark">
               Our Mission
             </h2>
-            <p className="text-lg mb-6 dark:text-gray-500">
+            <p className="text-lg mb-6 text-foreground-muted dark:text-foreground-muted-dark">
               At FitRack, our mission is to create a one-stop fitness platform
               where you can track your progress, connect with like-minded
               individuals, and access expert guidance to transform your fitness
@@ -60,43 +60,43 @@ const AboutUs = () => {
         </div>
       </motion.section>
 
-      <section className="bg-white dark:bg-black transition-colors duration-300 py-16">
+      <section className="bg-surface py-16 transition-colors duration-300 dark:bg-surface-dark">
         <div className="container mx-auto px-5">
-          <h2 className="text-3xl font-bold text-center mb-10 dark:text-white">
+          <h2 className="text-3xl font-bold text-center mb-10 text-foreground dark:text-foreground-dark">
             Why Choose FitRack?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="shadow-lg dark:bg-gray-900">
+            <Card className="shadow-lg dark:bg-surface-dark">
               <CardBody className="text-center">
                 <LucideDumbbell className="w-12 h-12 mx-auto text-secondary mb-4" />
-                <h3 className="font-semibold text-xl mb-2 dark:text-white">
+                <h3 className="font-semibold text-xl mb-2 text-foreground dark:text-foreground-dark">
                   Comprehensive Tracking
                 </h3>
-                <p className="dark:text-gray-500">
+                <p className="text-foreground-muted dark:text-foreground-muted-dark">
                   Monitor your workouts, nutrition, and progress all in one
                   place with our intuitive tools and personalized dashboards.
                 </p>
               </CardBody>
             </Card>
-            <Card className="shadow-lg dark:bg-gray-900">
+            <Card className="shadow-lg dark:bg-surface-dark">
               <CardBody className="text-center">
                 <LucideHeart className="w-12 h-12 mx-auto text-secondary mb-4" />
-                <h3 className="font-semibold text-xl mb-2 dark:text-white">
+                <h3 className="font-semibold text-xl mb-2 text-foreground dark:text-foreground-dark">
                   Supportive Community
                 </h3>
-                <p className="dark:text-gray-500">
+                <p className="text-foreground-muted dark:text-foreground-muted-dark">
                   Connect with other fitness enthusiasts, share your journey,
                   and find inspiration in our vibrant community.
                 </p>
               </CardBody>
             </Card>
-            <Card className="shadow-lg dark:bg-gray-900">
+            <Card className="shadow-lg dark:bg-surface-dark">
               <CardBody className="text-center">
                 <LucideDumbbell className="w-12 h-12 mx-auto text-secondary mb-4" />
-                <h3 className="font-semibold text-xl mb-2 dark:text-white">
+                <h3 className="font-semibold text-xl mb-2 text-foreground dark:text-foreground-dark">
                   Expert Guidance
                 </h3>
-                <p className="dark:text-gray-500">
+                <p className="text-foreground-muted dark:text-foreground-muted-dark">
                   Access workouts and advice from fitness professionals to help
                   you achieve your goals efficiently and safely.
                 </p>

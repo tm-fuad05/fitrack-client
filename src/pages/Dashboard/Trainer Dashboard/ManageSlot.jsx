@@ -79,7 +79,7 @@ const ManageSlot = () => {
 
         {/* Simple Table */}
         <div className="overflow-x-auto  ">
-          <table className="w-full bg-white border">
+          <table className="data-table">
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-3 text-left">Name</th>
@@ -110,7 +110,7 @@ const ManageSlot = () => {
                     <DialogBody>
                       <form onSubmit={handleManageSlots}>
                         <div>
-                          <label className="block text-gray-700 font-medium mb-2">
+                          <label className="block form-label font-medium mb-2">
                             Your Slots
                           </label>
                           <Select

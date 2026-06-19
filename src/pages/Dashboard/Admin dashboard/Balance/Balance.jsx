@@ -49,7 +49,7 @@ const Balance = () => {
           <p className="text-center mt-5">No Transactions</p>
         ) : (
           <div className="overflow-x-auto  ">
-            <table className="w-full bg-white border">
+            <table className="data-table">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="p-3 text-left">Member</th>

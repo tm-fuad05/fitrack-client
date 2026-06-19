@@ -11,7 +11,7 @@ const TrainerBooking = () => {
       <Helmet>
         <title>FitRack | Booking</title>
       </Helmet>
-      <div className="text-xl bg-gray-200 p-5 font-poppins mb-32">
+      <div className="text-xl bg-surface dark:bg-surface-elevated text-foreground dark:text-foreground-dark p-5 font-poppins mb-32 rounded-lg">
         <p>
           {" "}
           <span className="font-semibold">Trainer:</span> {trainerName}

@@ -62,7 +62,7 @@ const Profile = () => {
       </Helmet>
       <h1 className="text-2xl font-bold mb-4">Your Profile</h1>
       <div className="bg-gradient-to-t from-primary to-secondary min-h-[300px] rounded-xl"></div>
-      <div className="rounded-xl  bg-white dark:bg-gray-900 shadow-2xl w-9/12 relative p-5 pt-0 -translate-x-1/2 left-1/2 -top-24 z-10">
+      <div className="rounded-xl  bg-surface dark:bg-surface-dark shadow-2xl w-9/12 relative p-5 pt-0 -translate-x-1/2 left-1/2 -top-24 z-10">
         {isLoading ? (
           <Loader />
         ) : (
@@ -73,14 +73,14 @@ const Profile = () => {
           />
         )}
         <div className="pt-16 lg:pt-24 text-center space-y-1">
-          <h3 className=" font-bold text-xl md:text-2xl lg:text-3xl text-gray-800 dark:text-white">
+          <h3 className=" font-bold text-xl md:text-2xl lg:text-3xl text-foreground dark:text-foreground-dark">
             {user?.displayName}
           </h3>
-          <p className="text-gray-500 text-sm md:text-md lg:text-lg">
+          <p className="text-foreground-muted dark:text-foreground-muted-dark text-sm md:text-md lg:text-lg">
             {user?.email}
           </p>
-          <p className="text-gray-500 text-sm md:text-md lg:text-lg">
-            <span className="font-semibold text-gray-800 dark:text-gray-500">
+          <p className="text-foreground-muted dark:text-foreground-muted-dark text-sm md:text-md lg:text-lg">
+            <span className="font-semibold text-foreground dark:text-foreground-dark">
               Last Login time: <br />
             </span>{" "}
             {user.metadata.lastSignInTime}{" "}

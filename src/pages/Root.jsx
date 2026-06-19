@@ -1,7 +1,9 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Footer from "../components/Shared/Footer";
-import Navbar from "../components/Shared/Navbar";
+import Footer from "../layout/Footer";
+import Navbar from "../layout/Navbar";
+import SmoothScrollProvider from "../Provider/SmoothScrollProvider";
+import ScrollToTop from "../Routes/ScrollToTop";
 
 const Root = () => {
   const location = useLocation();
@@ -12,11 +14,16 @@ const Root = () => {
     location.pathname.includes("/dashboard");
 
   return (
-    <div>
-      {noHeaderFooter || <Navbar></Navbar>}
-      <Outlet />
-      {noHeaderFooter || <Footer></Footer>}
-    </div>
+    <SmoothScrollProvider>
+      <ScrollToTop />
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 dark:bg-background-dark dark:text-foreground-dark">
+        {noHeaderFooter || <Navbar />}
+        <main>
+          <Outlet />
+        </main>
+        {noHeaderFooter || <Footer />}
+      </div>
+    </SmoothScrollProvider>
   );
 };
 

@@ -57,19 +57,19 @@ const AddForum = () => {
       <Helmet>
         <title>FitRack | Add Forum</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-center text-foreground dark:text-foreground-dark">
         Post a Forum
       </h1>
       <form onSubmit={handlePost} className="space-y-6">
         {/* Title */}
         <div>
-          <label className="block text-gray-700 dark:text-gray-500 font-medium mb-2">
+          <label className="block form-label font-medium mb-2">
             Title
           </label>
           <input
             type="text"
             placeholder="Forum title"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-400 dark:border-gray-900 dark:placeholder-gray-800"
+            className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
             value={formData.title}
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
@@ -80,13 +80,13 @@ const AddForum = () => {
 
         {/* Category */}
         <div>
-          <label className="block text-gray-700 dark:text-gray-500 font-medium mb-2">
+          <label className="block form-label font-medium mb-2">
             Category
           </label>
           <input
             type="text"
             placeholder="Forum Category"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-400 dark:border-gray-900 dark:placeholder-gray-800"
+            className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
             value={formData.category}
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
@@ -96,13 +96,13 @@ const AddForum = () => {
         </div>
         {/* Description */}
         <div>
-          <label className="block text-gray-700 dark:text-gray-500 font-medium mb-2">
+          <label className="block form-label font-medium mb-2">
             Description
           </label>
           <textarea
             type="textarea"
             placeholder="Forum Description"
-            className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-400 dark:border-gray-900 dark:placeholder-gray-800"
+            className="form-input rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })

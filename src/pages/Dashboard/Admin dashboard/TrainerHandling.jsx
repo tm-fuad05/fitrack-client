@@ -53,7 +53,7 @@ const TrainerHandling = () => {
         {/* Total Count */}
         {trainers?.length > 0 && (
           <div className="mb-4">
-            <p className="text-gray-600 dark:text-gray-500">
+            <p className="text-foreground-muted dark:text-foreground-muted-dark">
               Total Trainers: {trainers?.length}
             </p>
           </div>
@@ -64,7 +64,7 @@ const TrainerHandling = () => {
           <p className="text-center mt-5">No trainers found in your website </p>
         ) : (
           <div className="overflow-x-auto  ">
-            <table className="w-full bg-white border">
+            <table className="data-table">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="p-3 text-left">Name</th>

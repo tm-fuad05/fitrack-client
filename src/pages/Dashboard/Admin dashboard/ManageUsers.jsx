@@ -84,14 +84,14 @@ const ManageUsers = () => {
 
         {/* Total Count */}
         <div className="mb-4">
-          <p className="text-gray-600 dark:text-gray-500">
+          <p className="text-foreground-muted dark:text-foreground-muted-dark">
             Total users: {users?.length}
           </p>
         </div>
 
         {/* Simple Table */}
         <div className="overflow-x-auto  ">
-          <table className="w-full bg-white border">
+          <table className="data-table">
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-3 text-left">Name</th>

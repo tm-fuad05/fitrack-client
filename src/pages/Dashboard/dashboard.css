@@ -1,4 +1,9 @@
 #dashboard-nav a.active {
   background-color: #e5e7eb;
-  color: black;
+  color: #171717;
+}
+
+.dark #dashboard-nav a.active {
+  background-color: #374151;
+  color: #f3f4f6;
 }

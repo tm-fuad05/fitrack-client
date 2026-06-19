@@ -1,5 +1,6 @@
 import React from "react";
 import SectionTitle from "../Shared/SectionTitle";
+import { motion } from "framer-motion";
 
 const Trainers = () => {
   const trainers = [
@@ -41,40 +42,80 @@ const Trainers = () => {
     },
   ];
 
+  // Container configuration for sequential staggering
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  // Card slide-up and fade-in animation
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <div>
-      <SectionTitle
-        title={"TEAM OF EXPERT COACHES"}
-        subtitle={"our team"}
-        dark={"white"}
-      />
-      <div className="bg-gradient-to-b from-primary to-secondary  py-16 mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 w-10/12 mx-auto">
+      <SectionTitle title={"TEAM OF EXPERT COACHES"} subtitle={"our team"} />
+      {/* Kept your original solid gradient background layer */}
+      <div className="bg-gradient-to-b from-primary to-secondary py-16 mt-10">
+        {/* Animated grid system wrapper */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-7 w-10/12 mx-auto"
+        >
           {trainers.map((trainer) => (
-            <div
+            <motion.div
               key={trainer.id}
-              className="text-white space-y-3 flex flex-col justify-center items-center group"
+              variants={cardVariants}
+              whileHover={{ y: -5 }} // Subtle hardware-accelerated lift on hover
+              className="text-white space-y-3 flex flex-col justify-center items-center group transition-all duration-300"
             >
-              <img
-                className="w-[250px] h-[250px] rounded-full object-cover group-hover:scale-105 group-hover:opacity-70 duration-300 "
-                src={trainer.photo}
-                alt=""
-              />
-              <h4 className="text-2xl lg:text-3xl font-bold ">
+              {/* Image with your original hover scale, adding a crisp inner border layout */}
+              <div className="w-[250px] h-[250px] rounded-full p-1 bg-white/20 overflow-hidden shadow-lg group-hover:bg-white/40 duration-300">
+                <img
+                  className="w-full h-full rounded-full object-cover group-hover:scale-105 group-hover:opacity-90 duration-300"
+                  src={trainer.photo}
+                  alt={trainer.name}
+                />
+              </div>
+
+              {/* Solid high-contrast text titles */}
+              <h4 className="text-2xl lg:text-3xl font-bold tracking-wide">
                 {trainer.name}
               </h4>
-              <p className="text-sm lg:text-md text-center flex-grow">
+
+              <p className="text-sm lg:text-md text-center flex-grow text-white/90">
                 {trainer.bio}
               </p>
-              <p className="font-bold ">Expertise in:</p>
-              <ul className="text-sm lg:text-md list-disc">
+
+              <p className="font-bold border-b border-white/30 pb-1">
+                Expertise in:
+              </p>
+
+              {/* Keeping your original list structure intact */}
+              <ul className="text-sm lg:text-md list-disc list-inside space-y-1">
                 {trainer.expertise.map((point, idx) => (
-                  <li key={idx}>{point}</li>
+                  <li key={idx} className="text-white/90">
+                    {point}
+                  </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

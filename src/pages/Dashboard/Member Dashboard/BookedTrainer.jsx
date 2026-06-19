@@ -77,33 +77,33 @@ const BookedTrainer = () => {
         <title>FitRack | Booked</title>
       </Helmet>
       {/* Simple Header */}
-      <h1 className="text-2xl font-bold mb-4 dark:text-white">
+      <h1 className="text-2xl font-bold mb-4 text-foreground dark:text-foreground-dark">
         Booked Trainers
       </h1>
 
       {/* Total Count */}
       {payments?.length > 0 && (
         <div className="mb-4">
-          <p className="text-gray-600 dark:text-gray-500">
+          <p className="text-foreground-muted dark:text-foreground-muted-dark">
             Total Booked Trainers: {payments?.length}
           </p>
         </div>
       )}
       {payments.length === 0 ? (
-        <p className="text-center mt-5 dark:text-gray-500">
+        <p className="text-center mt-5 text-foreground-muted dark:text-foreground-muted-dark">
           No Trainers Booked
         </p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {payments.map((p) => (
-            <div className="bg-white rounded-lg shadow-md p-6 flex flex-col">
-              <h2 className="text-2xl font-bold mb-2">{p.membershipType}</h2>
-              <p className="text-gray-500 mb-4">{p.trainer}</p>
+            <div className="bg-surface dark:bg-surface-dark rounded-lg shadow-md p-6 flex flex-col border border-gray-200 dark:border-gray-700">
+              <h2 className="text-2xl font-bold mb-2 text-foreground dark:text-foreground-dark">{p.membershipType}</h2>
+              <p className="text-foreground-muted dark:text-foreground-muted-dark mb-4">{p.trainer}</p>
               <div className="flex justify-between items-center mb-4">
-                <span className="text-4xl font-bold">${p.price}</span>
-                <span className="text-gray-500">{p.membershipType}</span>
+                <span className="text-4xl font-bold text-primary">${p.price}</span>
+                <span className="text-foreground-muted dark:text-foreground-muted-dark">{p.membershipType}</span>
               </div>
-              <p className="text-gray-500 flex-grow">Booked Date: {p.date} </p>
+              <p className="text-foreground-muted dark:text-foreground-muted-dark flex-grow">Booked Date: {p.date} </p>
               <button
                 onClick={handleOpen}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"

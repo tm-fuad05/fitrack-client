@@ -83,7 +83,7 @@ const ActivityLog = () => {
         {/* Simple Table */}
         {currentUser ? (
           <div className="overflow-x-auto  ">
-            <table className="w-full bg-white border">
+            <table className="data-table">
               <thead className="bg-gray-100">
                 <tr>
                   <th className="p-3 text-left">Name</th>
@@ -145,7 +145,7 @@ const ActivityLog = () => {
             </table>
           </div>
         ) : (
-          <p className="text-center mt-10 dark:text-gray-500">No Activities</p>
+          <p className="text-center mt-10 text-foreground-muted dark:text-foreground-muted-dark">No Activities</p>
         )}
       </div>
     </div>

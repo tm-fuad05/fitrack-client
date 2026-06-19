@@ -58,17 +58,16 @@ const Login = () => {
           src={authbg}
           alt=""
         />
-        <div className="w-1/2 flex flex-col px-6 py-7 lg:py-0 justify-center lg:rounded-l-xl bg-gray-100 flex-grow">
-          {/* Content */}
+        <div className="w-1/2 flex flex-col px-6 py-7 lg:py-0 justify-center lg:rounded-l-xl bg-surface dark:bg-surface-dark flex-grow">
           <div className="flex flex-col gap-2 mb-4">
-            <h2 className="font-bold text-2xl lg:text-3xl mt-2">
+            <h2 className="font-bold text-2xl lg:text-3xl mt-2 text-foreground dark:text-foreground-dark">
               Login to Fit<span className="text-secondary">Rack</span>
             </h2>
           </div>
           <form onSubmit={handleLogin} className="space-y-2">
             {/* email */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="email" className="text-[15px] font-[400] form-label">
                 Email
               </label>
               <input
@@ -76,12 +75,11 @@ const Login = () => {
                 name="email"
                 id="email"
                 placeholder="Email "
-                className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-4 py-3 w-full focus:border-primary transition-colors duration-300"
+                className="form-input border-[#e5eaf2] pl-4 pr-4 py-3 focus:ring-0"
               />
             </div>
-            {/* password */}
             <div>
-              <label htmlFor="password" className="text-[15px] font-[400]">
+              <label htmlFor="password" className="text-[15px] font-[400] form-label">
                 Password
               </label>
               <div className="w-full relative">
@@ -90,16 +88,16 @@ const Login = () => {
                   name="password"
                   id="password"
                   placeholder="Password"
-                  className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-primary transition-colors duration-300 mb-2"
+                  className="form-input border-[#e5eaf2] pl-4 pr-12 py-3 mt-1 mb-2 focus:ring-0"
                 />
                 {isEyeOpen ? (
                   <IoEyeOutline
-                    className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                    className="absolute top-4 right-4 text-[1.5rem] text-foreground-muted dark:text-foreground-muted-dark cursor-pointer"
                     onClick={() => setIsEyeOpen(false)}
                   />
                 ) : (
                   <IoEyeOffOutline
-                    className=" absolute top-4 right-4 text-[1.5rem] text-[#777777] cursor-pointer"
+                    className="absolute top-4 right-4 text-[1.5rem] text-foreground-muted dark:text-foreground-muted-dark cursor-pointer"
                     onClick={() => setIsEyeOpen(true)}
                   />
                 )}
@@ -118,7 +116,7 @@ const Login = () => {
             <SocialLogin></SocialLogin>
           </div>
           <div className="mt-3 text-center">
-            <p>
+            <p className="text-foreground-muted dark:text-foreground-muted-dark">
               New in this website?{" "}
               <Link className="hover:underline text-secondary" to="/register">
                 Register

@@ -9,26 +9,26 @@ import { Link } from "react-router-dom";
 
 const TrainerCard = ({ trainer }) => {
   return (
-    <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+    <div className="bg-surface dark:bg-surface-dark shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col">
       <img
         className="w-full h-[340px] md:h-64 object-cover"
         src={trainer.profileImage}
         alt={`${trainer.trainerName} Profile`}
       />
       <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+        <h2 className="text-xl font-bold text-foreground dark:text-foreground-dark">
           {trainer.fullName}
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm ">
+        <p className="text-foreground-muted dark:text-foreground-muted-dark mt-2 text-sm">
           {trainer.yearsOfExperience} Years of Experience
         </p>
-        <p className="text-gray-700 dark:text-gray-400 mt-2 ">
+        <p className="text-foreground-muted dark:text-foreground-muted-dark mt-2">
           <span className="font-semibold">Age:</span> {trainer.age}
         </p>
-        <p className="text-gray-700 dark:text-gray-400 mt-2 flex-grow">
+        <p className="text-foreground-muted dark:text-foreground-muted-dark mt-2 flex-grow">
           <span className="font-semibold">Expertise:</span>{" "}
           {trainer.skills.map((skill, index) => (
-            <span key={index} className="text-gray-500 dark:text-gray-400">
+            <span key={index} className="text-foreground-muted dark:text-foreground-muted-dark">
               {skill}
               {index < trainer.skills.length - 1 && ", "}
             </span>
@@ -40,8 +40,8 @@ const TrainerCard = ({ trainer }) => {
           <IoLogoTwitter className="hover:opacity-50 cursor-pointer" />
         </div>
       </div>
-      <div className="bg-gray-100 dark:bg-black/15 p-4">
-        <p className="text-gray-800 dark:text-gray-400 font-medium">
+      <div className="bg-surface dark:bg-surface-elevated p-4">
+        <p className="text-foreground dark:text-foreground-dark font-medium">
           Available Slots:{" "}
           <span className="text-secondary font-semibold">
             {trainer.availableDays.length}

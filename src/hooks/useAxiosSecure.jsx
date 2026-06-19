@@ -6,7 +6,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://fitrack-server.vercel.app/",
 });
 
 const useAxiosSecure = () => {
@@ -24,7 +24,7 @@ const useAxiosSecure = () => {
     },
     function (error) {
       return Promise.reject(error);
-    }
+    },
   );
 
   // Add a response interceptor
@@ -49,7 +49,7 @@ const useAxiosSecure = () => {
       }
 
       return Promise.reject(error);
-    }
+    },
   );
   return axiosSecure;
 };

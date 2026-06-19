@@ -268,7 +268,7 @@ const Dashboard = () => {
       <section className="col-span-12 lg:col-span-9">
         <div
           onClick={() => setDarkMode(!darkMode)}
-          className="text-gray-800 dark:text-white text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all w-fit ml-auto m-5 duration-1000 hidden lg:block"
+          className="text-foreground dark:text-foreground-dark text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all w-fit ml-auto m-5 duration-1000 hidden lg:block"
         >
           {darkMode ? <MdLightMode /> : <MdDarkMode />}
         </div>
@@ -280,7 +280,7 @@ const Dashboard = () => {
               <div className="flex items-center gap-1">
                 <img className="w-10 md:w-16" src={fitrack} alt="logo" />
                 <h2
-                  className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-gray-900/90 dark:text-white`}
+                  className={`font-bold text-xl md:text-2xl lg:text-3xl italic text-foreground dark:text-foreground-dark`}
                 >
                   Fit<span className="text-primary">Rack</span>
                 </h2>
@@ -289,7 +289,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-3">
               <div
                 onClick={() => setDarkMode(!darkMode)}
-                className={`text-gray-800 dark:text-white dar text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-300`}
+                className={`text-foreground dark:text-foreground-dark dar text-xl border border-gray-500 p-1.5 rounded-lg cursor-pointer transition-all duration-300`}
               >
                 {darkMode ? <MdLightMode /> : <MdDarkMode />}
               </div>
@@ -322,7 +322,7 @@ const Dashboard = () => {
           </button>
         </aside>
         {/* Content */}
-        <section className="py-10 w-11/12 mx-auto">
+        <section className="py-10 w-11/12 mx-auto text-foreground dark:text-foreground-dark">
           <Outlet></Outlet>
         </section>
       </section>

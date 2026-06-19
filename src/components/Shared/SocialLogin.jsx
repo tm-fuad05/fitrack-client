@@ -39,7 +39,7 @@ const SocialLogin = () => {
     <div className="flex justify-between gap-2 mx-auto">
       <button
         onClick={handleGoogleSignIn}
-        className="py-3 rounded-md bg-white w-full flex justify-center gap-2 hover:bg-gray-200 font-medium"
+        className="py-3 rounded-md bg-surface dark:bg-surface-elevated text-foreground dark:text-foreground-dark w-full flex justify-center gap-2 hover:bg-gray-200 dark:hover:bg-surface-dark font-medium border border-gray-200 dark:border-gray-700"
       >
         <img
           src="https://i.ibb.co/dQMmB8h/download-4-removebg-preview-1.png"

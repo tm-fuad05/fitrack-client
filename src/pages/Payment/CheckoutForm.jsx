@@ -16,6 +16,7 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [transaction, setTransaction] = useState("");
+  const isDark = document.documentElement.classList.contains("dark");
 
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", { price }).then((res) => {
@@ -103,9 +104,9 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
             style: {
               base: {
                 fontSize: "16px",
-                color: "#424770",
+                color: isDark ? "#f3f4f6" : "#171717",
                 "::placeholder": {
-                  color: "#aab7c4",
+                  color: isDark ? "#9ca3af" : "#6b7280",
                 },
               },
               invalid: {
@@ -123,7 +124,7 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
           Pay
         </button>
         {transaction && (
-          <p className="text-xs text-green-500 mt-2">
+          <p className="text-xs text-green-600 dark:text-green-400 mt-2">
             Transaction ID:{transaction}
           </p>
         )}
