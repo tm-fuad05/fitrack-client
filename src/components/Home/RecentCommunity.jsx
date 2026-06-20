@@ -62,7 +62,7 @@ const RecentCommunity = () => {
             variants={cardVariants}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
           >
-            <CommunityCard post={post} />
+            <CommunityCard post={post} refetch={refetch} />
           </motion.div>
         ))}
       </motion.div>
