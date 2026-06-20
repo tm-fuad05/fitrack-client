@@ -153,12 +153,12 @@ const AllClasses = () => {
           onPageChange={handlePageChange}
           forcePage={currentPage}
           containerClassName="flex items-center justify-center gap-2 mt-12 border-t border-gray-200 dark:border-white/5 pt-6"
-          pageClassName="overflow-hidden rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 backdrop-blur-md transition-all duration-300 hover:border-primary/50"
-          pageLinkClassName="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white block"
-          activeClassName="bg-primary border-primary hover:border-primary shadow-lg shadow-primary/20 scale-105"
-          activeLinkClassName="text-gray-50 hover:text-white"
-          previousClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 transition-all duration-300"
-          nextClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 transition-all duration-300"
+          pageClassName="overflow-hidden rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md transition-all duration-300 hover:border-primary/50 dark:hover:border-primary/50"
+          pageLinkClassName="px-4 py-2 text-sm font-semibold text-gray-900 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white block"
+          activeClassName="bg-primary border-primary hover:border-primary dark:bg-primary shadow-primary/20 scale-105"
+          activeLinkClassName="text-gray-50 dark:text-gray-50 hover:text-white"
+          previousClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300"
+          nextClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300"
           disabledClassName="opacity-30 cursor-not-allowed pointer-events-none"
           breakClassName="px-3 py-2 text-gray-400 dark:text-gray-500 font-bold"
         />
