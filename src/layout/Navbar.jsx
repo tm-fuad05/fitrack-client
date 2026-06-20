@@ -16,6 +16,7 @@ import "./navbar.css";
 import useAdmin from "../hooks/useAdmin";
 import useTrainerCheck from "../hooks/useTrainerCheck";
 import MiniLoader from "../components/Shared/MiniLoader";
+import Logo from "../components/Shared/Logo";
 
 const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -148,25 +149,9 @@ const Navbar = () => {
         {/* Logo */}
         <a
           href="/"
-          className="group flex items-center gap-2 transition-transform active:scale-95"
+          className="group flex items-center gap-2 transition-transform active:scale-95 hover:scale-95"
         >
-          <img
-            className="w-9 md:w-10 object-contain group-hover:rotate-6 transition-transform duration-300"
-            src={fitrack}
-            alt="logo"
-          />
-          <h2
-            className={`font-black text-xl italic tracking-tight transition-colors duration-300 ${
-              (pathname === "/" || pathname === "/all-trainer") && !scrolled
-                ? "text-white"
-                : "text-gray-950 dark:text-white"
-            }`}
-          >
-            Fit
-            <span className="text-primary group-hover:text-secondary transition-colors">
-              Rack
-            </span>
-          </h2>
+          <Logo />
         </a>
 
         {/* Desktop Nav Links */}
