@@ -21,6 +21,7 @@ const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
+  const mobNavRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const [darkMode, setDarkMode] = useState(() => {
@@ -41,6 +42,9 @@ const Navbar = () => {
     const handleOutsideClick = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setAccountMenuOpen(false);
+      }
+      if (mobNavRef.current && !mobNavRef.current.contains(event.target)) {
+        setMobileSidebarOpen(false);
       }
     };
 
@@ -82,8 +86,8 @@ const Navbar = () => {
     // Adapt links based on current viewport routing & state
     if (pathname === "/" || pathname === "/all-trainer") {
       return scrolled
-        ? `${baseClass} text-gray-700 dark:text-gray-300 hover:text-primary`
-        : `${baseClass} text-white hover:text-primary`;
+        ? `${baseClass} text-gray-900 dark:text-gray-300 hover:text-primary`
+        : `${baseClass} text-gray-900 dark:text-gray-300 hover:text-primary`;
     }
 
     return `${baseClass} text-gray-800 dark:text-gray-300 hover:text-primary`;
@@ -275,7 +279,8 @@ const Navbar = () => {
 
         {/* Mobile Sidebar Menu Panel */}
         <aside
-          className={`fixed lg:hidden left-0 right-0 top-[60px] w-full bg-white/95 dark:bg-gray-950/95 border-b border-gray-200 dark:border-white/10 backdrop-blur-xl shadow-2xl p-6 text-center transition-all duration-300 ${
+          ref={mobNavRef}
+          className={`fixed lg:hidden left-0 right-0 top-[72px] w-full bg-gray-50 dark:bg-surface-dark  backdrop-blur-xl shadow-2xl p-6 text-center transition-all duration-300 ${
             mobileSidebarOpen
               ? "trangray-y-0 opacity-100 z-40"
               : "-trangray-y-10 opacity-0 pointer-events-none"
