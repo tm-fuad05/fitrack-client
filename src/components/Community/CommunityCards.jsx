@@ -78,7 +78,7 @@ const CommunityCards = () => {
           pageClassName="overflow-hidden rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 backdrop-blur-md transition-all duration-300 hover:border-primary/50"
           pageLinkClassName="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white block"
           activeClassName="bg-primary border-primary hover:border-primary shadow-lg shadow-primary/20 scale-105"
-          activeLinkClassName="text-gray-700 hover:text-white"
+          activeLinkClassName="text-gray-50 hover:text-white"
           previousClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 transition-all duration-300"
           nextClassName="p-2 rounded-xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-neutral-900/40 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-primary/50 transition-all duration-300"
           disabledClassName="opacity-30 cursor-not-allowed pointer-events-none"
