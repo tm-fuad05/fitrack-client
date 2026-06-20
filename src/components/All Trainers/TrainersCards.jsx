@@ -26,16 +26,17 @@ const TrainersCards = () => {
     },
   });
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <div className="w-11/12 mx-auto my-20">
       <div className="flex justify-between items-cente items-center mb-5">
-        <h2 className="text-xl lg:text-3xl font-semibold text-foreground dark:text-foreground-dark">
-          Trainers ({trainers?.length})
-        </h2>
+        <div className="flex items-center pl-4 border-l-4 border-primary/90 py-1">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-slate-950 dark:text-white uppercase">
+            All Trainers{" "}
+            <span className="text-primary font-extrabold tracking-wide">
+              [{trainers?.length || 0}]
+            </span>
+          </h2>
+        </div>
         <div>
           <Select
             onChange={(value) => setSort(value)}
@@ -51,11 +52,15 @@ const TrainersCards = () => {
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-        {trainers.map((trainer) => (
-          <TrainerCard key={trainer._id} trainer={trainer}></TrainerCard>
-        ))}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
+          {trainers.map((trainer) => (
+            <TrainerCard key={trainer._id} trainer={trainer}></TrainerCard>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

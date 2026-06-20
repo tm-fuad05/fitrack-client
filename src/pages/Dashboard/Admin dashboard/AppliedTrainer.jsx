@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import useAppliedTrainer from "../../../hooks/useAppliedTrainer";
 import { TiTick } from "react-icons/ti";
-import { FaTrash } from "react-icons/fa6";
+import { FiUsers, FiMail, FiEye, FiX, FiUserX } from "react-icons/fi";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
-
-// SweetAlert
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2";
 import useUser from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
-// Material Ui
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
@@ -18,15 +14,26 @@ import Loader from "../../../components/Shared/Loader";
 
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch, isLoading } = useAppliedTrainer();
-  const pendingFilter = appliedTrainers?.filter((p) => p.status === "pending");
+  const pendingFilter =
+    appliedTrainers?.filter((p) => p.status === "pending") || [];
   const axiosSecure = useAxiosSecure();
   const { users } = useUser();
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(!open);
+  const [open, setOpen] = useState(false);
+  const [selectedTrainer, setSelectedTrainer] = useState(null);
+
+  const handleOpen = (trainer = null) => {
+    setSelectedTrainer(trainer);
+    setOpen(!open);
+  };
 
   const handleConfirmTrainer = async (trainer) => {
     const currentTrainer = users.find((u) => u.email === trainer.email);
+    if (!currentTrainer) {
+      Swal.fire("Error", "Corresponding user account not found.", "error");
+      return;
+    }
+
     const confirmedTrainer = {
       fullName: trainer.fullName,
       email: trainer.email,
@@ -39,83 +46,81 @@ const AppliedTrainer = () => {
 
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `You want to confirm ${trainer.fullName} as trainer?`,
+      text: `Confirm ${trainer.fullName} as an active instructor?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "var(--color-primary, #ff5200)",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Confirm",
+      confirmButtonText: "Confirm Allocation",
     });
+
     if (!result.isConfirmed) return;
+
     try {
       const [postRes, deleteRes, patchRes] = await Promise.all([
-        axiosSecure.post("/trainers", confirmedTrainer), // Add trainer
-        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`), // Remove application
-        axiosSecure.patch(`/users/make-trainer/${currentTrainer._id}`), // Update role
+        axiosSecure.post("/trainers", confirmedTrainer),
+        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`),
+        axiosSecure.patch(`/users/make-trainer/${currentTrainer._id}`),
       ]);
 
-      if (!postRes.data.success) aler("Failed to confirm trainer.");
-      if (!deleteRes.data.success)
-        alert("Failed to remove trainer application.");
-      if (!patchRes.data.success) alert("Failed to update trainer role.");
-
-      refetch();
-      Swal.fire({
-        title: "Confirmed!",
-        text: `${trainer.fullName} is Trainer now.`,
-        icon: "success",
-      });
+      if (
+        postRes.data.success &&
+        deleteRes.data.success &&
+        patchRes.data.success
+      ) {
+        refetch();
+        Swal.fire({
+          title: "Session Initialized!",
+          text: `${trainer.fullName} has been successfully promoted to Trainer.`,
+          icon: "success",
+        });
+      } else {
+        Swal.fire("Error", "One or more pipeline operations failed.", "error");
+      }
     } catch (error) {
       console.error(error);
-      Swal.fire({
-        title: "Something went wrong!",
-        text: `${error}`,
-        icon: "error",
-      });
+      Swal.fire(
+        "Error",
+        error.message || "Failed to execute pipeline.",
+        "error",
+      );
     }
   };
 
-  //   Rejecting feedback
-  const handleSendFeedback = async (e) => {
+  const handleRejectPipeline = async (e) => {
     e.preventDefault();
+    if (!selectedTrainer) return;
+
     const form = e.target;
     const email = form.email.value;
     const feedback = form.feedback.value;
-    const rejectionFeedback = {
-      email,
-      feedback,
-    };
+
     try {
-      const { data } = await axiosSecure.post(
-        "/rejection-feedback",
-        rejectionFeedback
-      );
-      if (data.success) {
-        Swal.fire({
-          title: "Feedback Sent",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      const feedbackRes = await axiosSecure.post("/rejection-feedback", {
+        email,
+        feedback,
+      });
+
+      if (feedbackRes.data.success) {
+        const patchRes = await axiosSecure.patch(
+          `/applied-as-trainer/${selectedTrainer._id}`,
+        );
+
+        if (patchRes.data.success) {
+          refetch();
+          handleOpen();
+          Swal.fire({
+            title: "Application Rejected",
+            text: "Feedback successfully transmitted and log updated.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
       }
     } catch (error) {
-      console.error("Failed to send feedback:", error);
-    }
-  };
-
-  const handleReject = async (trainer) => {
-    handleOpen();
-
-    // Delete from appliedTrainer
-    try {
-      const { data } = await axiosSecure.patch(
-        `/applied-as-trainer/${trainer._id}`
-      );
-      if (data.success) {
-        refetch();
-      }
-    } catch (error) {
-      console.error("Failed to reject:", error);
+      console.error("Pipeline failure:", error);
+      Swal.fire("Error", "Failed to process rejection routine.", "error");
     }
   };
 
@@ -124,144 +129,211 @@ const AppliedTrainer = () => {
   }
 
   return (
-    <div>
+    <div className="space-y-6 antialiased">
       <Helmet>
-        <title>FitRack | Applied trainers</title>
+        <title>FitRack | Applied Trainers</title>
       </Helmet>
-      <Back></Back>
-      <div>
-        {/* Simple Header */}
-        <h1 className="text-2xl font-bold mb-4 dark:text-white">
-          Applied Trainers
-        </h1>
 
-        {/* Total Count */}
-        {pendingFilter?.length > 0 && (
-          <div className="mb-4">
-            <p className="text-foreground-muted dark:text-foreground-muted-dark">
-              Total Applied Trainers: {pendingFilter?.length}
+      <div className="flex items-center justify-between">
+        <Back />
+      </div>
+
+      {/* Premium Stats Header Panel */}
+      <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
+        <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+              <FiUsers className="text-primary" /> Applied Candidates
+            </h1>
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
+              Review and authorize structural onboarding for incoming profile
+              credentials.
             </p>
           </div>
-        )}
 
-        {/* Simple Table */}
-        {pendingFilter?.length === 0 ? (
-          <p className="text-center mt-5">No users apply for trainer</p>
-        ) : (
-          <div className="overflow-x-auto  ">
-            <table className="data-table">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="p-3 text-left">Name</th>
-                  <th className="p-3 text-left">Email</th>
-                  <th className="p-3 text-left">Status</th>
-                  <th className="p-3 text-left">Details</th>
-                  <th className="p-3 text-left">Confirm</th>
-                  <th className="p-3 text-left">Reject</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pendingFilter &&
-                  pendingFilter.map((trainer) => (
-                    <tr
-                      key={trainer._id}
-                      className="border dark:border-gray-900 dark:bg-gray-900 dark:text-white even:bg-gray-50 dark:even:bg-gray-900/90"
-                    >
-                      <td className="p-3">{trainer.fullName}</td>
-                      <td className="p-3">{trainer.email}</td>
-                      <td className={`p-3 font-semibold text-primary`}>
-                        {trainer.status}
-                      </td>
-                      <td className="p-3">
-                        <Link to={trainer._id}>
-                          <button className="text-xl p-2 bg-secondary  text-white rounded-md hover:bg-opacity-50">
-                            {" "}
-                            <TbListDetails />{" "}
-                          </button>
-                        </Link>
-                      </td>
-                      <td className="p-3">
-                        <button
-                          onClick={() => handleConfirmTrainer(trainer)}
-                          className="text-xl p-2 bg-green-600 text-white rounded-md hover:bg-opacity-50"
-                        >
-                          {" "}
-                          <TiTick />{" "}
-                        </button>
-                      </td>
-                      <td className="p-3">
-                        <button
-                          onClick={handleOpen}
-                          className="text-xl p-2 bg-red-600 text-white rounded-md hover:bg-opacity-50"
-                        >
-                          {" "}
-                          <FaTrash />{" "}
-                        </button>
-                      </td>
-                      <Dialog open={open} size="xs">
-                        <DialogBody className="font-poppins">
-                          <h2 className="text-center text-xl font-bold ">
-                            {trainer.fullName}'s Info
-                          </h2>
-                          <div className="mt-4">
-                            <p>
-                              <span className="font-[600]">Name:</span>{" "}
-                              {trainer.fullName}
-                            </p>
-                            <p>
-                              <span className="font-[600]">Email:</span>{" "}
-                              {trainer.email}
-                            </p>
-                            <p>
-                              <span className="font-[600]">Age:</span>{" "}
-                              {trainer.age}
-                            </p>
-                          </div>
-                        </DialogBody>
-                        <DialogBody className="font-poppins">
-                          <form
-                            onSubmit={handleSendFeedback}
-                            className="space-y-4"
-                          >
-                            {/* Email */}
-                            <Input
-                              label="email"
-                              name="email"
-                              defaultValue={trainer.email}
-                              readOnly
-                            />
-
-                            {/* Feedback */}
-                            <Textarea
-                              label="Feedback"
-                              name="feedback"
-                              required
-                            />
-
-                            <div className="text-right mt-2">
-                              <button
-                                onClick={() => handleReject(trainer)}
-                                className="capitalize bg-gradient-to-r from-primary to-secondary text-white hover:bg-gradient-to-l hoverfrom-primary hover:to-secondary font-[400] px-3 py-2 rounded-md"
-                              >
-                                send feedback
-                              </button>
-                            </div>
-                          </form>
-                          <button
-                            className="px-3 py-2 rounded-md hover:bg-gray-100"
-                            onClick={handleOpen}
-                          >
-                            Cancel
-                          </button>
-                        </DialogBody>
-                      </Dialog>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+          <div className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 flex items-center gap-3 w-fit">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+              Pending Scope
+            </span>
+            <span className="text-2xl font-black text-slate-950 dark:text-white tracking-tight">
+              {pendingFilter.length}
+            </span>
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Main Ledger Table Component */}
+      {pendingFilter.length === 0 ? (
+        <div className="py-16 text-center rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10">
+          <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase">
+            No Pending Requisitions On Radar
+          </p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-gray-300/60 dark:border-white/5 bg-white dark:bg-transparent">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-100/80 dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                  Candidate
+                </th>
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                  <span className="flex items-center gap-1.5">
+                    <FiMail className="text-primary" /> Email Coordinates
+                  </span>
+                </th>
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                  Status
+                </th>
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
+                  Verify
+                </th>
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
+                  Action Auth
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-white/5">
+              {pendingFilter.map((trainer) => (
+                <tr
+                  key={trainer._id}
+                  className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200"
+                >
+                  <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200 whitespace-nowrap">
+                    {trainer.fullName}
+                  </td>
+                  <td className="p-4 text-sm font-semibold text-slate-800 dark:text-gray-400 whitespace-nowrap">
+                    {trainer.email}
+                  </td>
+                  <td className="p-4 text-xs font-extrabold uppercase tracking-wider text-primary">
+                    <span className="px-2.5 py-1 rounded-md bg-primary/10 border border-primary/20">
+                      {trainer.status}
+                    </span>
+                  </td>
+
+                  {/* Details Navigation */}
+                  <td className="p-4 text-center">
+                    <Link to={trainer._id} title="Inspect Core Criteria">
+                      <button className="p-2 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-gray-300 rounded-lg hover:text-secondary border border-gray-300 dark:border-white/10 transition-colors cursor-pointer inline-flex items-center justify-center text-lg">
+                        <TbListDetails />
+                      </button>
+                    </Link>
+                  </td>
+
+                  {/* Actions System */}
+                  <td className="p-4 text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => handleConfirmTrainer(trainer)}
+                        className="p-2 bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white border border-green-500/20 rounded-lg transition-all text-lg cursor-pointer inline-flex items-center justify-center"
+                        title="Authorize Promotion"
+                      >
+                        <TiTick />
+                      </button>
+                      <button
+                        onClick={() => handleOpen(trainer)}
+                        className="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg transition-all text-lg cursor-pointer inline-flex items-center justify-center"
+                        title="Decline & Feedback Execution"
+                      >
+                        <FiUserX />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Unified Dialogue Terminal */}
+      <Dialog
+        open={open}
+        handler={() => handleOpen(null)}
+        size="sm"
+        className="bg-white dark:bg-neutral-900 dark:border dark:border-white/10 rounded-2xl p-4 shadow-2xl backdrop-blur-xl"
+      >
+        {selectedTrainer && (
+          <>
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 pb-3 mb-4">
+              <h3 className="text-md font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+                <FiEye className="text-secondary" /> Candidate File Stack
+              </h3>
+              <button
+                onClick={() => handleOpen(null)}
+                className="text-lg p-1 text-gray-400 hover:text-slate-950 dark:hover:text-white cursor-pointer"
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <DialogBody className="space-y-6 text-slate-800 dark:text-gray-300 p-0 font-sans">
+              <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-gray-300/50 dark:border-white/5 grid grid-cols-2 gap-3 text-xs">
+                <p className="font-semibold text-gray-500 uppercase">
+                  Full Identity:{" "}
+                  <span className="block text-sm font-black text-slate-950 dark:text-white tracking-tight mt-0.5">
+                    {selectedTrainer.fullName}
+                  </span>
+                </p>
+                <p className="font-semibold text-gray-500 uppercase">
+                  Age Matrix:{" "}
+                  <span className="block text-sm font-black text-slate-950 dark:text-white tracking-tight mt-0.5">
+                    {selectedTrainer.age} Years
+                  </span>
+                </p>
+                <p className="font-semibold text-gray-500 uppercase col-span-2">
+                  Email Parameters:{" "}
+                  <span className="block text-sm font-bold text-slate-800 dark:text-gray-300 mt-0.5">
+                    {selectedTrainer.email}
+                  </span>
+                </p>
+              </div>
+
+              {/* Feedback Interface */}
+              <form onSubmit={handleRejectPipeline} className="space-y-4">
+                <div className="hidden">
+                  <Input
+                    label="email"
+                    name="email"
+                    defaultValue={selectedTrainer.email}
+                    readOnly
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                    Rejection Logs Statement
+                  </label>
+                  <Textarea
+                    label="Constructive Rejection Feedback Parameters..."
+                    name="feedback"
+                    required
+                    className="bg-transparent text-slate-950 dark:text-white border-gray-400 dark:border-white/10 focus:border-primary rounded-xl"
+                  />
+                </div>
+
+                {/* Submissions Action Stack */}
+                <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-200 dark:border-white/5">
+                  <button
+                    type="button"
+                    className="px-4 py-2 text-xs font-bold uppercase text-gray-500 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer"
+                    onClick={() => handleOpen(null)}
+                  >
+                    Abort Control
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 text-xs font-black uppercase text-white bg-gradient-to-r from-primary to-secondary hover:opacity-90 rounded-xl shadow-md transition-all cursor-pointer"
+                  >
+                    Execute Rejection
+                  </button>
+                </div>
+              </form>
+            </DialogBody>
+          </>
+        )}
+      </Dialog>
     </div>
   );
 };

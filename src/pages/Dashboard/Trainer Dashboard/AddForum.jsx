@@ -118,7 +118,7 @@ const AddForum = () => {
             <input
               type="text"
               placeholder="e.g., Optimal Post-Workout Nutrition Windows"
-              className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
@@ -135,7 +135,7 @@ const AddForum = () => {
             <input
               type="text"
               placeholder="e.g., Diet & Nutrition, Hypertrophy, Cardio"
-              className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.category}
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
@@ -151,7 +151,7 @@ const AddForum = () => {
             </label>
             <textarea
               placeholder="Compose your comprehensive technical discourse here..."
-              className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner resize-none"
+              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
