@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../components/Shared/Logo";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 import "./dashboard.css";
 import { LuLetterText } from "react-icons/lu";
 import { CgGym, CgProfile } from "react-icons/cg";
@@ -59,6 +59,13 @@ const Dashboard = () => {
           <NavLink
             onClick={handleLinkClick}
             className={navLinkStyling}
+            to="/dashboard/my-profile"
+          >
+            <CgProfile className="text-xl shrink-0" /> Profile
+          </NavLink>
+          <NavLink
+            onClick={handleLinkClick}
+            className={navLinkStyling}
             to="/dashboard/balance"
           >
             <RiMoneyDollarCircleLine className="text-xl shrink-0" /> Balance
@@ -75,7 +82,8 @@ const Dashboard = () => {
             className={navLinkStyling}
             to="/dashboard/applied-trainers"
           >
-            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied Trainers
+            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied
+            Trainers{" "}
           </NavLink>
           <NavLink
             onClick={handleLinkClick}
@@ -114,6 +122,13 @@ const Dashboard = () => {
         </>
       ) : isTrainer ? (
         <>
+          <NavLink
+            onClick={handleLinkClick}
+            className={navLinkStyling}
+            to="/dashboard/my-profile"
+          >
+            <CgProfile className="text-xl shrink-0" /> Profile
+          </NavLink>
           <NavLink
             onClick={handleLinkClick}
             className={navLinkStyling}
@@ -193,17 +208,19 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-neutral-950 text-slate-900 dark:text-white antialiased grid grid-cols-12 relative">
       {/* Desktop SideBar (Glassy Slate Panel) */}
-      <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10 duration-300 min-h-screen p-6 sticky top-0 h-screen overflow-y-auto">
-        <div className="mb-6">
+      <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10 duration-300 min-h-screen sticky top-0 h-screen overflow-y-auto">
+        <div className="p-4">
           <Logo />
         </div>
-        <div className="border-b border-gray-200 dark:border-white/10 mb-6" />
+        <div className="border-b border-gray-200 dark:border-white/10 " />
 
         {/* NavMenu Elastic Wrapper */}
-        <div className="flex-1 overflow-y-auto px-1">{navMenu}</div>
+        <div className="overflow-y-auto">
+          <div className="flex-1 p-5 pt-3">{navMenu}</div>
+        </div>
 
         {/* Logout Activation Terminal */}
-        <div className="pt-4 mt-auto border-t border-gray-200 dark:border-white/10">
+        <div className="p-4 mt-auto border-t border-gray-200 dark:border-white/10">
           <button
             onClick={handleSignOut}
             className="flex items-center gap-3 w-full py-3 px-4 rounded-xl font-extrabold text-sm text-red-500 hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all duration-300 cursor-pointer"

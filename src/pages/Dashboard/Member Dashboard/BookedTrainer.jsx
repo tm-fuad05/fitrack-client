@@ -114,7 +114,7 @@ const BookedTrainer = () => {
 
       {/* Grid Iteration Flow Framework */}
       {payments.length === 0 ? (
-        <div className="py-20 text-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-white/10 bg-white dark:bg-neutral-900/5">
+        <div className="py-20 text-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-white/10 bg-white dark:bg-transparent">
           <p className="text-sm font-bold text-gray-500 dark:text-gray-600 tracking-wide uppercase">
             Void Node: No Trainer Subscriptions Reserved
           </p>

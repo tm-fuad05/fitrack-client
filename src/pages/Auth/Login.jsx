@@ -155,7 +155,7 @@ const Login = () => {
           <div className="mt-6">
             <div className="relative mb-5 text-center flex items-center">
               <div className="grow h-px bg-gray-400 dark:bg-gray-500" />
-              <p className="relative bg-white dark:bg-neutral-900 lg:bg-transparent px-3 text-[11px] font-black uppercase text-gray-500 tracking-widest">
+              <p className="relative lg:bg-transparent px-3 text-[11px] font-black uppercase text-gray-500 tracking-widest">
                 Or Gateway Integration
               </p>
               <div className="grow h-px bg-gray-400 dark:bg-gray-500" />

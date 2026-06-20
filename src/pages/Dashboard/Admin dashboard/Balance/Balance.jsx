@@ -122,17 +122,17 @@ const Balance = () => {
         <div className="overflow-x-auto rounded-xl border border-gray-300/60 dark:border-white/5">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-white dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
-                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+              <tr className="bg-white dark:bg-white/5 border-b border-gray-300 dark:border-white/10 whitespace-nowrap">
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 ">
                   Member ID
                 </th>
-                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 ">
                   Package Scope
                 </th>
-                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 ">
                   Price Metric
                 </th>
-                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 ">
                   Timestamp
                 </th>
               </tr>
@@ -141,7 +141,7 @@ const Balance = () => {
               {recentPayments.map((p) => (
                 <tr
                   key={p._id}
-                  className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200"
+                  className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap"
                 >
                   <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200">
                     {p.name}

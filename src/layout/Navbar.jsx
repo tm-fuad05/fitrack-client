@@ -222,7 +222,7 @@ const Navbar = () => {
               {accountMenuOpen && (
                 <div className="absolute top-[44px] right-0 w-52 bg-white dark:bg-[#12131a] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                   <div className="px-3 py-2 border-b border-gray-100 dark:border-white/5 mb-1">
-                    <p className="text-xs font-semibold text-gray-950 dark:text-white truncate">
+                    <p className="text-xs font-semibold text-gray-900 dark:text-white truncate">
                       {user?.displayName}
                     </p>
                     <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 truncate">
@@ -231,12 +231,12 @@ const Navbar = () => {
                   </div>
 
                   <Link
-                    to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
+                    to={"/dashboard/my-profile"}
                     onClick={() => setAccountMenuOpen(false)}
                     className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                   >
                     <TbDashboard className="text-base text-primary" />
-                    Dashboard Node
+                    my profile
                   </Link>
 
                   <button
@@ -247,7 +247,7 @@ const Navbar = () => {
                     className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-500/10 transition-colors text-left border-none bg-transparent cursor-pointer"
                   >
                     <TbLogout2 className="text-base" />
-                    Terminate Session
+                    Logout
                   </button>
                 </div>
               )}

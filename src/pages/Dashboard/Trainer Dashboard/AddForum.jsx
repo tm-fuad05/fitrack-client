@@ -57,7 +57,7 @@ const AddForum = () => {
   };
 
   return (
-    <div className="w-11/12 max-w-4xl mx-auto bg-transparent text-slate-900 dark:text-white antialiased">
+    <div className="max-w-3xl mx-auto bg-transparent text-slate-900 dark:text-white antialiased">
       <Helmet>
         <title>FitRack | Add Forum</title>
       </Helmet>

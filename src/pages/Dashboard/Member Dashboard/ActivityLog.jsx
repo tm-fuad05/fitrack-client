@@ -111,40 +111,40 @@ const ActivityLog = () => {
       {/* Core Log Entry Table Layout */}
       {!currentUser ? (
         <div className="py-16 text-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-white/10 bg-white dark:bg-transparent">
-          <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase flex items-center justify-center gap-2">
+          <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase flex flex-col lg:flex-row items-center justify-center gap-2">
             <FiClock className="text-gray-400 " /> Static Void: No Operational
             Footprints Found
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-gray-300/60 dark:border-white/5 bg-white dark:bg-neutral-900/10">
+        <div className="overflow-x-auto rounded-xl border border-gray-300/60 dark:border-white/5 bg-white dark:bg-transparent">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-100/80 dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Identity Alias
+                  Name
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Network Endpoint
+                  Email
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Applied Vector
+                  Applied For
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Handshake State
+                  Status
                 </th>
                 {currentUser?.status === "rejected" && (
                   <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
-                    Diagnostics
+                    Declined Reason
                   </th>
                 )}
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
-                  Retract
+                  Delete
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              <tr className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200">
+              <tr className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200 bg-gray-50 dark:bg-transparent">
                 {/* Full Name */}
                 <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200 whitespace-nowrap">
                   {currentUser?.fullName}
