@@ -118,3 +118,19 @@
 .dark .fitrack-select__multi-value__label {
   color: #f3f4f6 !important;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, theme('colors.primary'), transparent);
+  border-radius: 2px;
+}
