@@ -45,7 +45,7 @@ const RecentCommunity = () => {
   };
 
   return (
-    <div className="w-11/12 xl:w-10/12 mx-auto my-16 mb-28">
+    <div className="w-11/12 mx-auto my-16 mb-28">
       <SectionTitle subtitle={"Our Community"} title={"Recent Posts"} />
 
       {/* Animated Layout Grid Container */}
@@ -54,7 +54,7 @@ const RecentCommunity = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.05 }}
-        className="my-12 grid grid-cols-1 lg:grid-cols-2 gap-6 p-4"
+        className="my-12 grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
         {communities.map((post) => (
           <motion.div
