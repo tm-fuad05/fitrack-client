@@ -190,7 +190,7 @@ const Navbar = () => {
 
               {/* Profile Dropdown */}
               {accountMenuOpen && (
-                <div className="absolute top-[48px] right-0 w-52 bg-white dark:bg-surface-dark border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                <div className="absolute top-[48px] right-0 w-52 bg-white dark:bg-gray-900 border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                   <div className="px-3 py-2 border-b border-white/5 mb-1 lg:hidden">
                     <p className="text-xs font-bold text-gray-900 dark:text-white truncate">
                       {user?.displayName}
