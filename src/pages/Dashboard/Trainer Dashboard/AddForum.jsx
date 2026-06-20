@@ -24,14 +24,15 @@ const AddForum = () => {
   const isDark = document.documentElement.classList.contains("dark");
 
   const date = new Date();
+
   const [formData, setFormData] = useState({
     title: "",
     author: user?.displayName,
-    date: moment(date).format("MMM DD YYYY"),
+    date: date,
     category: "",
     role: `${isAdmin ? "admin" : "trainer"}`,
     description: "",
-    votes: 0,
+    votedBy: [],
   });
 
   const handlePost = async (e) => {
@@ -96,7 +97,7 @@ const AddForum = () => {
                 <span className="text-gray-700 dark:text-gray-400 font-bold mr-1">
                   Date:
                 </span>{" "}
-                {formData.date}
+                {moment(formData.date).format("MMM DD YYYY")}
               </span>
             </div>
             <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-semibold capitalize">

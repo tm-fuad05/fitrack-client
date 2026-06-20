@@ -109,7 +109,7 @@ const AllClasses = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 border border-dashed border-gray-300 dark:border-white/5 rounded-3xl bg-gray-50 dark:bg-neutral-900/20">
+        <div className="text-center py-20 border border-dashed border-gray-300 dark:border-white/5 rounded-3xl bg-gray-50 dark:bg-transparent">
           <p className="text-gray-600 dark:text-gray-400 font-medium">
             No fitness classes matched your search criteria.
           </p>

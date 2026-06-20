@@ -5,6 +5,7 @@ import {
   HiOutlineCalendar,
   HiOutlineTag,
 } from "react-icons/hi2";
+import moment from "moment/moment";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -14,10 +15,12 @@ const CommunityCard = ({ post, refetch }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { _id, author, category, date, description, role, title, votes } = post;
+  const { _id, author, category, date, description, role, title, votedBy } =
+    post;
   const axiosSecure = useAxiosSecure();
+  const isVoted = votedBy?.includes(user?.email);
 
-  const handleUpVote = async (id) => {
+  const handleVote = async (id) => {
     try {
       if (user && user?.email) {
         const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
@@ -32,25 +35,10 @@ const CommunityCard = ({ post, refetch }) => {
     }
   };
 
-  const handleDownVote = async (id) => {
-    try {
-      if (user && user?.email) {
-        const { data } = await axiosSecure.patch(`/community/downvote/${id}`);
-        if (data.success) {
-          refetch();
-        }
-      } else {
-        navigate("/login", { state: location.pathname });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div
       key={_id}
-      className="flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-neutral-900/60 backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 group relative"
+      className="flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-neutral-900/60 backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 group relative h-full"
     >
       {/* Header Area: Title & Role Badge */}
       <div className="flex justify-between items-start gap-4 pb-3 border-b border-white/5">
@@ -81,7 +69,7 @@ const CommunityCard = ({ post, refetch }) => {
         </div>
         <div className="flex items-center gap-1.5">
           <HiOutlineCalendar className="text-sm text-gray-500" />
-          <span>{date}</span>
+          <span>{moment(date).format("MMM DD YYYY")}</span>
         </div>
       </div>
 
@@ -97,7 +85,7 @@ const CommunityCard = ({ post, refetch }) => {
       </p>
 
       {/* Footer Area: Voting System */}
-      <div className="flex justify-between items-center border-t border-white/5 pt-4 mt-2">
+      <div className="flex justify-between items-center border-t dark:border-white/5  border-gray-300 pt-4 mt-2">
         <div className="flex flex-col">
           <span className="text-[10px] uppercase tracking-wider font-semibold text-gray-700 dark:text-gray-500">
             Total Feedback
@@ -105,38 +93,26 @@ const CommunityCard = ({ post, refetch }) => {
           <span className="text-sm font-bold text-gray-700 dark:text-white">
             Votes:{" "}
             <motion.span
-              key={votes}
+              key={_id}
               initial={{ scale: 1.2, color: "var(--primary)" }}
               animate={{ scale: 1, color: "currentColor" }}
-              className={`inline-block font-bold ${votes >= 0 ? "text-primary" : "text-red-400"}`}
+              className={`inline-block font-bold ${votedBy?.length >= 0 ? "text-primary" : "text-red-400"}`}
             >
-              {votes}
+              {votedBy?.length || 0}
             </motion.span>
           </span>
         </div>
 
         {/* Like / Dislike Micro-Interactions in Floating Dock */}
-        <div className="flex items-center gap-1 bg-neutral-950/40 border border-white/5 rounded-xl p-1 shadow-inner">
+        <div className="flex items-center gap-1 bg-gray-100 dark:bg-transparent border border-white/5 rounded-xl p-1 shadow-inner">
           <motion.button
             whileHover={{ scale: 1.1, y: -1 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => handleUpVote(_id)}
-            className="p-2 rounded-lg text-gray-400 hover:text-primary hover:bg-white/5 transition-all"
+            onClick={() => handleVote(_id)}
+            className={` ${isVoted ? "text-primary" : "text-gray-600"} p-2 rounded-lg  hover:text-primary hover:bg-white/5 transition-all`}
             aria-label="Upvote"
           >
             <AiFillLike className="text-xl" />
-          </motion.button>
-
-          <div className="w-[1px] h-4 bg-white/10"></div>
-
-          <motion.button
-            whileHover={{ scale: 1.1, y: 1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => handleDownVote(_id)}
-            className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-white/5 transition-all"
-            aria-label="Downvote"
-          >
-            <AiFillDislike className="text-xl" />
           </motion.button>
         </div>
       </div>

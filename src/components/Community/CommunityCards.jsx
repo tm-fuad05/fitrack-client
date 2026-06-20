@@ -28,16 +28,24 @@ const CommunityCards = () => {
   }
 
   return (
-    <div>
-      <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {currentCommunities.map((post) => (
-          <CommunityCard
-            refetch={refetch}
-            key={post._id}
-            post={post}
-          ></CommunityCard>
-        ))}
-      </div>
+    <div className="pt-8">
+      {currentCommunities?.length > 0 ? (
+        <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {currentCommunities.map((post) => (
+            <CommunityCard
+              refetch={refetch}
+              key={post._id}
+              post={post}
+            ></CommunityCard>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20 border border-dashed border-gray-300 dark:border-white/5 rounded-3xl bg-gray-50 dark:bg-transparent">
+          <p className="text-gray-600 dark:text-gray-400 font-medium">
+            No posts yet
+          </p>
+        </div>
+      )}
       {/* Pagination Panel */}
       {pageCount > 1 && (
         <ReactPaginate
