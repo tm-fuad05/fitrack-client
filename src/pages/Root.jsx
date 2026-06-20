@@ -16,7 +16,7 @@ const Root = () => {
   return (
     <SmoothScrollProvider>
       <ScrollToTop />
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 dark:bg-background-dark dark:text-foreground-dark">
+      <div className="min-h-screen bg-gray-50/50 text-foreground transition-colors duration-300 dark:bg-background-dark">
         {noHeaderFooter || <Navbar />}
         <main>
           <Outlet />

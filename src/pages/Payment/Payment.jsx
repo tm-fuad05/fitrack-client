@@ -20,7 +20,7 @@ const Payment = () => {
   const { user } = useAuth();
 
   return (
-    <div className="w-11/12 max-w-7xl mx-auto my-28 bg-transparent text-gray-900 dark:text-white antialiased">
+    <div className="w-11/12 max-w-7xl mx-auto py-28 bg-transparent text-gray-900 dark:text-white antialiased">
       <Helmet>
         <title>FitRack | Payment</title>
       </Helmet>

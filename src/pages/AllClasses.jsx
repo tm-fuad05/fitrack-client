@@ -24,7 +24,7 @@ const AllClasses = () => {
   };
 
   return (
-    <div className="w-11/12 max-w-7xl mx-auto my-28 bg-transparent">
+    <div className="w-11/12 max-w-7xl mx-auto py-28 bg-transparent">
       <Helmet>
         <title>FitRack | All Classes</title>
       </Helmet>

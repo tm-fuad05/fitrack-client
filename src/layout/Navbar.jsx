@@ -11,8 +11,7 @@ import useAuth from "../hooks/useAuth";
 import { useLenis } from "../Provider/SmoothScrollProvider";
 
 // SweetAlert
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import "sweetalert2/src/sweetalert2.scss";
+import Swal from "sweetalert2";
 import "./navbar.css";
 import useAdmin from "../hooks/useAdmin";
 import useTrainerCheck from "../hooks/useTrainerCheck";
@@ -30,10 +29,10 @@ const Navbar = () => {
 
   useEffect(() => {
     if (darkMode) {
-      document.querySelector("html").classList.add("dark");
+      document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
     } else {
-      document.querySelector("html").classList.remove("dark");
+      document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
@@ -56,7 +55,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   const { user, signOutUser, loader } = useAuth();
-  const { scrollY } = useLenis();
+  const { scrollY } = useLenis() || { scrollY: 0 };
 
   const scrolled = scrollY > 50;
 
@@ -71,6 +70,25 @@ const Navbar = () => {
     });
   };
 
+  // NavLink CSS Class Mapping Generator
+  const getNavLinkClass = (isActive) => {
+    const baseClass =
+      "before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-bold tracking-wide text-sm uppercase";
+
+    if (isActive) {
+      return `${baseClass} text-primary before:w-full`;
+    }
+
+    // Adapt links based on current viewport routing & state
+    if (pathname === "/" || pathname === "/all-trainer") {
+      return scrolled
+        ? `${baseClass} text-gray-700 dark:text-gray-300 hover:text-primary`
+        : `${baseClass} text-white hover:text-primary`;
+    }
+
+    return `${baseClass} text-gray-800 dark:text-gray-300 hover:text-primary`;
+  };
+
   const navMenu = (
     <>
       {["Home", "All Trainer", "All Classes", "Community", "About Us"].map(
@@ -80,14 +98,9 @@ const Navbar = () => {
           return (
             <NavLink
               key={item}
-              className={({ isActive }) =>
-                `before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-medium tracking-wide text-sm ${
-                  isActive
-                    ? "text-primary font-semibold before:w-full"
-                    : "text-white/90 hover:text-primary"
-                }`
-              }
+              className={({ isActive }) => getNavLinkClass(isActive)}
               to={path}
+              onClick={() => setMobileSidebarOpen(false)}
             >
               {item}
             </NavLink>
@@ -97,14 +110,9 @@ const Navbar = () => {
 
       {user && user?.email && (
         <NavLink
-          className={({ isActive }) =>
-            `before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-medium tracking-wide text-sm ${
-              isActive
-                ? "text-primary font-semibold before:w-full"
-                : "text-white/90 hover:text-primary"
-            }`
-          }
+          className={({ isActive }) => getNavLinkClass(isActive)}
           to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
+          onClick={() => setMobileSidebarOpen(false)}
         >
           Dashboard
         </NavLink>
@@ -112,17 +120,25 @@ const Navbar = () => {
     </>
   );
 
+  // Dynamic Background Wrapper Engine
+  const getNavbarBgClass = () => {
+    const isHomeOrTrainer = pathname === "/" || pathname === "/all-trainer";
+
+    if (isHomeOrTrainer) {
+      return scrolled
+        ? "bg-white dark:bg-surface-dark shadow-sm py-4 text-gray-900 dark:text-white"
+        : "bg-transparent py-5 text-white";
+    }
+
+    // Static layouts for interior views (Classes, Community, About Us)
+    return scrolled
+      ? "bg-white/90 dark:bg-surface-dark  dark:border-white/10 backdrop-blur-xl shadow-md py-4 text-gray-900 dark:text-white"
+      : "bg-white dark:bg-surface-dark dark:border-white/5 py-5 text-gray-900 dark:text-white";
+  };
+
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        pathname === "/" || pathname === "/all-trainer"
-          ? scrolled
-            ? "bg-black/80 dark:bg-background-dark/80 backdrop-blur-xl shadow-lg py-4"
-            : "bg-transparent py-5"
-          : scrolled
-            ? "bg-black/90 dark:bg-background-dark/90 backdrop-blur-xl shadow-md py-4"
-            : "bg-black dark:bg-background-dark py-4"
-      } text-white`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${getNavbarBgClass()}`}
     >
       <nav className="flex items-center justify-between relative px-6 max-w-7xl mx-auto">
         {/* Logo */}
@@ -131,11 +147,17 @@ const Navbar = () => {
           className="group flex items-center gap-2 transition-transform active:scale-95"
         >
           <img
-            className="w-10 md:w-12 object-contain group-hover:rotate-6 transition-transform duration-300"
+            className="w-9 md:w-10 object-contain group-hover:rotate-6 transition-transform duration-300"
             src={fitrack}
             alt="logo"
           />
-          <h2 className="font-black text-xl md:text-2xl italic tracking-tight text-white">
+          <h2
+            className={`font-black text-xl italic tracking-tight transition-colors duration-300 ${
+              (pathname === "/" || pathname === "/all-trainer") && !scrolled
+                ? "text-white"
+                : "text-gray-950 dark:text-white"
+            }`}
+          >
             Fit
             <span className="text-primary group-hover:text-secondary transition-colors">
               Rack
@@ -149,68 +171,68 @@ const Navbar = () => {
         </ul>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {/* Theme Toggle Button */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="relative flex items-center justify-center text-xl p-2 rounded-xl border border-white/10 bg-white/5 text-white dark:text-amber-400 hover:text-primary dark:hover:text-primary hover:border-primary/30 dark:hover:border-primary/30 shadow-sm transition-all duration-300 active:scale-90"
+            className={`relative flex items-center justify-center text-lg p-2.5 rounded-xl border transition-all duration-300 active:scale-90 cursor-pointer ${
+              (pathname === "/" || pathname === "/all-trainer") && !scrolled
+                ? "border-white/10 bg-white/5 text-white"
+                : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-800 dark:text-amber-400"
+            } hover:text-primary dark:hover:text-primary`}
             aria-label="Toggle Theme"
           >
-            {darkMode ? (
-              <MdLightMode className="animate-spin-slow" />
-            ) : (
-              <MdDarkMode className="hover:animate-pulse" />
-            )}
+            {darkMode ? <MdLightMode /> : <MdDarkMode />}
           </button>
 
           {/* User Section / Login */}
           {user && user?.email ? (
             <div className="relative" ref={dropdownRef}>
               <button
-                className="flex items-center gap-2 p-1.5 pr-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all shadow-sm active:scale-98"
+                className={`flex items-center gap-2 p-1 pr-3 rounded-full border transition-all active:scale-98 cursor-pointer ${
+                  (pathname === "/" || pathname === "/all-trainer") && !scrolled
+                    ? "border-white/10 bg-white/5 text-white"
+                    : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-800 dark:text-white"
+                }`}
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
                 <div className="relative flex-shrink-0">
                   <img
                     src={user?.photoURL}
                     alt="avatar"
-                    className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20"
+                    className="w-7 h-7 rounded-full object-cover ring-2 ring-primary/20"
                   />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute bottom-0 right-0 border-2 border-black dark:border-background-dark"></span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 absolute bottom-0 right-0 border border-white dark:border-gray-950" />
                 </div>
-                <span className="text-xs font-semibold text-white md:block hidden max-w-[120px] truncate">
-                  {user?.displayName.split(" ")[0]}
+                <span className="text-xs font-bold md:block hidden max-w-[100px] truncate">
+                  {user?.displayName?.split(" ")[0]}
                 </span>
                 <IoIosArrowDown
-                  className={`text-xs text-gray-400 transition-transform duration-300 ${
+                  className={`text-[10px] transition-transform duration-300 ${
                     accountMenuOpen ? "rotate-180" : "rotate-0"
                   }`}
                 />
               </button>
 
-              {/* Profile Dropdown */}
+              {/* Profile Dropdown Component Container */}
               {accountMenuOpen && (
-                <div className="absolute top-[48px] right-0 w-52 bg-white dark:bg-gray-900 border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
-                  <div className="px-3 py-2 border-b border-white/5 mb-1 lg:hidden">
-                    <p className="text-xs font-bold text-gray-900 dark:text-white truncate">
+                <div className="absolute top-[44px] right-0 w-52 bg-white dark:bg-[#12131a] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                  <div className="px-3 py-2 border-b border-gray-100 dark:border-white/5 mb-1">
+                    <p className="text-xs font-black text-gray-950 dark:text-white truncate">
                       {user?.displayName}
                     </p>
-                    <p className="text-[10px] text-gray-600 dark:text-gray-400 truncate">
+                    <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 truncate">
                       {user?.email}
                     </p>
                   </div>
 
                   <Link
-                    to={`/dashboard/${isAdmin ? "manage-users" : isTrainer ? "manage-slot" : "my-profile"}`}
+                    to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-gray-400 hover:bg-white/5 font-medium transition-colors"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-wider text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                   >
-                    <TbDashboard className="text-lg text-primary" />
-                    {isAdmin
-                      ? "Manage User"
-                      : isTrainer
-                        ? "Manage Slot"
-                        : "View Profile"}
+                    <TbDashboard className="text-base text-primary" />
+                    Dashboard Node
                   </Link>
 
                   <button
@@ -218,10 +240,10 @@ const Navbar = () => {
                       setAccountMenuOpen(false);
                       handleSignOut();
                     }}
-                    className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-red-500 hover:bg-red-500/10 font-medium transition-colors text-left border-none bg-transparent"
+                    className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-wider text-red-500 hover:bg-red-500/10 transition-colors text-left border-none bg-transparent cursor-pointer"
                   >
-                    <TbLogout2 className="text-lg" />
-                    Logout
+                    <TbLogout2 className="text-base" />
+                    Terminate Session
                   </button>
                 </div>
               )}
@@ -231,7 +253,7 @@ const Navbar = () => {
               {loader ? (
                 <MiniLoader />
               ) : (
-                <button className="bg-gradient-to-r from-[#e13a3b] to-[#e96d4c] px-5 py-2 text-sm font-semibold rounded-xl text-white hover:shadow-lg hover:shadow-primary/20 hover:opacity-95 active:scale-95 transition-all border-none">
+                <button className="bg-gradient-to-r from-primary to-secondary px-5 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl text-white hover:shadow-lg hover:shadow-primary/20 hover:opacity-95 active:scale-95 transition-all border-none cursor-pointer">
                   Login
                 </button>
               )}
@@ -240,24 +262,26 @@ const Navbar = () => {
 
           {/* Mobile Hamburger Toggle */}
           <button
-            className="text-2xl p-1.5 rounded-xl lg:hidden text-white hover:bg-white/5 transition-colors border-none bg-transparent"
+            className={`text-xl p-2 rounded-xl lg:hidden transition-colors border-none bg-transparent cursor-pointer ${
+              (pathname === "/" || pathname === "/all-trainer") && !scrolled
+                ? "text-white"
+                : "text-gray-900 dark:text-white"
+            }`}
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           >
             {mobileSidebarOpen ? <IoMdClose /> : <RiMenuFill />}
           </button>
         </div>
 
-        {/* Mobile Sidebar Menu */}
+        {/* Mobile Sidebar Menu Panel */}
         <aside
-          className={`fixed lg:hidden left-0 right-0 top-[65px] w-full bg-black/95 dark:bg-background-dark/95 backdrop-blur-xl shadow-2xl p-6 text-center transition-all duration-300 ${
+          className={`fixed lg:hidden left-0 right-0 top-[60px] w-full bg-white/95 dark:bg-gray-950/95 border-b border-gray-200 dark:border-white/10 backdrop-blur-xl shadow-2xl p-6 text-center transition-all duration-300 ${
             mobileSidebarOpen
-              ? "translate-y-0 opacity-100 z-40"
-              : "-translate-y-10 opacity-0 pointer-events-none"
+              ? "trangray-y-0 opacity-100 z-40"
+              : "-trangray-y-10 opacity-0 pointer-events-none"
           }`}
         >
-          <ul className="items-center gap-5 flex flex-col font-medium">
-            {navMenu}
-          </ul>
+          <ul className="items-center gap-6 flex flex-col">{navMenu}</ul>
         </aside>
       </nav>
     </div>

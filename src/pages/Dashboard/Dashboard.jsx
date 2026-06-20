@@ -216,7 +216,7 @@ const Dashboard = () => {
       {/* Main Structural Pipeline */}
       <section className="col-span-12 lg:col-span-9 flex flex-col min-h-screen">
         {/* Top Floating Control Deck (Desktop Only) */}
-        <div className="hidden lg:flex justify-end p-5 bg-transparent border-b border-transparent">
+        <div className="hidden lg:flex justify-end p-5 pb-0 bg-transparent border-b border-transparent">
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="text-slate-800 dark:text-gray-200 text-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-white/5 p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-all shadow-sm"
