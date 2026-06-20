@@ -190,12 +190,12 @@ const Navbar = () => {
 
               {/* Profile Dropdown */}
               {accountMenuOpen && (
-                <div className="absolute top-[48px] right-0 w-52 bg-neutral-900 dark:bg-surface-dark border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
-                  <div className="px-3 py-2 border-b border-white/5 mb-1 md:hidden">
-                    <p className="text-xs font-bold text-white truncate">
+                <div className="absolute top-[48px] right-0 w-52 bg-white dark:bg-surface-dark border border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
+                  <div className="px-3 py-2 border-b border-white/5 mb-1 lg:hidden">
+                    <p className="text-xs font-bold text-gray-900 dark:text-white truncate">
                       {user?.displayName}
                     </p>
-                    <p className="text-[10px] text-gray-400 truncate">
+                    <p className="text-[10px] text-gray-600 dark:text-gray-400 truncate">
                       {user?.email}
                     </p>
                   </div>
@@ -203,7 +203,7 @@ const Navbar = () => {
                   <Link
                     to={`/dashboard/${isAdmin ? "manage-users" : isTrainer ? "manage-slot" : "my-profile"}`}
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-gray-300 hover:bg-white/5 font-medium transition-colors"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-gray-900 dark:text-gray-400 hover:bg-white/5 font-medium transition-colors"
                   >
                     <TbDashboard className="text-lg text-primary" />
                     {isAdmin
