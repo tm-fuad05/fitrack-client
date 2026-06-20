@@ -73,7 +73,7 @@ const Navbar = () => {
   // NavLink CSS Class Mapping Generator
   const getNavLinkClass = (isActive) => {
     const baseClass =
-      "before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-bold tracking-wide text-sm uppercase";
+      "before:w-0 hover:before:w-full before:bg-primary before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-4px] transition-all duration-300 before:left-0 cursor-pointer capitalize font-semibold tracking-wide text-sm uppercase";
 
     if (isActive) {
       return `${baseClass} text-primary before:w-full`;
@@ -178,7 +178,7 @@ const Navbar = () => {
             className={`relative flex items-center justify-center text-lg p-2.5 rounded-xl border transition-all duration-300 active:scale-90 cursor-pointer ${
               (pathname === "/" || pathname === "/all-trainer") && !scrolled
                 ? "border-white/10 bg-white/5 text-white"
-                : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-800 dark:text-amber-400"
+                : "border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5 text-gray-800 dark:text-amber-400"
             } hover:text-primary dark:hover:text-primary`}
             aria-label="Toggle Theme"
           >
@@ -192,7 +192,7 @@ const Navbar = () => {
                 className={`flex items-center gap-2 p-1 pr-3 rounded-full border transition-all active:scale-98 cursor-pointer ${
                   (pathname === "/" || pathname === "/all-trainer") && !scrolled
                     ? "border-white/10 bg-white/5 text-white"
-                    : "border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-800 dark:text-white"
+                    : "border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5 text-gray-900 dark:text-white"
                 }`}
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
@@ -202,7 +202,7 @@ const Navbar = () => {
                     alt="avatar"
                     className="w-7 h-7 rounded-full object-cover ring-2 ring-primary/20"
                   />
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 absolute bottom-0 right-0 border border-white dark:border-gray-950" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 absolute bottom-0 right-0 border bg-green-600 dark:border-gray-950" />
                 </div>
                 <span className="text-xs font-bold md:block hidden max-w-[100px] truncate">
                   {user?.displayName?.split(" ")[0]}
@@ -218,7 +218,7 @@ const Navbar = () => {
               {accountMenuOpen && (
                 <div className="absolute top-[44px] right-0 w-52 bg-white dark:bg-[#12131a] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 z-50 animate-in fade-in slide-in-from-top-3 duration-200">
                   <div className="px-3 py-2 border-b border-gray-100 dark:border-white/5 mb-1">
-                    <p className="text-xs font-black text-gray-950 dark:text-white truncate">
+                    <p className="text-xs font-semibold text-gray-950 dark:text-white truncate">
                       {user?.displayName}
                     </p>
                     <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 truncate">
@@ -229,7 +229,7 @@ const Navbar = () => {
                   <Link
                     to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-wider text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                   >
                     <TbDashboard className="text-base text-primary" />
                     Dashboard Node
@@ -240,7 +240,7 @@ const Navbar = () => {
                       setAccountMenuOpen(false);
                       handleSignOut();
                     }}
-                    className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-wider text-red-500 hover:bg-red-500/10 transition-colors text-left border-none bg-transparent cursor-pointer"
+                    className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-500/10 transition-colors text-left border-none bg-transparent cursor-pointer"
                   >
                     <TbLogout2 className="text-base" />
                     Terminate Session

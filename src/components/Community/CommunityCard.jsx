@@ -86,7 +86,7 @@ const CommunityCard = ({ post, refetch }) => {
       </div>
 
       {/* Category Tag */}
-      <div className="inline-flex items-center gap-1.5 w-fit text-xs px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300市 bg-transparent">
+      <div className="inline-flex items-center gap-1.5 w-fit text-xs px-2.5 py-1 rounded-lg border border-dashed border-gray-500 dark:border-gray-700 text-gray-800 dark:text-gray-300 bg-transparent">
         <HiOutlineTag className="text-primary text-sm" />
         <span className="font-medium capitalize">{category}</span>
       </div>
