@@ -226,7 +226,7 @@ const Dashboard = () => {
         </div>
 
         {/* Small Device Header Deck */}
-        <header className="bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
+        <header className="bg-white/80 dark:bg-surface-dark backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
           <div className="flex justify-between items-center w-11/12 mx-auto py-4">
             <a href="/" className="flex items-center gap-2 group">
               <img
@@ -247,7 +247,7 @@ const Dashboard = () => {
                 {darkMode ? <MdLightMode /> : <MdDarkMode />}
               </button>
               <button
-                className="text-2xl p-2 rounded-xl border border-gray-300 dark:border-white/10 dark:text-white bg-gray-50 dark:bg-white/5 cursor-pointer text-slate-800"
+                className="text-lg p-2 rounded-xl border border-gray-300 dark:border-white/10 dark:text-white bg-gray-50 dark:bg-white/5 cursor-pointer text-slate-800"
                 onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
               >
                 {mobileSidebarOpen ? <IoMdClose /> : <RiMenuFill />}
@@ -258,13 +258,13 @@ const Dashboard = () => {
 
         {/* Mobile Sidebar Flyout Panel */}
         <aside
-          className={`lg:hidden bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl w-full p-6 fixed z-40 border-b border-gray-200 dark:border-white/10 transition-all duration-300 flex flex-col justify-between ${
+          className={`lg:hidden overflow-y-auto bg-white/95 dark:bg-surface-dark backdrop-blur-xl w-full p-6 fixed z-40 border-b border-gray-200 dark:border-white/10 transition-all duration-300 flex flex-col ${
             mobileSidebarOpen
               ? "top-[69px] opacity-100 h-[calc(100vh-69px)]"
               : "-top-[1000px] opacity-0 pointer-events-none"
           }`}
         >
-          <div className="overflow-y-auto flex-1 py-4">{navMenu}</div>
+          <div className=" py-4 px-1">{navMenu}</div>
           <div className="pt-4 border-t border-gray-200 dark:border-white/10 pb-6">
             <button
               onClick={handleSignOut}

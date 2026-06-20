@@ -87,7 +87,7 @@ const Navbar = () => {
     if (pathname === "/" || pathname === "/all-trainer") {
       return scrolled
         ? `${baseClass} text-gray-900 dark:text-gray-300 hover:text-primary`
-        : `${baseClass} text-gray-900 dark:text-gray-300 hover:text-primary`;
+        : `${baseClass} text-gray-900 lg:text-gray-50 dark:text-gray-300 hover:text-primary`;
     }
 
     return `${baseClass} text-gray-800 dark:text-gray-300 hover:text-primary`;
