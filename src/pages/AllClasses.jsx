@@ -6,6 +6,7 @@ import { IoSearch } from "react-icons/io5";
 import { HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi2";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Shared/Loader";
+import { motion, AnimatePresence } from "framer-motion";
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
@@ -21,6 +22,24 @@ const AllClasses = () => {
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
     window.scrollTo(0, 0);
+  };
+
+  // Orchestrated Layout Variants
+  const parentContainer = {
+    initial: {},
+    animate: {
+      transition: { staggerChildren: 0.05 },
+    },
+  };
+
+  const cardNode = {
+    initial: { opacity: 0, y: 30, scale: 0.98 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    },
   };
 
   return (
@@ -46,11 +65,8 @@ const AllClasses = () => {
             onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Search by class name..."
-            className="w-full border border-gray-300 dark:border-white/10 py-3 pl-5 pr-[60px] rounded-xl bg-gray-50 dark:bg-neutral-900/40 backdrop-blur-md text-gray-900 dark:bg-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:ring-1 focus:ring-primary/20 dark:focus:ring-primary/10 transition-all duration-300"
+            className="w-full border border-gray-300 dark:bg-white/5 dark:border-white/10 py-3 pl-5 pr-[60px] rounded-xl bg-gray-50 dark:bg-neutral-900/40 backdrop-blur-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:ring-1 focus:ring-primary/20 dark:focus:ring-primary/10 transition-all duration-300"
           />
-          <span className="absolute top-1/2 -translate-y-1/2 right-1.5 h-[calc(100%-12px)] px-4 flex items-center justify-center rounded-lg cursor-pointer bg-gray-200 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white hover:border-primary dark:hover:border-primary transition-all duration-300">
-            <IoSearch className="text-lg" />
-          </span>
         </div>
       </div>
 
@@ -58,57 +74,63 @@ const AllClasses = () => {
       {isLoading ? (
         <Loader />
       ) : currentClasses.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        // <AnimatePresence mode="wait">
+        <motion.div
+          variants={parentContainer}
+          initial="initial"
+          animate="animate"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+        >
           {currentClasses.map((classItem) => (
-            <div
-              key={classItem.id || classItem._id}
-              className="flex flex-col gap-5 p-6 rounded-2xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/40 dark:hover:border-primary/30 transition-all duration-300 group relative overflow-hidden"
-            >
-              {/* Content Block: Text fixes applied here */}
-              <div className="flex flex-col gap-3 flex-grow pb-4 border-b border-gray-200 dark:border-white/5">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">
-                  {classItem.name}
-                </h2>
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-normal flex-grow">
-                  {classItem.description}
-                </p>
-              </div>
-
-              {/* Trainers Meta Block */}
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-gray-500 dark:text-gray-400">
-                  <HiOutlineUsers className="text-base text-primary" />
-                  <span>
-                    Available Trainers ({classItem.trainers?.length || 0})
-                  </span>
+            <motion.div variants={cardNode} key={classItem.id || classItem._id}>
+              <div className="h-full flex flex-col gap-5 p-6 rounded-2xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/40 dark:hover:border-primary/30 transition-all duration-300 group relative overflow-hidden">
+                {/* Content Block: Text fixes applied here */}
+                <div className="flex flex-col gap-3 flex-grow pb-4 border-b border-gray-200 dark:border-white/5">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">
+                    {classItem.name}
+                  </h2>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-normal flex-grow">
+                    {classItem.description}
+                  </p>
                 </div>
 
-                {classItem.trainers && classItem.trainers.length > 0 ? (
-                  <ul className="flex flex-wrap gap-2 pt-1">
-                    {classItem.trainers.slice(0, 5).map((trainer, index) => (
-                      <li key={trainer._id || index}>
-                        <Link
-                          to={`/all-trainer/trainer/${trainer}`}
-                          className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:text-white hover:bg-primary dark:hover:bg-primary hover:border-primary dark:hover:border-primary font-medium transition-all duration-200 shadow-sm"
-                        >
-                          <HiOutlineHashtag className="text-[10px] shrink-0" />
-                          <span className="truncate max-w-[100px]">
-                            {trainer}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-xs italic text-gray-400 dark:text-gray-500">
-                    No trainers assigned yet.
-                  </p>
-                )}
+                {/* Trainers Meta Block */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-gray-500 dark:text-gray-400">
+                    <HiOutlineUsers className="text-base text-primary" />
+                    <span>
+                      Available Trainers ({classItem.trainers?.length || 0})
+                    </span>
+                  </div>
+
+                  {classItem.trainers && classItem.trainers.length > 0 ? (
+                    <ul className="flex flex-wrap gap-2 pt-1">
+                      {classItem.trainers.slice(0, 5).map((trainer, index) => (
+                        <li key={trainer._id || index}>
+                          <Link
+                            to={`/all-trainer/trainer/${trainer}`}
+                            className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:text-white hover:bg-primary dark:hover:bg-primary hover:border-primary dark:hover:border-primary font-medium transition-all duration-200 shadow-sm"
+                          >
+                            <HiOutlineHashtag className="text-[10px] shrink-0" />
+                            <span className="truncate max-w-[100px]">
+                              {trainer}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-xs italic text-gray-400 dark:text-gray-500">
+                      No trainers assigned yet.
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ) : (
+        // </AnimatePresence>
         <div className="text-center py-20 border border-dashed border-gray-300 dark:border-white/5 rounded-3xl bg-gray-50 dark:bg-transparent">
           <p className="text-gray-600 dark:text-gray-400 font-medium">
             No fitness classes matched your search criteria.

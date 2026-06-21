@@ -3,6 +3,7 @@ import useCommunity from "../../hooks/useCommunity";
 import CommunityCard from "./CommunityCard";
 import ReactPaginate from "react-paginate";
 import Loader from "../Shared/Loader";
+import { motion } from "framer-motion";
 
 const CommunityCards = () => {
   const { communities, refetch, isLoading } = useCommunity();
@@ -23,20 +24,40 @@ const CommunityCards = () => {
     window.scrollTo(0, 0);
   };
 
+  const parentContainer = {
+    initial: {},
+    animate: {
+      transition: { staggerChildren: 0.05 },
+    },
+  };
+
+  const cardNode = {
+    initial: { opacity: 0, y: 30, scale: 0.98 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <div className="pt-8">
+    <motion.div
+      variants={parentContainer}
+      initial="initial"
+      animate="animate"
+      className="pt-8"
+    >
       {currentCommunities?.length > 0 ? (
         <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
           {currentCommunities.map((post) => (
-            <CommunityCard
-              refetch={refetch}
-              key={post._id}
-              post={post}
-            ></CommunityCard>
+            <motion.div variants={cardNode} key={post._id}>
+              <CommunityCard refetch={refetch} post={post}></CommunityCard>
+            </motion.div>
           ))}
         </div>
       ) : (
@@ -93,7 +114,7 @@ const CommunityCards = () => {
           breakClassName="px-3 py-2 text-gray-400 dark:text-gray-500 font-bold"
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 
