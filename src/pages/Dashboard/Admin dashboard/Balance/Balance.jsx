@@ -61,7 +61,7 @@ const Balance = () => {
               <p className="text-xs font-extrabold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                 Total Aggregated Revenue
               </p>
-              <h3 className="text-3xl font-black text-slate-950 dark:text-white mt-1.5 tracking-tight flex items-baseline">
+              <h3 className="text-3xl font-black text-surface-dark dark:text-white mt-1.5 tracking-tight flex items-baseline">
                 <span className="text-primary text-2xl font-bold mr-0.5">
                   $
                 </span>
@@ -85,7 +85,7 @@ const Balance = () => {
               <p className="text-xs font-extrabold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                 Monitored Volume
               </p>
-              <h3 className="text-3xl font-black text-slate-950 dark:text-white mt-1.5 tracking-tight">
+              <h3 className="text-3xl font-black text-surface-dark dark:text-white mt-1.5 tracking-tight">
                 {recentPayments?.length || 0}{" "}
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Batches
@@ -104,7 +104,7 @@ const Balance = () => {
 
       {/* Industrial Grade Data Table Module */}
       <div className="mb-5">
-        <h2 className="text-lg font-black tracking-tight text-slate-950 dark:text-white uppercase">
+        <h2 className="text-lg font-black tracking-tight text-surface-dark dark:text-white uppercase">
           Recent Logs Terminal
         </h2>
         <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
@@ -143,7 +143,7 @@ const Balance = () => {
                   key={p._id}
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap"
                 >
-                  <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200">
+                  <td className="p-4 text-sm font-bold text-surface-dark dark:text-gray-200">
                     {p.name}
                   </td>
                   <td className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
@@ -167,7 +167,7 @@ const Balance = () => {
       {/* Analytics Visualization Block */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm">
         <div className="mb-6">
-          <h2 className="text-lg font-black tracking-tight text-slate-950 dark:text-white uppercase">
+          <h2 className="text-lg font-black tracking-tight text-surface-dark dark:text-white uppercase">
             Revenue Metrics Chart
           </h2>
           <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">

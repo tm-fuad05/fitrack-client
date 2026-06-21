@@ -95,7 +95,7 @@ const BookedTrainer = () => {
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+            <h1 className="text-xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
               <FiGrid className="text-primary animate-pulse" /> Verified Booked
               Subscriptions
             </h1>
@@ -134,7 +134,7 @@ const BookedTrainer = () => {
                   {p.membershipType || "Standard Pack"}
                 </span>
 
-                <h2 className="text-xl font-black text-slate-950 dark:text-white uppercase tracking-tight truncate flex items-center gap-1.5">
+                <h2 className="text-xl font-black text-surface-dark dark:text-white uppercase tracking-tight truncate flex items-center gap-1.5">
                   <FiUser className="text-primary text-base flex-shrink-0" />{" "}
                   {p.trainer}
                 </h2>
@@ -166,7 +166,7 @@ const BookedTrainer = () => {
               {/* Action Vector Broadcast Trigger */}
               <button
                 onClick={() => handleOpen(p)}
-                className="mt-6 w-full flex items-center justify-center gap-2 py-3 bg-slate-50 dark:bg-white/5 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary border border-gray-300 dark:border-white/10 group-hover:border-transparent text-slate-950 dark:text-gray-300 group-hover:text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-all duration-300 cursor-pointer"
+                className="mt-6 w-full flex items-center justify-center gap-2 py-3 bg-slate-50 dark:bg-white/5 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary border border-gray-300 dark:border-white/10 group-hover:border-transparent text-surface-dark dark:text-gray-300 group-hover:text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm transition-all duration-300 cursor-pointer"
               >
                 <FiMessageSquare /> Transmit Feedback
               </button>
@@ -182,7 +182,7 @@ const BookedTrainer = () => {
         className="bg-white dark:bg-[#12131a] border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden focus:outline-none"
         size="sm"
       >
-        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-4 text-slate-950 dark:text-white font-black text-base uppercase tracking-tight">
+        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-4 text-surface-dark dark:text-white font-black text-base uppercase tracking-tight">
           <span className="flex items-center gap-2">
             <FiMessageSquare className="text-primary" /> Review Node:{" "}
             <span className="text-secondary tracking-normal">
@@ -207,7 +207,7 @@ const BookedTrainer = () => {
               <textarea
                 name="feedback"
                 placeholder="Document your pipeline performance assessment details here..."
-                className="w-full min-h-[100px] bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none resize-none"
+                className="w-full min-h-[100px] bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none resize-none"
                 required
               />
             </div>

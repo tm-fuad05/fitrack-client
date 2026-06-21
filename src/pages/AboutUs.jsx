@@ -29,14 +29,19 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="w-11/12 max-w-7xl mx-auto my-16 mt-28 bg-transparent text-gray-900 dark:text-white antialiased">
+    <div className="w-11/12 max-w-7xl mx-auto my-16 pt-24 text-gray-900 dark:text-white antialiased">
       <Helmet>
         <title>FitRack | About Us</title>
       </Helmet>
 
       {/* Modern Split Hero Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-20 border-b border-gray-200 dark:border-white/5 pb-12">
-        <div className="lg:col-span-7 space-y-6">
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-7 space-y-6"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
             <LucideSparkles className="w-3.5 h-3.5" /> Truly Next-Gen Fitness
           </div>
@@ -57,9 +62,14 @@ const AboutUs = () => {
               Join Our Tribe
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="lg:col-span-5 relative group">
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7 }}
+          className="lg:col-span-5 relative group"
+        >
           <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
           <div className="relative rounded-2xl overflow-hidden border border-gray-300 dark:border-white/10 shadow-2xl bg-gray-100 dark:bg-neutral-900">
             <img
@@ -68,7 +78,7 @@ const AboutUs = () => {
               className="w-full h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-700"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Interactive Bento Box Grid Layout */}

@@ -91,7 +91,7 @@ const AllClasses = () => {
                           to={`/all-trainer/trainer/${trainer}`}
                           className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:text-white hover:bg-primary dark:hover:bg-primary hover:border-primary dark:hover:border-primary font-medium transition-all duration-200 shadow-sm"
                         >
-                          <HiOutlineHashtag className="text-[10px] text-gray-400 dark:text-gray-500 shrink-0" />
+                          <HiOutlineHashtag className="text-[10px] shrink-0" />
                           <span className="truncate max-w-[100px]">
                             {trainer}
                           </span>

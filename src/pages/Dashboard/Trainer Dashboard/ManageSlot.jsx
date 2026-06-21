@@ -123,7 +123,7 @@ const ManageSlot = () => {
 
       {/* Header section */}
       <div className="mb-10 text-center">
-        <h1 className="text-3xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center justify-center gap-2">
           <FiCalendar className="text-primary" /> Manage Routine{" "}
           <span className="text-primary">Slots</span>
         </h1>
@@ -140,27 +140,27 @@ const ManageSlot = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-200/70 dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-slate-950 dark:text-gray-300">
+                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300">
                     Trainer Name
                   </th>
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-slate-950 dark:text-gray-300">
+                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300">
                     Active Slots / Schedule
                   </th>
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-slate-950 dark:text-gray-300 text-center">
+                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300 text-center">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-300/50 dark:divide-white/5">
                 <tr className="hover:bg-gray-200/20 dark:hover:bg-white/5 transition-colors">
-                  <td className="p-4 font-bold text-slate-950 dark:text-gray-200 text-sm">
+                  <td className="p-4 font-bold text-surface-dark dark:text-gray-200 text-sm">
                     {user?.displayName}
                   </td>
                   <td className="p-4 space-y-1.5">
                     {currentTrainer?.availableDays?.map((d, index) => (
                       <div
                         key={index}
-                        className="inline-flex items-center gap-1.5 bg-gray-200/60 dark:bg-white/10 text-slate-950 dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-lg mr-2 mb-1.5 shadow-sm"
+                        className="inline-flex items-center gap-1.5 bg-gray-200/60 dark:bg-white/10 text-surface-dark dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-lg mr-2 mb-1.5 shadow-sm"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                         {d} ({currentTrainer?.availableTime || "Not Specified"})
@@ -186,7 +186,7 @@ const ManageSlot = () => {
         <div className="p-6 rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-100/70 dark:bg-white/5 backdrop-blur-md shadow-xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-2xl pointer-events-none" />
 
-          <h3 className="text-lg font-black text-slate-950 dark:text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
+          <h3 className="text-lg font-black text-surface-dark dark:text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
             <FiCheckCircle className="text-green-500" /> Current Trainee
             Bookings
           </h3>
@@ -196,7 +196,7 @@ const ManageSlot = () => {
               {bookingSlots.map((slot, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/5 text-slate-950 dark:text-gray-200 shadow-inner"
+                  className="flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/5 text-surface-dark dark:text-gray-200 shadow-inner"
                 >
                   <div className="p-1.5 rounded-lg bg-green-500/10 text-green-500 shrink-0">
                     <TiTick className="text-xl" />
@@ -208,7 +208,7 @@ const ManageSlot = () => {
                     <span className="mx-1.5 text-gray-400">||</span>
                     <span className="text-gray-600 dark:text-gray-400">
                       By:{" "}
-                      <strong className="text-slate-950 dark:text-white font-bold">
+                      <strong className="text-surface-dark dark:text-white font-bold">
                         {slot.name}
                       </strong>
                     </span>
@@ -231,7 +231,7 @@ const ManageSlot = () => {
         size="sm"
         className="bg-white dark:bg-neutral-900 border border-gray-300 dark:border-white/10 shadow-2xl rounded-3xl overflow-hidden focus:outline-none"
       >
-        <DialogHeader className="text-lg font-black text-slate-950 dark:text-white px-6 pt-6 uppercase tracking-wide border-b border-gray-200 dark:border-white/5 pb-3">
+        <DialogHeader className="text-lg font-black text-surface-dark dark:text-white px-6 pt-6 uppercase tracking-wide border-b border-gray-200 dark:border-white/5 pb-3">
           Configure Distribution Structure
         </DialogHeader>
         <DialogBody className="p-6">

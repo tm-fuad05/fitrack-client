@@ -95,7 +95,7 @@ const Featured = () => {
 
             {/* Content Area */}
             <div className="flex flex-col gap-3 z-10 flex-grow">
-              <h3 className="uppercase text-xl font-bold font-oxanium text-foreground dark:text-foreground-dark tracking-wide transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary">
+              <h3 className="uppercase text-xl font-bold font-oxanium text-foreground dark:text-foreground-dark tracking-wide transition-colors duration-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary">
                 {card.name}
               </h3>
 

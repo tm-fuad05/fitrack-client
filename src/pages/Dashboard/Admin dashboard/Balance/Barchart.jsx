@@ -19,7 +19,7 @@ const CustomTooltip = ({ active, payload }) => {
         <p className="text-xs font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-0.5">
           {payload[0].payload.name}
         </p>
-        <p className="text-lg font-black text-slate-950 dark:text-white tracking-tight">
+        <p className="text-lg font-black text-surface-dark dark:text-white tracking-tight">
           {payload[0].value.toLocaleString()}{" "}
           <span className="text-xs font-bold text-gray-400 uppercase">
             Total

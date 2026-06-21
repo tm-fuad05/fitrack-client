@@ -65,7 +65,7 @@ const AddForum = () => {
 
       {/* Header Title */}
       <div className="mb-10 text-center">
-        <h1 className="text-3xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center justify-center gap-2">
           <FiEdit3 className="text-primary" /> Post a{" "}
           <span className="text-primary">Forum</span>
         </h1>
@@ -119,7 +119,7 @@ const AddForum = () => {
             <input
               type="text"
               placeholder="e.g., Optimal Post-Workout Nutrition Windows"
-              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
+              className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
@@ -136,7 +136,7 @@ const AddForum = () => {
             <input
               type="text"
               placeholder="e.g., Diet & Nutrition, Hypertrophy, Cardio"
-              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
+              className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.category}
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
@@ -152,7 +152,7 @@ const AddForum = () => {
             </label>
             <textarea
               placeholder="Compose your comprehensive technical discourse here..."
-              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
+              className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })

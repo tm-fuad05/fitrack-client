@@ -148,7 +148,7 @@ const AddClass = () => {
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden max-w-3xl mx-auto">
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
         <div>
-          <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+          <h1 className="text-xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
             <FiPlusCircle className="text-primary" /> Deploy New Class
           </h1>
           <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
@@ -169,7 +169,7 @@ const AddClass = () => {
             <input
               type="text"
               placeholder="e.g., High-Intensity Metabolic Conditioning"
-              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
+              className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -186,7 +186,7 @@ const AddClass = () => {
             </label>
             <textarea
               placeholder="Map out structural targets, physiological scopes, or program descriptions..."
-              className="w-full bg-transparent text-slate-950 dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
+              className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
@@ -204,7 +204,7 @@ const AddClass = () => {
             <Select
               isMulti
               options={trainersOptions}
-              className="w-full text-sm font-semibold text-slate-950 dark:text-white"
+              className="w-full text-sm font-semibold text-surface-dark dark:text-white"
               styles={customSelectStyles}
               placeholder="Search and map active instructors to system profile..."
               onChange={(selected) =>

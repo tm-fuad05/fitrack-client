@@ -251,7 +251,7 @@ const Dashboard = () => {
                 src={fitrack}
                 alt="logo"
               />
-              <h2 className="font-black text-xl md:text-2xl italic text-slate-950 dark:text-white uppercase tracking-tight">
+              <h2 className="font-black text-xl md:text-2xl italic text-surface-dark dark:text-white uppercase tracking-tight">
                 Fit<span className="text-primary">Rack</span>
               </h2>
             </a>

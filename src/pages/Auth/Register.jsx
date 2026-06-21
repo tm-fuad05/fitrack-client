@@ -97,7 +97,7 @@ const Register = () => {
 
           {/* Header Branding Panel */}
           <div className="flex flex-col gap-1.5 mb-6">
-            <h2 className="font-black text-2xl lg:text-3xl tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+            <h2 className="font-black text-2xl lg:text-3xl tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
               <FiUserPlus className="text-primary" /> Register to Fit
               <span className="text-secondary">Rack</span>
             </h2>
@@ -118,7 +118,7 @@ const Register = () => {
                 name="name"
                 id="name"
                 placeholder="John Doe"
-                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
                 required
               />
             </div>
@@ -136,7 +136,7 @@ const Register = () => {
                 name="photo"
                 id="photo"
                 placeholder="https://example.com/photo.jpg"
-                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
                 required
               />
             </div>
@@ -154,7 +154,7 @@ const Register = () => {
                 name="email"
                 id="email"
                 placeholder="name@example.com"
-                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
                 required
               />
             </div>
@@ -173,13 +173,13 @@ const Register = () => {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="w-full rounded-xl pl-4 pr-12 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                  className="w-full rounded-xl pl-4 pr-12 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setIsEyeOpen(!isEyeOpen)}
-                  className="absolute top-1/2 -translate-y-1/2 right-4 text-xl text-gray-500 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white transition-colors cursor-pointer"
+                  className="absolute top-1/2 -translate-y-1/2 right-4 text-xl text-gray-500 dark:text-gray-400 hover:text-surface-dark dark:hover:text-white transition-colors cursor-pointer"
                 >
                   {isEyeOpen ? <IoEyeOutline /> : <IoEyeOffOutline />}
                 </button>

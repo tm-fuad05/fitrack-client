@@ -143,7 +143,7 @@ const AppliedTrainer = () => {
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+            <h1 className="text-xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
               <FiUsers className="text-primary" /> Applied Candidates
             </h1>
             <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
@@ -156,7 +156,7 @@ const AppliedTrainer = () => {
             <span className="text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
               Pending Scope
             </span>
-            <span className="text-2xl font-black text-slate-950 dark:text-white tracking-tight">
+            <span className="text-2xl font-black text-surface-dark dark:text-white tracking-tight">
               {pendingFilter.length}
             </span>
           </div>
@@ -200,7 +200,7 @@ const AppliedTrainer = () => {
                   key={trainer._id}
                   className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200"
                 >
-                  <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200 whitespace-nowrap">
+                  <td className="p-4 text-sm font-bold text-surface-dark dark:text-gray-200 whitespace-nowrap">
                     {trainer.fullName}
                   </td>
                   <td className="p-4 text-sm font-semibold text-slate-800 dark:text-gray-400 whitespace-nowrap">
@@ -257,12 +257,12 @@ const AppliedTrainer = () => {
         {selectedTrainer && (
           <>
             <div className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 pb-3 mb-4">
-              <h3 className="text-md font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+              <h3 className="text-md font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
                 <FiEye className="text-secondary" /> Candidate File Stack
               </h3>
               <button
                 onClick={() => handleOpen(null)}
-                className="text-lg p-1 text-gray-400 hover:text-slate-950 dark:hover:text-white cursor-pointer"
+                className="text-lg p-1 text-gray-400 hover:text-surface-dark dark:hover:text-white cursor-pointer"
               >
                 <FiX />
               </button>
@@ -272,13 +272,13 @@ const AppliedTrainer = () => {
               <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-gray-300/50 dark:border-white/5 grid grid-cols-2 gap-3 text-xs">
                 <p className="font-semibold text-gray-500 uppercase">
                   Full Identity:{" "}
-                  <span className="block text-sm font-black text-slate-950 dark:text-white tracking-tight mt-0.5">
+                  <span className="block text-sm font-black text-surface-dark dark:text-white tracking-tight mt-0.5">
                     {selectedTrainer.fullName}
                   </span>
                 </p>
                 <p className="font-semibold text-gray-500 uppercase">
                   Age Matrix:{" "}
-                  <span className="block text-sm font-black text-slate-950 dark:text-white tracking-tight mt-0.5">
+                  <span className="block text-sm font-black text-surface-dark dark:text-white tracking-tight mt-0.5">
                     {selectedTrainer.age} Years
                   </span>
                 </p>
@@ -309,7 +309,7 @@ const AppliedTrainer = () => {
                     label="Constructive Rejection Feedback Parameters..."
                     name="feedback"
                     required
-                    className="bg-transparent text-slate-950 dark:text-white border-gray-400 dark:border-white/10 focus:border-primary rounded-xl"
+                    className="bg-transparent text-surface-dark dark:text-white border-gray-400 dark:border-white/10 focus:border-primary rounded-xl"
                   />
                 </div>
 

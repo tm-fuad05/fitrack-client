@@ -190,7 +190,7 @@ const ApplicationForTrainer = () => {
 
         {/* Header Section */}
         <div className="text-center mb-8 relative">
-          <h1 className="text-2xl font-black uppercase tracking-tight text-slate-950 dark:text-white flex items-center justify-center gap-2">
+          <h1 className="text-2xl font-black uppercase tracking-tight text-surface-dark dark:text-white flex items-center justify-center gap-2">
             <FiGrid className="text-primary animate-pulse" /> Apply to Be a
             Trainer
           </h1>
@@ -235,7 +235,7 @@ const ApplicationForTrainer = () => {
                 <input
                   type="text"
                   placeholder="Enter your full name"
-                  className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
+                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.fullName}
                   onChange={(e) =>
                     setFormData({ ...formData, fullName: e.target.value })
@@ -265,7 +265,7 @@ const ApplicationForTrainer = () => {
                 <input
                   type="number"
                   placeholder="Years"
-                  className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
+                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.age}
                   onChange={(e) =>
                     setFormData({ ...formData, age: e.target.value })
@@ -282,7 +282,7 @@ const ApplicationForTrainer = () => {
                 <input
                   type="text"
                   placeholder="e.g., 3 Years"
-                  className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
+                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.yearsOfExperience}
                   onChange={(e) =>
                     setFormData({
@@ -303,7 +303,7 @@ const ApplicationForTrainer = () => {
                 <input
                   type="url"
                   placeholder="https://example.com/vector.png"
-                  className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
+                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
                   value={formData.profileImage}
                   onChange={(e) =>
                     setFormData({ ...formData, profileImage: e.target.value })
@@ -363,7 +363,7 @@ const ApplicationForTrainer = () => {
                 <input
                   type="text"
                   placeholder="e.g., 09:00 AM - 05:00 PM"
-                  className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
+                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
                   value={formData.availableTime}
                   onChange={(e) =>
                     setFormData({ ...formData, availableTime: e.target.value })

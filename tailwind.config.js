@@ -10,7 +10,7 @@ module.exports = withMT({
         secondary: "#e96d4c",
         background: {
           DEFAULT: "#fdf5f2",
-          dark: "#0a0a0b",
+          dark: "#000",
         },
         foreground: {
           DEFAULT: "#171717",

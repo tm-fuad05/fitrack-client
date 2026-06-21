@@ -155,7 +155,7 @@ const AddSlot = () => {
 
       {/* Header Container */}
       <div className="mb-10 text-center">
-        <h1 className="text-3xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center justify-center gap-2">
           <FiPlusCircle className="text-primary" /> Add Routine{" "}
           <span className="text-primary">Slot</span>
         </h1>
@@ -209,7 +209,7 @@ const AddSlot = () => {
               <input
                 type="text"
                 placeholder="e.g., Morning Shift, Afternoon Core, Late Night Hypertrophy"
-                className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-slate-950 dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
                 value={formData.slotName}
                 onChange={(e) =>
                   setFormData({ ...formData, slotName: e.target.value })

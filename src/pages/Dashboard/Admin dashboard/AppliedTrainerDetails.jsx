@@ -42,7 +42,7 @@ const AppliedTrainerDetails = () => {
 
             {/* Profile Meta Metadata */}
             <div className="mt-4 space-y-1">
-              <h2 className="text-lg font-black tracking-tight text-slate-950 dark:text-white uppercase">
+              <h2 className="text-lg font-black tracking-tight text-surface-dark dark:text-white uppercase">
                 {appliedTrainer.fullName}
               </h2>
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 dark:text-gray-400">
@@ -73,7 +73,7 @@ const AppliedTrainerDetails = () => {
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                 Core Credentials
               </h3>
-              <p className="text-base font-black text-slate-950 dark:text-white tracking-tight uppercase mt-0.5">
+              <p className="text-base font-black text-surface-dark dark:text-white tracking-tight uppercase mt-0.5">
                 Instructional Experience Parameters
               </p>
             </div>
@@ -84,7 +84,7 @@ const AppliedTrainerDetails = () => {
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1">
                   Age Context
                 </span>
-                <span className="text-lg font-black text-slate-950 dark:text-white tracking-tight">
+                <span className="text-lg font-black text-surface-dark dark:text-white tracking-tight">
                   {appliedTrainer.age}{" "}
                   <span className="text-xs font-semibold text-gray-400">
                     Years
@@ -95,7 +95,7 @@ const AppliedTrainerDetails = () => {
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 block mb-1 flex items-center gap-1">
                   <FiBriefcase /> Seniority
                 </span>
-                <span className="text-lg font-black text-slate-950 dark:text-white tracking-tight">
+                <span className="text-lg font-black text-surface-dark dark:text-white tracking-tight">
                   {appliedTrainer.yearsOfExperience}{" "}
                   <span className="text-xs font-semibold text-gray-400">
                     Yrs Exp
@@ -107,7 +107,7 @@ const AppliedTrainerDetails = () => {
                   <FiClock /> Scope Window
                 </span>
                 <span
-                  className="text-sm font-black text-slate-950 dark:text-white truncate block mt-0.5"
+                  className="text-sm font-black text-surface-dark dark:text-white truncate block mt-0.5"
                   title={appliedTrainer.availableTime}
                 >
                   {appliedTrainer.availableTime}

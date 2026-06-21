@@ -38,7 +38,7 @@ const CommunityCard = ({ post, refetch }) => {
   return (
     <div
       key={_id}
-      className="flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-neutral-900/60 backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 group relative h-full"
+      className="flex flex-col gap-4 p-6 rounded-2xl border border-gray-300 dark:border-white/10 bg-neutral-900/60 backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 group relative h-full"
     >
       {/* Header Area: Title & Role Badge */}
       <div className="flex justify-between items-start gap-4 pb-3 border-b border-white/5">

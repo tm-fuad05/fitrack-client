@@ -103,7 +103,7 @@ const Profile = () => {
           </div>
 
           <div className="mt-8 space-y-2 w-full">
-            <h3 className="font-black text-2xl text-slate-950 dark:text-white uppercase tracking-tight leading-none">
+            <h3 className="font-black text-2xl text-surface-dark dark:text-white uppercase tracking-tight leading-none">
               {user?.displayName}
             </h3>
 
@@ -133,7 +133,7 @@ const Profile = () => {
               <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
                 System Handshake State
               </p>
-              <h4 className="text-sm font-bold text-slate-950 dark:text-gray-200 mt-0.5">
+              <h4 className="text-sm font-bold text-surface-dark dark:text-gray-200 mt-0.5">
                 All local client databases are synchronized with root.
               </h4>
             </div>
@@ -150,7 +150,7 @@ const Profile = () => {
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   Identity Tag
                 </p>
-                <p className="text-base font-bold text-slate-950 dark:text-gray-200 mt-1">
+                <p className="text-base font-bold text-surface-dark dark:text-gray-200 mt-1">
                   {user?.displayName}
                 </p>
               </div>
@@ -165,7 +165,7 @@ const Profile = () => {
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   Secure Network Endpoint
                 </p>
-                <p className="text-sm font-bold text-slate-950 dark:text-gray-200 mt-1 truncate select-all">
+                <p className="text-sm font-bold text-surface-dark dark:text-gray-200 mt-1 truncate select-all">
                   {user?.email}
                 </p>
               </div>
@@ -180,7 +180,7 @@ const Profile = () => {
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   Hex Ledger Signature
                 </p>
-                <p className="text-sm font-mono font-bold text-slate-950 dark:text-gray-300 mt-1 tracking-wide">
+                <p className="text-sm font-mono font-bold text-surface-dark dark:text-gray-300 mt-1 tracking-wide">
                   {currentUser?._id || "fetching_hash..."}
                 </p>
               </div>
@@ -195,7 +195,7 @@ const Profile = () => {
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   Handshake Time-stamp
                 </p>
-                <p className="text-xs font-mono font-bold text-slate-950 dark:text-gray-200 mt-1">
+                <p className="text-xs font-mono font-bold text-surface-dark dark:text-gray-200 mt-1">
                   {lastLogin}
                 </p>
               </div>
@@ -211,7 +211,7 @@ const Profile = () => {
         className="bg-white dark:bg-[#12131a] border border-gray-300 dark:border-white/10 rounded-3xl shadow-2xl overflow-hidden focus:outline-none"
         size="sm"
       >
-        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-5 text-slate-950 dark:text-white font-black text-base uppercase tracking-tight">
+        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-5 text-surface-dark dark:text-white font-black text-base uppercase tracking-tight">
           <span className="flex items-center gap-2">
             <FiSliders className="text-primary" /> Modify Parameter Payload
           </span>
@@ -233,7 +233,7 @@ const Profile = () => {
                 type="text"
                 name="name"
                 defaultValue={user?.displayName}
-                className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
+                className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
                 required
               />
             </div>
@@ -246,7 +246,7 @@ const Profile = () => {
                 type="url"
                 name="photo"
                 defaultValue={user?.photoURL}
-                className="w-full bg-slate-50 dark:bg-transparent text-slate-950 dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none"
+                className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none"
                 required
               />
             </div>

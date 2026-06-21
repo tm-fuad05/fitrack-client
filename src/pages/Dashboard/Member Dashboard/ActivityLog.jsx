@@ -98,7 +98,7 @@ const ActivityLog = () => {
       {/* Premium Sci-Fi Stats Header Panel */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-        <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+        <h1 className="text-xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
           <FiActivity className="text-primary animate-pulse" /> Security
           Activity Ledger
         </h1>
@@ -146,7 +146,7 @@ const ActivityLog = () => {
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
               <tr className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200 bg-gray-50 dark:bg-transparent">
                 {/* Full Name */}
-                <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200 whitespace-nowrap">
+                <td className="p-4 text-sm font-bold text-surface-dark dark:text-gray-200 whitespace-nowrap">
                   {currentUser?.fullName}
                 </td>
 
@@ -211,7 +211,7 @@ const ActivityLog = () => {
         className="bg-white dark:bg-[#12131a] border border-gray-300 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden focus:outline-none"
         size="sm"
       >
-        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-4 text-slate-950 dark:text-white font-black text-base uppercase tracking-tight">
+        <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-4 text-surface-dark dark:text-white font-black text-base uppercase tracking-tight">
           <span className="flex items-center gap-2">
             <FiInfo className="text-red-500" /> Infrastructure Feedback
           </span>

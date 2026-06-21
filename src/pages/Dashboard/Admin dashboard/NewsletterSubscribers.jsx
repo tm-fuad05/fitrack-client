@@ -28,7 +28,7 @@ const NewsletterSubscribers = () => {
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl font-black tracking-tight text-slate-950 dark:text-white uppercase flex items-center gap-2">
+            <h1 className="text-xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center gap-2">
               <FiUsers className="text-primary" /> Newsletter Subscribers
             </h1>
             <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
@@ -42,7 +42,7 @@ const NewsletterSubscribers = () => {
             <span className="text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
               Total Leads
             </span>
-            <span className="text-2xl font-black text-slate-950 dark:text-white tracking-tight">
+            <span className="text-2xl font-black text-surface-dark dark:text-white tracking-tight">
               {newsletters?.length || 0}
             </span>
           </div>
@@ -93,7 +93,7 @@ const NewsletterSubscribers = () => {
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200"
                 >
                   {/* Name */}
-                  <td className="p-4 text-sm font-bold text-slate-950 dark:text-gray-200 whitespace-nowrap">
+                  <td className="p-4 text-sm font-bold text-surface-dark dark:text-gray-200 whitespace-nowrap">
                     {subscriber.name}
                   </td>
 
