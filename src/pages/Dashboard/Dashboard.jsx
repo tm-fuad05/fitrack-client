@@ -209,9 +209,16 @@ const Dashboard = () => {
     <div className="min-h-screen bg-slate-50 dark:bg-neutral-950 text-slate-900 dark:text-white antialiased grid grid-cols-12 relative">
       {/* Desktop SideBar (Glassy Slate Panel) */}
       <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10 duration-300 min-h-screen sticky top-0 h-screen overflow-y-auto">
-        <div className="p-4">
-          <Logo />
-        </div>
+        <a href="/" className="p-4 flex gap-2 items-center">
+          <img
+            className="w-9 md:w-12 transition-transform duration-500 group-hover:rotate-12"
+            src={fitrack}
+            alt="logo"
+          />
+          <h2 className="font-bold text-xl md:text-2xl italic text-foreground dark:text-white tracking-tight font-oxanium">
+            Fit<span className="text-primary">Rack</span>
+          </h2>
+        </a>
         <div className="border-b border-gray-200 dark:border-white/10 " />
 
         {/* NavMenu Elastic Wrapper */}
@@ -243,18 +250,9 @@ const Dashboard = () => {
         </div>
 
         {/* Small Device Header Deck */}
-        <header className="bg-white/80 dark:bg-surface-dark backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
+        <header className="bg-white/80 dark:bg-[#060911] backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
           <div className="flex justify-between items-center w-11/12 mx-auto py-4">
-            <a href="/" className="flex items-center gap-2 group">
-              <img
-                className="w-9 md:w-12 transition-transform duration-500 group-hover:rotate-12"
-                src={fitrack}
-                alt="logo"
-              />
-              <h2 className="font-black text-xl md:text-2xl italic text-surface-dark dark:text-white uppercase tracking-tight">
-                Fit<span className="text-primary">Rack</span>
-              </h2>
-            </a>
+            <Logo />
 
             <div className="flex items-center gap-2.5">
               <button
@@ -275,7 +273,7 @@ const Dashboard = () => {
 
         {/* Mobile Sidebar Flyout Panel */}
         <aside
-          className={`lg:hidden overflow-y-auto bg-white/95 dark:bg-surface-dark backdrop-blur-xl w-full p-6 fixed z-40 border-b border-gray-200 dark:border-white/10 transition-all duration-300 flex flex-col ${
+          className={`lg:hidden overflow-y-auto bg-white/95 dark:bg-[#060911] backdrop-blur-xl w-full p-6 fixed z-40 border-b border-gray-200 dark:border-white/10 transition-all duration-300 flex flex-col ${
             mobileSidebarOpen
               ? "top-[69px] opacity-100 h-[calc(100vh-69px)]"
               : "-top-[1000px] opacity-0 pointer-events-none"
