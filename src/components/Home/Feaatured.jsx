@@ -95,17 +95,17 @@ const Featured = () => {
 
             {/* Content Area */}
             <div className="flex flex-col gap-3 z-10 flex-grow">
-              <h3 className="uppercase text-xl font-bold font-oxanium text-foreground dark:text-foreground-dark tracking-wide transition-colors duration-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary">
+              <h3 className="uppercase text-xl font-bold text-foreground dark:text-foreground-dark tracking-wide transition-colors duration-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-secondary">
                 {card.name}
               </h3>
 
-              <p className="font-poppins text-sm lg:text-base text-foreground-muted dark:text-foreground-muted-dark font-light leading-relaxed">
+              <p className=" text-sm lg:text-base text-foreground-muted dark:text-foreground-muted-dark font-light leading-relaxed">
                 {card.description}
               </p>
 
               <div className="mt-auto pt-4">
                 <Link to={"/all-classes"}>
-                  <button className="capitalize flex items-center gap-3 py-2 px-5 font-medium font-poppins text-sm border border-foreground/20 dark:border-white/10 rounded-full text-foreground dark:text-foreground-dark transition-all duration-300 hover:border-primary dark:hover:border-secondary group/btn relative overflow-hidden">
+                  <button className="capitalize flex items-center gap-3 py-2 px-5 font-medium  text-sm border border-foreground/20 dark:border-white/10 rounded-full text-foreground dark:text-foreground-dark transition-all duration-300 hover:border-primary dark:hover:border-secondary group/btn relative overflow-hidden">
                     read more
                     {/* Dynamic arrow tracking */}
                     <motion.div

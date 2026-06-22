@@ -86,7 +86,7 @@ const Newsletter = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           onSubmit={handleSubmit}
-          className="font-poppins grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl mx-auto mt-12 p-6 md:p-10 rounded-2xl border border-white/10 backdrop-blur-md bg-black/40 shadow-2xl"
+          className=" grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl mx-auto mt-12 p-6 md:p-10 rounded-2xl border border-white/10 backdrop-blur-md bg-black/40 shadow-2xl"
         >
           {/* Name Input */}
           <motion.div variants={itemVariants} className="w-full">

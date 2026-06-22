@@ -25,7 +25,7 @@ const Footer = () => {
 
   return (
     // CHANGED: Fixed hardcoded bg-neutral-950 to adaptive dark theme backgrounds (bg-background-dark / bg-surface-dark)
-    <footer className="relative bg-gray-50 text-gray-800 dark:bg-background-dark dark:text-gray-300 pt-16 pb-6 overflow-hidden border-t border-gray-200 dark:border-white/5 font-poppins transition-colors duration-300">
+    <footer className="relative bg-gray-50 text-gray-800 dark:bg-background-dark dark:text-gray-300 pt-16 pb-6 overflow-hidden border-t border-gray-200 dark:border-white/5 transition-colors duration-300">
       {/* IMPROVED: Enhanced glowing neon blobs for that rich glossy dark-UI backdrop depth */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[140px] pointer-events-none mix-blend-screen opacity-70 dark:opacity-100" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[140px] pointer-events-none mix-blend-screen opacity-70 dark:opacity-100" />
@@ -83,7 +83,7 @@ const Footer = () => {
 
           {/* Column 2: Quick Navigation Links */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold font-oxanium text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
+            <h4 className="text-base font-bold  text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
               Quick Links
             </h4>
             <ul className="space-y-2.5 text-sm font-medium dark:font-light">
@@ -107,7 +107,7 @@ const Footer = () => {
 
           {/* Column 3: Contact Info Blocks */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold font-oxanium text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
+            <h4 className="text-base font-bold  text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
               Contact Info
             </h4>
             <div className="space-y-3.5 text-sm font-medium dark:font-light">
@@ -142,7 +142,7 @@ const Footer = () => {
 
           {/* Column 4: Newsletter Micro-CTA */}
           <div className="space-y-4">
-            <h4 className="text-base font-bold font-oxanium text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
+            <h4 className="text-base font-bold  text-gray-900 dark:text-white uppercase tracking-widest border-b border-gray-300 dark:border-white/5 pb-2">
               Newsletter
             </h4>
             <p className="text-xs text-gray-700 dark:text-gray-400 font-normal dark:font-light leading-relaxed">
@@ -155,7 +155,7 @@ const Footer = () => {
                 placeholder="Your email..."
                 className="w-full bg-transparent pl-3 text-xs text-gray-900 dark:text-white focus:outline-none placeholder-gray-500"
               />
-              <button className="h-full px-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-white text-xs font-semibold font-poppins hover:opacity-90 active:scale-95 transition-all">
+              <button className="h-full px-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-white text-xs font-semibold hover:opacity-90 active:scale-95 transition-all">
                 Join
               </button>
             </div>

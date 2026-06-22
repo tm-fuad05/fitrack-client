@@ -89,7 +89,7 @@ const Review = () => {
                 </motion.div>
 
                 {/* Client Name */}
-                <h3 className="text-xl lg:text-2xl font-bold font-oxanium tracking-wide">
+                <h3 className="text-xl lg:text-2xl font-bold-wide">
                   {review.name}
                 </h3>
 
@@ -111,7 +111,7 @@ const Review = () => {
                 </motion.div>
 
                 {/* Client Review Message */}
-                <p className="text-sm lg:text-base text-gray-300 group-hover:text-white line-clamp-4 font-poppins font-light transition-colors duration-300 leading-relaxed">
+                <p className="text-sm lg:text-base text-gray-300 group-hover:text-white line-clamp-4  font-light transition-colors duration-300 leading-relaxed">
                   {review.review}
                 </p>
 
