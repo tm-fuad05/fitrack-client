@@ -206,19 +206,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-neutral-950 text-slate-900 dark:text-white antialiased grid grid-cols-12 relative">
+    <div className="min-h-screen dark:text-white antialiased grid grid-cols-12 relative">
       {/* Desktop SideBar (Glassy Slate Panel) */}
-      <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10 duration-300 min-h-screen sticky top-0 h-screen overflow-y-auto">
-        <a href="/" className="p-4 flex gap-2 items-center">
-          <img
-            className="w-9 md:w-12 transition-transform duration-500 group-hover:rotate-12"
-            src={fitrack}
-            alt="logo"
-          />
-          <h2 className="font-bold text-xl md:text-2xl italic text-foreground dark:text-white tracking-tight font-oxanium">
-            Fit<span className="text-primary">Rack</span>
-          </h2>
-        </a>
+      <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10  min-h-screen sticky top-0 h-screen overflow-y-auto">
+        <div className="p-5 py-4">
+          <Logo />
+        </div>
         <div className="border-b border-gray-200 dark:border-white/10 " />
 
         {/* NavMenu Elastic Wrapper */}
@@ -253,7 +246,6 @@ const Dashboard = () => {
         <header className="bg-white/80 dark:bg-[#060911] backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
           <div className="flex justify-between items-center w-11/12 mx-auto py-4">
             <Logo />
-
             <div className="flex items-center gap-2.5">
               <button
                 onClick={() => setDarkMode(!darkMode)}

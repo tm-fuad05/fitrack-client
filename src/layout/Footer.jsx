@@ -35,16 +35,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 pb-12">
           {/* Column 1: Brand & Bio */}
           <div className="space-y-4 flex flex-col items-start">
-            <a href="/" className="p-4 flex gap-2 items-center">
-              <img
-                className="w-9 md:w-12 transition-transform duration-500 group-hover:rotate-12"
-                src={fitrack}
-                alt="logo"
-              />
-              <h2 className="font-bold text-xl md:text-2xl italic text-foreground dark:text-white tracking-tight font-oxanium">
-                Fit<span className="text-primary">Rack</span>
-              </h2>
-            </a>
+            <Logo />
             <p className="text-sm text-gray-700 dark:text-gray-400 font-normal dark:font-light leading-relaxed pt-2">
               Track your fitness, unlock premium analytics, and reach your peak
               performance with the ultimate gym ecosystem.

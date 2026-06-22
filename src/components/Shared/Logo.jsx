@@ -1,6 +1,6 @@
 import React from "react";
 import fitrack from "../../assets/fitrack.png";
-const Logo = ({ scrolled }) => {
+const Logo = ({ scrolled = {} }) => {
   return (
     <a href="/">
       <div className="flex items-center gap-2">

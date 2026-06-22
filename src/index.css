@@ -30,7 +30,7 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground;
   }
 
   .dark body {
@@ -38,99 +38,19 @@
   }
 
   ::selection {
-    @apply bg-primary/20 text-gray-900 dark:text-white;
+    @apply bg-primary/40 text-gray-900 dark:text-white;
   }
 }
-
-@layer components {
-  .section-container {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
-  }
-
-  .glass-panel {
-    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
-  }
-
-  .premium-card {
-    @apply rounded-2xl border border-gray-200/80 bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-surface-dark;
-  }
-
-  .form-input {
-    @apply border border-gray-200 bg-surface text-foreground rounded-md outline-none w-full transition-colors duration-300 focus:border-primary dark:border-gray-700 dark:bg-surface-elevated dark:text-foreground-dark dark:placeholder:text-foreground-muted-dark;
-  }
-
-  .form-label {
-    @apply text-foreground dark:text-foreground-dark;
-  }
-
-  .pagination-link {
-    @apply px-4 py-2 rounded-md border border-gray-200 text-foreground hover:bg-surface block dark:border-gray-700 dark:text-foreground-dark dark:hover:bg-surface-elevated;
-  }
-
-  .pagination-nav {
-    @apply rounded-md border border-gray-200 p-2 text-foreground hover:bg-surface dark:border-gray-700 dark:text-foreground-dark dark:hover:bg-surface-elevated;
-  }
-
-  .role-badge-trainer {
-    @apply bg-green-100 text-green-900 dark:bg-green-900/30 dark:text-green-300;
-  }
-
-  .role-badge-member {
-    @apply bg-blue-100 text-blue-900 dark:bg-blue-900/30 dark:text-blue-300;
-  }
-}
-
-.data-table {
-  @apply w-full border border-gray-200 bg-surface dark:border-gray-700 dark:bg-surface-dark;
-}
-
-.data-table th,
-.data-table td {
-  @apply text-foreground dark:text-foreground-dark;
-}
-.dark .fitrack-select__control {
-  background-color: #1f2937 !important;
-  border-color: #374151 !important;
-}
-
-.dark .fitrack-select__single-value,
-.dark .fitrack-select__input-container,
-.dark .fitrack-select__placeholder {
-  color: #f3f4f6 !important;
-}
-
-.dark .fitrack-select__menu {
-  background-color: #1f2937 !important;
-}
-
-.dark .fitrack-select__option {
-  color: #f3f4f6 !important;
-}
-
-.dark .fitrack-select__option--is-focused {
-  background-color: #374151 !important;
-}
-
-.dark .fitrack-select__multi-value {
-  background-color: #374151 !important;
-}
-
-.dark .fitrack-select__multi-value__label {
-  color: #f3f4f6 !important;
-}
-
 
 ::-webkit-scrollbar {
   width: 6px;
 }
 
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, theme('colors.primary'), transparent);
+  background: linear-gradient(to bottom, theme("colors.primary"), transparent);
   border-radius: 2px;
 }
