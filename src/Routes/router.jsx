@@ -16,7 +16,7 @@ import ManageUsers from "../pages/Dashboard/Admin dashboard/ManageUsers";
 import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
 import ActivityLog from "../pages/Dashboard/Member Dashboard/ActivityLog";
 import BookedTrainer from "../pages/Dashboard/Member Dashboard/BookedTrainer";
-import Profile from "../pages/Dashboard/Member Dashboard/Profile";
+import Profile from "../pages/Dashboard/Profile";
 import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
 import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";

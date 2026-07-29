@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
-import useTrainerCheck from "../hooks/useTrainerCheck";
-import useAppliedTrainer from "../hooks/useAppliedTrainer";
+import { div } from "framer-motion/client";
+import useAxiosSecure from "../hooks/axios_hook/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
+import useAppliedTrainer from "../hooks/trainer_hook/useAppliedTrainer";
+import useTrainerCheck from "../hooks/trainer_hook/useTrainerCheck";
 import {
   FiUser,
   FiMail,
@@ -19,7 +20,6 @@ import {
   FiAlertTriangle,
   FiCheckCircle,
 } from "react-icons/fi";
-import { div } from "framer-motion/client";
 
 const ApplicationForTrainer = () => {
   const axiosSecure = useAxiosSecure();

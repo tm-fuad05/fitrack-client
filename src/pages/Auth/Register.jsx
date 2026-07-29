@@ -10,7 +10,7 @@ import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);

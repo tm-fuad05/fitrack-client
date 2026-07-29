@@ -7,7 +7,7 @@ import "swiper/css/free-mode";
 
 import { Autoplay, Navigation, FreeMode, Pagination } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
 import { FaQuoteRight, FaRegStar, FaStar } from "react-icons/fa6";
 import SectionTitle from "../Shared/SectionTitle";
 import Rating from "react-rating";

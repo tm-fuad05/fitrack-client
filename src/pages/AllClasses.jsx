@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
-import useClass from "../hooks/useClass";
+import useClass from "../hooks/class_hook/useClass";
 import { IoSearch } from "react-icons/io5";
 import { HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi2";
 import { Helmet } from "react-helmet-async";

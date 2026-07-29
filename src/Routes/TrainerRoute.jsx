@@ -2,7 +2,7 @@ import React from "react";
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 import Loader from "../components/Shared/Loader";
-import useTrainerCheck from "../hooks/useTrainerCheck";
+import useTrainerCheck from "../hooks/trainer_hook/useTrainerCheck";
 
 const TrainerRoute = ({ children }) => {
   const { user, loader, signOutUser } = useAuth();

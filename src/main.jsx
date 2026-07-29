@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -34,5 +34,5 @@ createRoot(document.getElementById("root")).render(
       pauseOnHover
       theme="light"
     />
-  </StrictMode>
+  </StrictMode>,
 );

@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import Swal from "sweetalert2";
-import useTrainer from "../../../hooks/useTrainer";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useTrainer from "../../../hooks/trainer_hook/useTrainer";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { FiPlusCircle, FiBookOpen, FiFileText, FiUsers } from "react-icons/fi";
 import Back from "../../../components/Shared/Back";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAddClass } from "../../../hooks/class_hook/useAddClass";
 
 const AddClass = () => {
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
   const { trainers } = useTrainer() || { trainers: [] };
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     trainers: [],
   });
+  const mutation = useAddClass();
 
   const trainersOptions = trainers.map((trainer) => ({
     value: trainer.fullName,
@@ -25,31 +25,9 @@ const AddClass = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axiosSecure.post("/classes", formData);
-      if (data.success) {
-        Swal.fire({
-          title: "Class Dispatched Successfully",
-          text: "The structural class profile has been added to index.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          navigate("/all-classes");
-        }, 1500);
-      }
-    } catch (error) {
-      console.error("Failed to execute class registration pipeline:", error);
-      Swal.fire(
-        "Error",
-        "Could not initialize class blueprint configuration.",
-        "error",
-      );
-    }
+    mutation.mutate(formData);
   };
 
-  // Custom styling for premium react-select compatibility with dynamic Dark Mode
   const customSelectStyles = {
     control: (provided, state) => ({
       ...provided,

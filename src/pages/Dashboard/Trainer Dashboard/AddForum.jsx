@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment/moment";

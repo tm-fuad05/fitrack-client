@@ -1,8 +1,8 @@
 import React from "react";
-import useUser from "../../../hooks/useUser";
+import useUser from "../../../hooks/user_hook/useUser";
 import Swal from "sweetalert2";
 import Back from "../../../components/Shared/Back";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import {
@@ -12,73 +12,43 @@ import {
   FiTrash2,
   FiUserCheck,
 } from "react-icons/fi";
+import { useDeleteUser } from "../../../hooks/user_hook/useDeleteUser";
+import { useMakeAdmin } from "../../../hooks/user_hook/useMakeAdmin";
 
 const ManageUsers = () => {
   const { users, refetch, isLoading } = useUser() || { users: [] };
   const axiosSecure = useAxiosSecure();
+  const deleleMutation = useDeleteUser();
+  const updateMutation = useMakeAdmin();
 
   const handleDelete = async (user) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `Permanently purge ${user.name} from the core system ledger?`,
+      text: `Permanently delete ${user.name} from FitRack?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "var(--color-primary, #ff5200)",
-      confirmButtonText: "Purge User",
+      confirmButtonText: "Delete User",
     });
 
     if (!result.isConfirmed) return;
-    try {
-      const { data } = await axiosSecure.delete(`/users/${user._id}`);
-      if (data.success) {
-        refetch();
-        Swal.fire({
-          title: "User Purged",
-          text: `${user.name} has been erased from infrastructure records.`,
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      console.error("Failed to delete user", error);
-      Swal.fire(
-        "Error",
-        "Pipeline interruption during termination process.",
-        "error",
-      );
-    }
+    deleleMutation.mutate(user);
   };
 
   const handleRole = async (user) => {
     const result = await Swal.fire({
-      title: "Elevate to Admin?",
+      title: "Make Admin?",
       text: `Grant full administrative root privileges to ${user.name}?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "var(--color-primary, #ff5200)",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Elevate Privileges",
+      confirmButtonText: "Make Admin",
     });
 
     if (!result.isConfirmed) return;
-    try {
-      const { data } = await axiosSecure.patch(`/users/make-admin/${user._id}`);
-      if (data.success) {
-        refetch();
-        Swal.fire({
-          title: "Privileges Elevated",
-          text: `${user.name} is now registered under the Admin tier.`,
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      console.error("Failed to promote", error);
-      Swal.fire(
-        "Error",
-        "Authorization update failed on backend pipeline.",
-        "error",
-      );
-    }
+    updateMutation.mutate(user);
   };
 
   if (isLoading) {
@@ -111,7 +81,7 @@ const ManageUsers = () => {
 
           <div className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 flex items-center gap-3 w-fit">
             <span className="text-xs font-extrabold uppercase tracking-wider text-gray-600 dark:text-gray-400">
-              Indexed Nodes
+              Total users
             </span>
             <span className="text-2xl font-black text-surface-dark dark:text-white tracking-tight">
               {users?.length || 0}

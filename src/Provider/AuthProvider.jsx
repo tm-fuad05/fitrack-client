@@ -9,7 +9,7 @@ import {
 import React, { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosPublic from "../hooks/axios_hook/useAxiosPublic";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
+import useAxiosSecure from "./axios_hook/useAxiosSecure";
 
 const usePayment = () => {
   const axiosSecure = useAxiosSecure();

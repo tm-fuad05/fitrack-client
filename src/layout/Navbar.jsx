@@ -14,7 +14,7 @@ import { useLenis } from "../Provider/SmoothScrollProvider";
 import Swal from "sweetalert2";
 import "./navbar.css";
 import useAdmin from "../hooks/useAdmin";
-import useTrainerCheck from "../hooks/useTrainerCheck";
+import useTrainerCheck from "../hooks/trainer_hook/useTrainerCheck";
 import MiniLoader from "../components/Shared/MiniLoader";
 import Logo from "../components/Shared/Logo";
 

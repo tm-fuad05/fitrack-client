@@ -6,12 +6,15 @@ import {
   HiOutlineTag,
 } from "react-icons/hi2";
 import moment from "moment/moment";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../hooks/axios_hook/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
-const CommunityCard = ({ post, refetch }) => {
+const CommunityCard = ({ post }) => {
+  const queryClient = useQueryClient();
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,18 +23,26 @@ const CommunityCard = ({ post, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const isVoted = votedBy?.includes(user?.email);
 
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
+      return data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ["community"],
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
   const handleVote = async (id) => {
-    try {
-      if (user && user?.email) {
-        const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
-        if (data.success) {
-          refetch();
-        }
-      } else {
-        navigate("/login", { state: location.pathname });
-      }
-    } catch (error) {
-      console.error(error);
+    if (user && user?.email) {
+      mutation.mutate(id);
+    } else {
+      navigate("/login", { state: location.pathname });
     }
   };
 

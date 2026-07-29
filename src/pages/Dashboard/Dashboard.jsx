@@ -17,13 +17,15 @@ import "sweetalert2/src/sweetalert2.scss";
 
 import { TbLogout2 } from "react-icons/tb";
 import useAdmin from "../../hooks/useAdmin";
-import useTrainerCheck from "../../hooks/useTrainerCheck";
+import useTrainerCheck from "../../hooks/trainer_hook/useTrainerCheck";
 import fitrack from "../../assets/fitrack.png";
+import useAppliedTrainer from "../../hooks/trainer_hook/useAppliedTrainer";
 
 const Dashboard = () => {
   const { signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
   const { isTrainer } = useTrainerCheck();
+  const { appliedTrainers } = useAppliedTrainer();
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -82,8 +84,12 @@ const Dashboard = () => {
             className={navLinkStyling}
             to="/dashboard/applied-trainers"
           >
-            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied
-            Trainers{" "}
+            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied Trainers{" "}
+            {/* <span>
+              {appliedTrainers.length == 0
+                ? ""
+                : `(${appliedTrainers?.length})`}
+            </span> */}
           </NavLink>
           <NavLink
             onClick={handleLinkClick}

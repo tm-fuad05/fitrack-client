@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
-import useTrainer from "../../../hooks/useTrainer";
+import useTrainer from "../../../hooks/trainer_hook/useTrainer";
 import { FaTrash } from "react-icons/fa6";
 import { FiCalendar, FiCheckCircle } from "react-icons/fi";
 import usePayment from "../../../hooks/usePayment";
 import { TiTick } from "react-icons/ti";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Select from "react-select";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Loader from "../../../components/Shared/Loader";

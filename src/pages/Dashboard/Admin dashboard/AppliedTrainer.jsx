@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import useAppliedTrainer from "../../../hooks/useAppliedTrainer";
 import { TiTick } from "react-icons/ti";
 import { FiUsers, FiMail, FiEye, FiX, FiUserX } from "react-icons/fi";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useUser from "../../../hooks/useUser";
+import useUser from "../../../hooks/user_hook/useUser";
 import Back from "../../../components/Shared/Back";
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import useAppliedTrainer from "../../../hooks/trainer_hook/useAppliedTrainer";
 
 const AppliedTrainer = () => {
   const { appliedTrainers, refetch, isLoading } = useAppliedTrainer();

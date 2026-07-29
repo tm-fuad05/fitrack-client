@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Swal from "sweetalert2";
-import useUser from "../../../hooks/useUser";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useUser from "../../hooks/user_hook/useUser";
 import { Helmet } from "react-helmet-async";
-import Loader from "../../../components/Shared/Loader";
+import Loader from "../../components/Shared/Loader";
+import useAxiosSecure from "../../hooks/axios_hook/useAxiosSecure";
 import {
   FiUser,
   FiMail,

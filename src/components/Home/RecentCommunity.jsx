@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
 
 import SectionTitle from "../Shared/SectionTitle";
 import { Link } from "react-router-dom";

@@ -1,5 +1,5 @@
 import React from "react";
-import useNewsletter from "../../../hooks/useNewsletter";
+import useNewsletter from "../../../hooks/newsletter_hook/useNewsletter";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import {

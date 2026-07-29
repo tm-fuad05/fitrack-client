@@ -1,8 +1,8 @@
 import React from "react";
-import useUser from "../../../hooks/useUser";
+import useUser from "../../../hooks/user_hook/useUser";
 import Back from "../../../components/Shared/Back";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import { FiShield, FiMail, FiUserMinus, FiAward } from "react-icons/fi";
 

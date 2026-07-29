@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import useTrainer from "../../../hooks/useTrainer";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import useTrainer from "../../../hooks/trainer_hook/useTrainer";
 import useAuth from "../../../hooks/useAuth";
 import Select from "react-select";
 import { Helmet } from "react-helmet-async";

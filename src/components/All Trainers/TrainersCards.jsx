@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TrainerCard from "./TrainerCard";
 import Loader from "../Shared/Loader";
 import { Select, Option } from "@material-tailwind/react";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 
 const TrainersCards = () => {

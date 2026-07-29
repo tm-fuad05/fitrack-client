@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useCommunity from "../../hooks/useCommunity";
+import useCommunity from "../../hooks/community_hook/useCommunity";
 import CommunityCard from "./CommunityCard";
 import ReactPaginate from "react-paginate";
 import Loader from "../Shared/Loader";

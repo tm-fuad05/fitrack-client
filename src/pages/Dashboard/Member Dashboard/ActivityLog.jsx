@@ -1,5 +1,5 @@
 import React from "react";
-import useAppliedTrainer from "../../../hooks/useAppliedTrainer";
+import useAppliedTrainer from "../../../hooks/trainer_hook/useAppliedTrainer";
 import Back from "../../../components/Shared/Back";
 import useAuth from "../../../hooks/useAuth";
 import {
@@ -9,7 +9,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import Swal from "sweetalert2";

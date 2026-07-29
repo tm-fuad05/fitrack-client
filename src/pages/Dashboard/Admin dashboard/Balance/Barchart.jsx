@@ -8,7 +8,7 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import useNewsletter from "../../../../hooks/useNewsletter";
+import useNewsletter from "../../../../hooks/newsletter_hook/useNewsletter";
 import usePayment from "../../../../hooks/usePayment";
 
 // Custom Premium Tooltip Component

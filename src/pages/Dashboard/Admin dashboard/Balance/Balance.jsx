@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import Back from "../../../../components/Shared/Back";
 import usePayment from "../../../../hooks/usePayment";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Barchart from "./Barchart";
-import useUser from "../../../../hooks/useUser";
+import useUser from "../../../../hooks/user_hook/useUser";
 import Loader from "../../../../components/Shared/Loader";
+import useAxiosSecure from "../../../../hooks/axios_hook/useAxiosSecure";
 import {
   FiDollarSign,
   FiTrendingUp,
