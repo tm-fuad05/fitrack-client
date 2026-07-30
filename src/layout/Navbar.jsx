@@ -132,7 +132,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             `${getNavLinkClass(isActive)} w-full lg:w-auto pt-5 pb-1  lg:pt-0 lg:pb-0  lg:border-none flex items-center justify-center lg:inline-block`
           }
-          to={`/dashboard/${isAdmin ? "balance" : isTrainer ? "manage-slot" : "my-profile"}`}
+          to={"/dashboard/my-profile"}
           onClick={() => setMobileSidebarOpen(false)}
         >
           Dashboard

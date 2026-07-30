@@ -5,11 +5,13 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
 import { FiShield, FiMail, FiUserMinus, FiAward } from "react-icons/fi";
+import { useRemoveTrainerRole } from "../../../hooks/trainer_hook/useRemoveTrainerRole";
 
 const TrainerHandling = () => {
-  const { users, refetch } = useUser();
+  const { users } = useUser();
   const axiosSecure = useAxiosSecure();
   const trainers = users?.filter((u) => u.role === "trainer") || [];
+  const mutation = useRemoveTrainerRole();
 
   const handleRemoveTrainerRole = async (trainer) => {
     const result = await Swal.fire({
@@ -23,27 +25,7 @@ const TrainerHandling = () => {
     });
 
     if (!result.isConfirmed) return;
-
-    try {
-      const { data } = await axiosSecure.patch(
-        `/users/make-member/${trainer._id}`,
-      );
-      if (data.success) {
-        refetch();
-        Swal.fire({
-          title: "Role Revoked",
-          text: `${trainer.name} has been successfully reverted to a member.`,
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      console.error("Failed to remove trainer role", error);
-      Swal.fire(
-        "Error",
-        "Could not complete the role downgrade pipeline.",
-        "error",
-      );
-    }
+    mutation.mutate(trainer);
   };
 
   return (

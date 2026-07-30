@@ -18,7 +18,7 @@ const TrainerDetails = () => {
   const { user } = useAuth();
 
   return (
-    <div className=" mt-28 bg-transparent text-gray-900 dark:text-white antialiased">
+    <div className=" pt-28 bg-transparent text-gray-900 dark:text-white antialiased">
       <Helmet>
         <title>FitRack | {trainer.fullName || "Trainer Profile"}</title>
       </Helmet>

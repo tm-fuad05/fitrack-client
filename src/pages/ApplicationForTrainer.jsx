@@ -280,7 +280,7 @@ const ApplicationForTrainer = () => {
                   <FiBriefcase className="text-primary" /> Years of Experience
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="e.g., 3 Years"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.yearsOfExperience}
