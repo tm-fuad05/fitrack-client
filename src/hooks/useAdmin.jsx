@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
-import useAxiosSecure from "./axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "./useAxios";
 
 const useAdmin = () => {
   const { user, loader } = useAuth();
@@ -15,7 +15,7 @@ const useAdmin = () => {
 
         return data?.isAdmin;
       } catch (error) {
-        console.error(error);
+        console.error(error?.response?.data?.message || error?.message);
       }
     },
   });

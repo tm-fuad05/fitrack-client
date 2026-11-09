@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import useCommunity from "../../hooks/community_hook/useCommunity";
+import { useState } from "react";
+import { useGetAllCommunities } from "../../hooks/useCommunity";
 import CommunityCard from "./CommunityCard";
 import ReactPaginate from "react-paginate";
 import Loader from "../Shared/Loader";
 import { motion } from "framer-motion";
+import { cardNode, parentContainer } from "../../animation/motion.animation";
 
 const CommunityCards = () => {
-  const { communities, refetch, isLoading } = useCommunity();
+  const { communities, refetch, isLoading } = useGetAllCommunities();
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
@@ -16,29 +17,12 @@ const CommunityCards = () => {
 
   // Get current page items
   const offset = currentPage * itemsPerPage;
-  const currentCommunities = communities.slice(offset, offset + itemsPerPage);
+  const currentCommunities = communities?.slice(offset, offset + itemsPerPage);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
     // Scroll to top when page changes
     window.scrollTo(0, 0);
-  };
-
-  const parentContainer = {
-    initial: {},
-    animate: {
-      transition: { staggerChildren: 0.05 },
-    },
-  };
-
-  const cardNode = {
-    initial: { opacity: 0, y: 30, scale: 0.98 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
   };
 
   if (isLoading) {
@@ -54,7 +38,7 @@ const CommunityCards = () => {
     >
       {currentCommunities?.length > 0 ? (
         <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {currentCommunities.map((post) => (
+          {currentCommunities?.map((post) => (
             <motion.div variants={cardNode} key={post._id}>
               <CommunityCard refetch={refetch} post={post}></CommunityCard>
             </motion.div>

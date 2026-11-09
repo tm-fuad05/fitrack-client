@@ -1,5 +1,5 @@
-import React from "react";
-import useAppliedTrainer from "../../../hooks/trainer_hook/useAppliedTrainer";
+/* eslint-disable no-undef */
+import { useGetAllApplicants } from "../../../hooks/useApplicant";
 import Back from "../../../components/Shared/Back";
 import useAuth from "../../../hooks/useAuth";
 import {
@@ -9,7 +9,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../hooks/useAxios";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import Swal from "sweetalert2";
@@ -36,17 +36,18 @@ const ActivityLog = () => {
         const { data } = await axiosSecure.get("/rejection-feedback");
         return data;
       } catch (error) {
-        console.error("Failed to load data", error);
+        console.error(
+          "Failed to load data",
+          error?.response?.data?.message || error?.message,
+        );
         return [];
       }
     },
   });
 
   const rejectedUser = rejectionFeedback.find((u) => u.email === user?.email);
-  const { appliedTrainers = [], refetch } = useAppliedTrainer() || {
-    appliedTrainers: [],
-  };
-  const currentUser = appliedTrainers.find((u) => u.email === user?.email);
+  const { data: applicants, refetch } = useGetAllApplicants();
+  const currentUser = applicants.find((u) => u.email === user?.email);
 
   const handleDelete = async () => {
     const result = await Swal.fire({

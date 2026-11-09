@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Swal from "sweetalert2";
-import useUser from "../../hooks/user_hook/useUser";
+import { useGetSpacificUser } from "../../hooks/useUser";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../components/Shared/Loader";
-import useAxiosSecure from "../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../hooks/useAxios";
 import {
   FiUser,
   FiMail,
@@ -19,13 +19,17 @@ import {
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
+
   const axiosSecure = useAxiosSecure();
   const handleOpen = () => setOpen(!open);
 
   const { user, updateUserProfile } = useAuth();
-  const { users, refetch, isLoading } = useUser() || { users: [] };
 
-  const currentUser = users?.find((u) => u.email === user?.email);
+  const {
+    data: currentUser,
+    isLoading,
+    refetch,
+  } = useGetSpacificUser(user?.email);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -53,7 +57,7 @@ const Profile = () => {
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.response?.data?.message || error?.message);
       Swal.fire("Error", "Pipeline transaction failed.", "error");
     }
   };

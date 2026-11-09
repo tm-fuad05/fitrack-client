@@ -1,4 +1,3 @@
-import React from "react";
 import SectionTitle from "../components/Shared/SectionTitle";
 import CommunityCards from "../components/Community/CommunityCards";
 import { Helmet } from "react-helmet-async";

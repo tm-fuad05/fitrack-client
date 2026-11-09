@@ -1,24 +1,18 @@
-import React, { useState } from "react";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
-import useTrainer from "../../../hooks/trainer_hook/useTrainer";
+import { useState } from "react";
+import { useAxiosSecure } from "../../../hooks/useAxios";
+import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import useAuth from "../../../hooks/useAuth";
 import Select from "react-select";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { useNavigate } from "react-router-dom";
-import {
-  FiPlusCircle,
-  FiUser,
-  FiCalendar,
-  FiClock,
-  FiLayers,
-} from "react-icons/fi";
+import { FiPlusCircle, FiUser, FiCalendar, FiLayers } from "react-icons/fi";
 
 const AddSlot = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { trainers, refetch } = useTrainer();
+  const { trainers, refetch } = useGetAllTrainers();
   const currentTrainer = trainers.find((t) => t.email === user.email);
   const navigate = useNavigate();
   const isDark = document.documentElement.classList.contains("dark");
@@ -143,7 +137,10 @@ const AddSlot = () => {
         }, 1500);
       }
     } catch (error) {
-      alert("Failed to add slot", error);
+      console.error(
+        "Failed to add slot",
+        error?.response?.data?.message || error?.message,
+      );
     }
   };
 
@@ -232,7 +229,9 @@ const AddSlot = () => {
                 onChange={(selected) =>
                   setFormData({
                     ...formData,
-                    availableDays: selected ? selected.map((d) => d.value) : [],
+                    availableDays: selected
+                      ? selected?.map((d) => d.value)
+                      : [],
                   })
                 }
               />
@@ -251,7 +250,7 @@ const AddSlot = () => {
                 onChange={(selected) =>
                   setFormData({
                     ...formData,
-                    classes: selected ? selected.map((c) => c.value) : [],
+                    classes: selected ? selected?.map((c) => c.value) : [],
                   })
                 }
               />

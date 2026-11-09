@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import useAuth from "../hooks/useAuth";
 import Loader from "../components/Shared/Loader";
 import { Navigate, useLocation } from "react-router-dom";

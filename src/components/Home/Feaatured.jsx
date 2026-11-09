@@ -1,4 +1,3 @@
-import React from "react";
 import SectionTitle from "../Shared/SectionTitle";
 import { TbTreadmill } from "react-icons/tb";
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -72,7 +71,7 @@ const Featured = () => {
         viewport={{ once: true, amount: 0.1 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-11/12 xl:w-10/12 mx-auto mt-14"
       >
-        {cards.map((card, idx) => (
+        {cards?.map((card, idx) => (
           <motion.div
             key={idx}
             variants={cardVariants}

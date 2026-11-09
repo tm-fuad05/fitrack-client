@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-useless-escape */
+import { useState } from "react";
 // Pic import
 import authbg from "../../assets/authbg.jpg";
 import gymbg from "../../assets/gymbg.jpg";
@@ -10,7 +11,7 @@ import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
+import { useAxiosPublic } from "../../hooks/useAxios";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
@@ -42,7 +43,7 @@ const Register = () => {
       await registerUser(email, password);
       await updateUserProfile({ displayName: name, photoURL: photo });
 
-      const userInfo = { name: name, email: email, role: "member" };
+      const userInfo = { name: name, email: email };
       const { data } = await axiosPublic.post("/users", userInfo);
 
       if (data.success) {

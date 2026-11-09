@@ -1,29 +1,13 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
 import TrainerCard from "./TrainerCard";
 import Loader from "../Shared/Loader";
 import { Select, Option } from "@material-tailwind/react";
-import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
+import { useGetAllTrainers } from "../../hooks/useTrainer";
 
 const TrainersCards = () => {
   const [sort, setSort] = useState("");
-  const axiosPublic = useAxiosPublic();
-
-  const {
-    data: trainers = [],
-
-    isLoading,
-  } = useQuery({
-    queryKey: ["trainers", sort],
-    queryFn: async () => {
-      try {
-        const { data } = await axiosPublic.get(`/trainers?sort=${sort}`);
-        return data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  });
+  const { data: trainers, isLoading, refetch } = useGetAllTrainers(sort);
 
   return (
     <div className="w-11/12 mx-auto my-20">
@@ -55,7 +39,7 @@ const TrainersCards = () => {
         <Loader />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-          {trainers.map((trainer) => (
+          {trainers?.map((trainer) => (
             <TrainerCard key={trainer._id} trainer={trainer}></TrainerCard>
           ))}
         </div>

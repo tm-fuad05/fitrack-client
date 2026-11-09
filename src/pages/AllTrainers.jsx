@@ -1,4 +1,3 @@
-import React from "react";
 import Coverpage from "../components/Shared/Coverpage";
 import trainers from "../assets/trainers.png";
 import TrainersCards from "../components/All Trainers/TrainersCards";

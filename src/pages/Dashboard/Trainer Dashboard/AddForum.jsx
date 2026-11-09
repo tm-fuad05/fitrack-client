@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../hooks/useAxios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment/moment";
@@ -53,7 +53,10 @@ const AddForum = () => {
         }, 1500);
       }
     } catch (error) {
-      alert("Failed to post", error);
+      console.error(
+        "Failed to post",
+        error?.response?.data?.message || error?.message,
+      );
     }
   };
 

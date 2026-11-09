@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "./useAxios";
 import Swal from "sweetalert2";
 
 export function useMakeAdmin() {
@@ -8,7 +8,7 @@ export function useMakeAdmin() {
 
   const mutation = useMutation({
     mutationFn: async (user) => {
-      return await axiosSecure.patch(`/users/make-admin/${user._id}`);
+      await axiosSecure.patch(`/users/make-admin/${user._id}`);
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
@@ -18,9 +18,9 @@ export function useMakeAdmin() {
         icon: "success",
       });
     },
-    onError: (err) => {
+    onError: (error) => {
       Swal.fire({
-        title: err.message,
+        title: error?.response?.data?.message || error?.message,
         icon: "error",
       });
     },

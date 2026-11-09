@@ -1,15 +1,13 @@
-import React from "react";
-import useUser from "../../../hooks/user_hook/useUser";
+import { useGetAllUsers } from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+
 import { Helmet } from "react-helmet-async";
 import { FiShield, FiMail, FiUserMinus, FiAward } from "react-icons/fi";
-import { useRemoveTrainerRole } from "../../../hooks/trainer_hook/useRemoveTrainerRole";
+import { useRemoveTrainerRole } from "../../../hooks/useTrainer";
 
 const TrainerHandling = () => {
-  const { users } = useUser();
-  const axiosSecure = useAxiosSecure();
+  const { users } = useGetAllUsers();
   const trainers = users?.filter((u) => u.role === "trainer") || [];
   const mutation = useRemoveTrainerRole();
 
@@ -95,7 +93,7 @@ const TrainerHandling = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {trainers.map((trainer) => (
+              {trainers?.map((trainer) => (
                 <tr
                   key={trainer._id}
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200"

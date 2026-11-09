@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { FiUsers, FiMail, FiEye, FiX, FiUserX } from "react-icons/fi";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import useUser from "../../../hooks/user_hook/useUser";
+import { useGetAllUsers } from "../../../hooks/useUser";
 import Back from "../../../components/Shared/Back";
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
-import useAppliedTrainer from "../../../hooks/trainer_hook/useAppliedTrainer";
+import { useAxiosSecure } from "../../../hooks/useAxios";
+import { useGetAllApplicants } from "../../../hooks/useApplicant";
 
 const AppliedTrainer = () => {
-  const { appliedTrainers, refetch, isLoading } = useAppliedTrainer();
-  const pendingFilter =
-    appliedTrainers?.filter((p) => p.status === "pending") || [];
+  const { data: applicants, refetch, isLoading } = useGetAllApplicants();
+  const pendingFilter = applicants?.filter((p) => p.status === "pending") || [];
   const axiosSecure = useAxiosSecure();
-  const { users } = useUser();
+  const { users } = useGetAllUsers();
 
   const [open, setOpen] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
@@ -195,7 +194,7 @@ const AppliedTrainer = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {pendingFilter.map((trainer) => (
+              {pendingFilter?.map((trainer) => (
                 <tr
                   key={trainer._id}
                   className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200"

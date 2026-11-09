@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
-import { div } from "framer-motion/client";
-import useAxiosSecure from "../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
-import useAppliedTrainer from "../hooks/trainer_hook/useAppliedTrainer";
-import useTrainerCheck from "../hooks/trainer_hook/useTrainerCheck";
+import { useGetAllApplicants } from "../hooks/useApplicant";
+import { useTrainerCheck } from "../hooks/useTrainer";
 import {
   FiUser,
   FiMail,
@@ -27,9 +26,9 @@ const ApplicationForTrainer = () => {
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
   const { isTrainer } = useTrainerCheck();
-  const { appliedTrainers } = useAppliedTrainer();
+  const { data: applicants } = useGetAllApplicants();
 
-  const currentUser = appliedTrainers?.find((u) => u.email === user?.email);
+  const currentUser = applicants?.find((u) => u.email === user?.email);
 
   const [formData, setFormData] = useState({
     fullName: user?.displayName || "",
@@ -327,7 +326,7 @@ const ApplicationForTrainer = () => {
                     onChange={(selected) =>
                       setFormData({
                         ...formData,
-                        skills: selected ? selected.map((s) => s.value) : [],
+                        skills: selected ? selected?.map((s) => s.value) : [],
                       })
                     }
                   />
@@ -347,7 +346,7 @@ const ApplicationForTrainer = () => {
                       setFormData({
                         ...formData,
                         availableDays: selected
-                          ? selected.map((d) => d.value)
+                          ? selected?.map((d) => d.value)
                           : [],
                       })
                     }

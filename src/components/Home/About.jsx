@@ -1,4 +1,3 @@
-import React from "react";
 import aboutbg from "../../assets/aboutbg.png";
 import Button from "../Shared/Button";
 import { Link } from "react-router-dom";

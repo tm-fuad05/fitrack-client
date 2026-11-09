@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import Button from "../Shared/Button";
 import {
   IoLogoFacebook,
@@ -27,7 +27,7 @@ const TrainerCard = ({ trainer }) => {
         </p>
         <p className="text-foreground-muted dark:text-foreground-muted-dark mt-2 flex-grow">
           <span className="font-semibold">Expertise:</span>{" "}
-          {trainer.skills.map((skill, index) => (
+          {trainer.skills?.map((skill, index) => (
             <span
               key={index}
               className="text-foreground-muted dark:text-foreground-muted-dark"
@@ -52,7 +52,7 @@ const TrainerCard = ({ trainer }) => {
           </span>
         </p>
         <div className="mt-2">
-          <Link to={`/all-trainer/trainer/${trainer.fullName}`}>
+          <Link to={`/trainers/${trainer.fullName}`}>
             <Button
               text={"know more"}
               hoverText={"white"}

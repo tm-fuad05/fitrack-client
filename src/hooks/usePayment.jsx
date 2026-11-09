@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "./useAxios";
 
 const usePayment = () => {
   const axiosSecure = useAxiosSecure();
@@ -10,7 +10,7 @@ const usePayment = () => {
         const { data } = await axiosSecure.get(`/payments`);
         return data;
       } catch (error) {
-        console.error(error);
+        console.error(error?.response?.data?.message || error?.message);
       }
     },
   });

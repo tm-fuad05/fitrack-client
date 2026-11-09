@@ -1,4 +1,6 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+
 import { AiFillDislike, AiFillLike } from "react-icons/ai";
 import {
   HiOutlineUser,
@@ -6,12 +8,13 @@ import {
   HiOutlineTag,
 } from "react-icons/hi2";
 import moment from "moment/moment";
-import useAxiosSecure from "../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useInstantVote } from "../../hooks/useInstantVote";
 
 const CommunityCard = ({ post }) => {
   const queryClient = useQueryClient();
@@ -21,20 +24,20 @@ const CommunityCard = ({ post }) => {
   const { _id, author, category, date, description, role, title, votedBy } =
     post;
   const axiosSecure = useAxiosSecure();
-  const isVoted = votedBy?.includes(user?.email);
+  // const { isVoted, voteCount } = useInstantVote(post);
+  const isVoted = votedBy.includes(user?.email);
 
   const mutation = useMutation({
     mutationFn: async (id) => {
-      const { data } = await axiosSecure.patch(`/community/upvote/${id}`);
-      return data;
+      await axiosSecure.patch(`/communities/vote/${id}`);
     },
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["community"],
       });
     },
     onError: (error) => {
-      toast.error(error?.message);
+      toast.error(error.response?.data?.message || error?.message);
     },
   });
 
@@ -107,7 +110,7 @@ const CommunityCard = ({ post }) => {
               key={_id}
               initial={{ scale: 1.2, color: "var(--primary)" }}
               animate={{ scale: 1, color: "currentColor" }}
-              className={`inline-block font-bold ${votedBy?.length >= 0 ? "text-primary" : "text-red-400"}`}
+              className={`inline-block font-bold ${votedBy?.voteCount >= 0 ? "text-primary" : "text-red-400"}`}
             >
               {votedBy?.length || 0}
             </motion.span>

@@ -1,8 +1,7 @@
-import React from "react";
 import newsletter from "../../assets/newsletter.png";
 import Button from "../Shared/Button";
 import SectionTitle from "../Shared/SectionTitle";
-import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
+import { useAxiosPublic } from "../../hooks/useAxios";
 import { motion } from "framer-motion";
 // SweetAlert
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -39,7 +38,7 @@ const Newsletter = () => {
         });
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.response?.data?.message || error?.message);
     }
   };
 

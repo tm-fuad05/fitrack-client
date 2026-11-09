@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
 import reviewbg from "../../assets/reviewbg.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -6,27 +6,14 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 
 import { Autoplay, Navigation, FreeMode, Pagination } from "swiper/modules";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
 import { FaQuoteRight, FaRegStar, FaStar } from "react-icons/fa6";
 import SectionTitle from "../Shared/SectionTitle";
 import Rating from "react-rating";
 import { motion } from "framer-motion";
+import { useGetAllReviews } from "../../hooks/useReview";
 
 const Review = () => {
-  const axiosPublic = useAxiosPublic();
-
-  const { data: reviews = [] } = useQuery({
-    queryKey: ["review"],
-    queryFn: async () => {
-      try {
-        const { data } = await axiosPublic.get("/reviews");
-        return data;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  });
+  const { data: reviews, isLoading, refetch } = useGetAllReviews();
 
   return (
     <div

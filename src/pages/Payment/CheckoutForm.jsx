@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/axios_hook/useAxiosSecure";
+import { useEffect, useState } from "react";
+import { useAxiosSecure } from "../../hooks/useAxios";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
@@ -46,11 +47,10 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
     setError("");
 
     // Create Payment Method
-    const { error: methodError, paymentMethod } =
-      await stripe.createPaymentMethod({
-        type: "card",
-        card,
-      });
+    const { error: methodError } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
 
     if (methodError) {
       setError(methodError.message);

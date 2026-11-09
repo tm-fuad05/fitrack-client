@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import fitrack from "../assets/fitrack.png";
 
 // react icons
@@ -8,13 +8,11 @@ import { TbLogout2, TbDashboard } from "react-icons/tb";
 import { RiMenuFill } from "react-icons/ri";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { useLenis } from "../Provider/SmoothScrollProvider";
+import { useLenis } from "../provider/SmoothScrollProvider";
 
 // SweetAlert
 import Swal from "sweetalert2";
 import "./navbar.css";
-import useAdmin from "../hooks/useAdmin";
-import useTrainerCheck from "../hooks/trainer_hook/useTrainerCheck";
 import MiniLoader from "../components/Shared/MiniLoader";
 import Logo from "../components/Shared/Logo";
 
@@ -68,11 +66,12 @@ const Navbar = () => {
     };
   }, [mobileSidebarOpen]);
 
-  const { isAdmin } = useAdmin();
-  const { isTrainer } = useTrainerCheck();
+  // const { isAdmin } = useAdmin();
+  // const { isTrainer } = useTrainerCheck();
   const { pathname } = useLocation();
 
   const { user, signOutUser, loader } = useAuth();
+
   const { scrollY } = useLenis() || { scrollY: 0 };
 
   const scrolled = scrollY > 50;
@@ -97,7 +96,7 @@ const Navbar = () => {
       return `${baseClass} text-primary before:w-full lg:before:w-full`;
     }
 
-    if (pathname === "/" || pathname === "/all-trainer") {
+    if (pathname === "/" || pathname === "/trainers") {
       return scrolled
         ? `${baseClass} text-gray-900 dark:text-gray-300 hover:text-primary`
         : `${baseClass} text-gray-900 lg:text-gray-50 dark:text-gray-300 hover:text-primary`;
@@ -108,7 +107,7 @@ const Navbar = () => {
 
   const navMenu = (
     <>
-      {["Home", "All Trainer", "All Classes", "Community", "About Us"].map(
+      {["Home", "Trainers", "Classes", "Communities", "About Us"]?.map(
         (item) => {
           const path =
             item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`;
@@ -143,7 +142,7 @@ const Navbar = () => {
 
   // Dynamic Background Wrapper Engine
   const getNavbarBgClass = () => {
-    const isHomeOrTrainer = pathname === "/" || pathname === "/all-trainer";
+    const isHomeOrTrainer = pathname === "/" || pathname === "/trainers";
 
     if (isHomeOrTrainer) {
       return scrolled
@@ -176,7 +175,7 @@ const Navbar = () => {
           <button
             onClick={() => setDarkMode(!darkMode)}
             className={`relative flex items-center justify-center text-lg p-2.5 rounded-xl border transition-all duration-300 active:scale-90 cursor-pointer ${
-              (pathname === "/" || pathname === "/all-trainer") &&
+              (pathname === "/" || pathname === "/trainers") &&
               !scrolled &&
               !mobileSidebarOpen
                 ? "border-white/10 bg-white/5 text-white"
@@ -192,7 +191,7 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 className={`flex items-center gap-2 p-1 pr-3 rounded-full border transition-all active:scale-98 cursor-pointer ${
-                  (pathname === "/" || pathname === "/all-trainer") &&
+                  (pathname === "/" || pathname === "/trainers") &&
                   !scrolled &&
                   !mobileSidebarOpen
                     ? "border-white/10 bg-white/5 text-white"
@@ -267,7 +266,7 @@ const Navbar = () => {
           {/* Mobile Hamburger Toggle */}
           <button
             className={`text-xl p-2 rounded-xl lg:hidden transition-colors border-none bg-transparent cursor-pointer z-50 ${
-              (pathname === "/" || pathname === "/all-trainer") &&
+              (pathname === "/" || pathname === "/trainers") &&
               !scrolled &&
               !mobileSidebarOpen
                 ? "text-white"

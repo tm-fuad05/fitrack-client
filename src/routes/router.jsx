@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Root from "../pages/Root";
 import Home from "../pages/Home";
 import Register from "../pages/Auth/Register";
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/all-trainer",
+        path: "/trainers",
         element: <AllTrainers></AllTrainers>,
       },
       {
@@ -52,12 +52,10 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/all-trainer/trainer/:trainerName",
+        path: "/trainers/:trainerName",
         element: <TrainerDetails></TrainerDetails>,
         loader: ({ params }) =>
-          fetch(
-            `https://fitrack-server.vercel.app/trainers/${params.trainerName}`,
-          ),
+          fetch(`http://localhost:5000/api/v1/trainers/${params.trainerName}`),
       },
       {
         path: "/trainer-booking/:trainerName/:slot/:skills",
@@ -76,11 +74,11 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/all-classes",
+        path: "/classes",
         element: <AllClasses></AllClasses>,
       },
       {
-        path: "/community",
+        path: "/communities",
         element: <Community></Community>,
       },
       {

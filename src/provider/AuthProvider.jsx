@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -6,10 +8,10 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
-import useAxiosPublic from "../hooks/axios_hook/useAxiosPublic";
+import { useAxiosPublic } from "../hooks/useAxios";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -42,8 +44,9 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const signOutUser = () => {
+  const signOutUser = async () => {
     setLoader(true);
+    localStorage.removeItem("token");
     return signOut(auth);
   };
 
@@ -55,13 +58,14 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         try {
           const userInfo = { email: currentUser.email };
-          const { data } = await axiosPublic.post("/jwt", userInfo);
+          const { data } = await axiosPublic.post("/auth/login", userInfo);
+
           if (data.token) {
             localStorage.setItem("token", data.token);
             setLoader(false);
           }
         } catch (error) {
-          alert(error);
+          console.error(error?.response?.data?.message || error?.message);
           localStorage.removeItem("token");
           setLoader(false);
         }

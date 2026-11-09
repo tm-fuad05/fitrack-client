@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
-import useTrainer from "../../../hooks/trainer_hook/useTrainer";
+import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import { FaTrash } from "react-icons/fa6";
 import { FiCalendar, FiCheckCircle } from "react-icons/fi";
 import usePayment from "../../../hooks/usePayment";
 import { TiTick } from "react-icons/ti";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Select from "react-select";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../hooks/useAxios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Loader from "../../../components/Shared/Loader";
 
 const ManageSlot = () => {
   const axiosSecure = useAxiosSecure();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
 
   const { user } = useAuth();
-  const { trainers, refetch, isLoading } = useTrainer();
+  const { trainers, refetch, isLoading } = useGetAllTrainers();
   const { payments } = usePayment();
   const isDark = document.documentElement.classList.contains("dark");
 
@@ -58,7 +58,9 @@ const ManageSlot = () => {
         });
       }
     } catch (error) {
-      alert(`Failed to delete slot: ${error.message || error}`);
+      console.error(
+        `Failed to delete slot: ${error?.response?.data?.message || error?.message}`,
+      );
     }
   };
 
@@ -193,7 +195,7 @@ const ManageSlot = () => {
 
           {bookingSlots.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {bookingSlots.map((slot, index) => (
+              {bookingSlots?.map((slot, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/5 text-surface-dark dark:text-gray-200 shadow-inner"
@@ -247,7 +249,9 @@ const ManageSlot = () => {
                 styles={customSelectStyles}
                 onChange={(selected) =>
                   setFormData({
-                    availableDays: selected ? selected.map((d) => d.value) : [],
+                    availableDays: selected
+                      ? selected?.map((d) => d.value)
+                      : [],
                   })
                 }
               />

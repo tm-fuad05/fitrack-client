@@ -1,5 +1,3 @@
-import React from "react";
-
 const Coverpage = ({ bg, subtitle, title }) => {
   return (
     <div

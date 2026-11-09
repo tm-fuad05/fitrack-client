@@ -1,9 +1,8 @@
-import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../layout/Footer";
 import Navbar from "../layout/Navbar";
-import SmoothScrollProvider from "../Provider/SmoothScrollProvider";
-import ScrollToTop from "../Routes/ScrollToTop";
+import SmoothScrollProvider from "../provider/SmoothScrollProvider";
+import ScrollToTop from "../routes/ScrollToTop";
 
 const Root = () => {
   const location = useLocation();

@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import {
   BarChart,
   Bar,
@@ -8,8 +8,8 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import useNewsletter from "../../../../hooks/newsletter_hook/useNewsletter";
 import usePayment from "../../../../hooks/usePayment";
+import { useGetAllNewsletter } from "../../../../hooks/useNewsletter";
 
 // Custom Premium Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
@@ -32,7 +32,7 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const Barchart = () => {
-  const { newsletters } = useNewsletter();
+  const { newsletters } = useGetAllNewsletter();
   const { payments } = usePayment();
 
   const data = [
@@ -74,7 +74,7 @@ const Barchart = () => {
 
           {/* Bar with Dynamic Theme Gradient Orbs / Colors */}
           <Bar dataKey="total" radius={[10, 10, 0, 0]} maxBarSize={60}>
-            {data.map((entry, index) => (
+            {data?.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 // Primary tracking color for index 0, Secondary brand gradient for index 1

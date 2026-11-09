@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
-import useTrainer from "../../../hooks/trainer_hook/useTrainer";
+import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
 import { FiPlusCircle, FiBookOpen, FiFileText, FiUsers } from "react-icons/fi";
 import Back from "../../../components/Shared/Back";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAddClass } from "../../../hooks/class_hook/useAddClass";
+import { useAddClass } from "../../../hooks/useClass";
 
 const AddClass = () => {
-  const navigate = useNavigate();
-  const { trainers } = useTrainer() || { trainers: [] };
+  const { data: trainers } = useGetAllTrainers() || { trainers: [] };
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -18,7 +15,7 @@ const AddClass = () => {
   });
   const mutation = useAddClass();
 
-  const trainersOptions = trainers.map((trainer) => ({
+  const trainersOptions = trainers?.map((trainer) => ({
     value: trainer.fullName,
     label: trainer.fullName,
   }));
@@ -188,7 +185,7 @@ const AddClass = () => {
               onChange={(selected) =>
                 setFormData({
                   ...formData,
-                  trainers: selected ? selected.map((t) => t.value) : [],
+                  trainers: selected ? selected?.map((t) => t.value) : [],
                 })
               }
             />

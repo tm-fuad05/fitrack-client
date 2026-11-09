@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../hooks/useAxios";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
@@ -42,7 +42,10 @@ const BookedTrainer = () => {
         );
         return data;
       } catch (error) {
-        console.error("Failed to load pipeline datasets", error);
+        console.error(
+          "Failed to load pipeline datasets",
+          error?.response?.data?.message || error?.message,
+        );
         return [];
       }
     },
@@ -77,7 +80,10 @@ const BookedTrainer = () => {
         });
       }
     } catch (error) {
-      console.error("Failed to post payload structural asset", error);
+      console.error(
+        "Failed to post payload structural asset",
+        error?.response?.data?.message || error?.message,
+      );
       Swal.fire("Error", "Transmission sequence broken.", "error");
     }
   };
@@ -121,7 +127,7 @@ const BookedTrainer = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {payments.map((p, idx) => (
+          {payments?.map((p, idx) => (
             <div
               key={p._id || idx}
               className="group bg-white dark:bg-transparent rounded-[1.5rem] border border-gray-300/60 dark:border-white/5 p-6 flex flex-col justify-between shadow-sm hover:border-primary/20 transition-all duration-300 relative overflow-hidden"

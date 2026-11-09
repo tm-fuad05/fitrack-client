@@ -1,8 +1,8 @@
-import React from "react";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxiosPublic from "../../hooks/axios_hook/useAxiosPublic";
+import { useAxiosPublic } from "../../hooks/useAxios";
+import { getAdditionalUserInfo } from "firebase/auth";
 
 const SocialLogin = () => {
   const { googleSignIn, setUser } = useAuth();
@@ -13,25 +13,30 @@ const SocialLogin = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await googleSignIn();
+      const details = getAdditionalUserInfo(result);
 
-      if (!result.user) alert("Google sign in failed");
+      console.log("Result:", result);
+      console.log("Details:", details);
+
+      if (!result.user) console.error("Google sign in failed");
 
       const userInfo = {
         name: result.user?.displayName,
         email: result.user?.email,
-        role: "member",
       };
+      setUser(result.user);
 
-      const { data } = await axiosPublic.post("/users", userInfo);
-      if (data.success) {
-        navigate(location?.state || "/");
+      if (details?.isNewUser) {
+        await axiosPublic.post("/users", userInfo);
       }
 
-      setUser(result.user);
       toast.success("Successfully signed in");
-      navigate(location?.state || "/");
+      navigate(location?.state || "/classes");
     } catch (error) {
-      console.error("Google sign-in error", error);
+      console.error(
+        "Google sign-in error",
+        error?.response?.data?.message || error?.message,
+      );
     }
   };
 

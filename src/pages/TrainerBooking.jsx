@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Packages from "../components/Shared/Packages";
 import { Helmet } from "react-helmet-async";

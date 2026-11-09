@@ -1,5 +1,3 @@
-import React from "react";
-import useNewsletter from "../../../hooks/newsletter_hook/useNewsletter";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import {
@@ -9,9 +7,10 @@ import {
   FiBookOpen,
   FiMessageSquare,
 } from "react-icons/fi";
+import { useGetAllNewsletter } from "../../../hooks/useNewsletter";
 
 const NewsletterSubscribers = () => {
-  const { newsletters = [], isLoading } = useNewsletter();
+  const { data: newsletters, isLoading } = useGetAllNewsletter();
 
   if (isLoading) {
     return <Loader />;
@@ -87,7 +86,7 @@ const NewsletterSubscribers = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {newsletters.map((subscriber) => (
+              {newsletters?.map((subscriber) => (
                 <tr
                   key={subscriber.id || subscriber._id}
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200"

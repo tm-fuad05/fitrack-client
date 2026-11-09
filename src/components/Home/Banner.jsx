@@ -1,4 +1,3 @@
-import React from "react";
 import hero from "../../assets/hero.png";
 import { Link } from "react-router-dom";
 import Button from "../Shared/Button";
@@ -43,7 +42,7 @@ const Banner = () => {
           animate="visible"
           className="font-semibold text-xs lg:text-sm uppercase tracking-[6px] lg:tracking-[12px] p-3 px-5 w-fit mx-auto md:mx-0 rounded-bl-xl rounded-tr-xl border border-white/10 shadow-lg backdrop-blur-md bg-gradient-to-r from-primary to-secondary/30"
         >
-          {welcomeText.split("").map((char, index) => (
+          {welcomeText.split("")?.map((char, index) => (
             <motion.span key={index} variants={typingLetter}>
               {char}
             </motion.span>
@@ -87,7 +86,7 @@ const Banner = () => {
           transition={{ duration: 0.5, delay: 1, ease: "backOut" }}
           className="mt-4"
         >
-          <Link to={"/all-classes"}>
+          <Link to={"/classes"}>
             <Button textColor={"white"} text={"go to classes page"}></Button>
           </Link>
         </motion.div>

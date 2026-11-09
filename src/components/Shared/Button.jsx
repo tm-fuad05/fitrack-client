@@ -1,4 +1,3 @@
-import React from "react";
 import { FiArrowRight } from "react-icons/fi";
 const Button = ({ textColor, hoverText, text, dark }) => {
   return (

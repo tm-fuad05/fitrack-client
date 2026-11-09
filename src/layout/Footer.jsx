@@ -1,4 +1,3 @@
-import React from "react";
 import {
   IoLogoFacebook,
   IoLogoInstagram,
@@ -11,7 +10,6 @@ import {
 import Logo from "../components/Shared/Logo";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import fitrack from "../assets/fitrack.png";
 
 const Footer = () => {
   // Snappy spring physics for social icons
@@ -64,7 +62,7 @@ const Footer = () => {
                   url: "https://linkedin.com",
                   label: "LinkedIn",
                 },
-              ].map((item, index) => (
+              ]?.map((item, index) => (
                 <motion.a
                   key={index}
                   variants={iconVariants}
@@ -92,7 +90,7 @@ const Footer = () => {
                 { text: "Our Trainers", path: "/trainers" },
                 { text: "Community Forum", path: "/community" },
                 { text: "Privacy Policy", path: "/privacy" },
-              ].map((link, idx) => (
+              ]?.map((link, idx) => (
                 <li key={idx}>
                   <Link
                     to={link.path}

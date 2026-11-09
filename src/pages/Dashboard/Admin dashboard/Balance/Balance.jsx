@@ -3,9 +3,9 @@ import Back from "../../../../components/Shared/Back";
 import usePayment from "../../../../hooks/usePayment";
 import { useQuery } from "@tanstack/react-query";
 import Barchart from "./Barchart";
-import useUser from "../../../../hooks/user_hook/useUser";
+import { useGetAllUsers } from "../../../../hooks/useUser";
 import Loader from "../../../../components/Shared/Loader";
-import useAxiosSecure from "../../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../../hooks/useAxios";
 import {
   FiDollarSign,
   FiTrendingUp,
@@ -15,7 +15,7 @@ import {
 
 const Balance = () => {
   const axiosSecure = useAxiosSecure();
-  const { users } = useUser();
+  const { users } = useGetAllUsers();
   console.log(users);
 
   const { data: recentPayments = [], isLoading } = useQuery({
@@ -25,7 +25,7 @@ const Balance = () => {
         const { data } = await axiosSecure.get(`/recent-payments`);
         return data;
       } catch (error) {
-        console.error(error);
+        console.error(error?.response?.data?.message || error?.message);
         return [];
       }
     },
@@ -138,7 +138,7 @@ const Balance = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {recentPayments.map((p) => (
+              {recentPayments?.map((p) => (
                 <tr
                   key={p._id}
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap"

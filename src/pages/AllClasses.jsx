@@ -1,45 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
-import useClass from "../hooks/class_hook/useClass";
-import { IoSearch } from "react-icons/io5";
+import { useGetAllClasses } from "../hooks/useClass";
 import { HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi2";
 import { Helmet } from "react-helmet-async";
 import Loader from "../components/Shared/Loader";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { cardNode, parentContainer } from "../animation/motion.animation";
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
-  const { classes = [], isLoading } = useClass({ search });
+  const { data: classes, isLoading } = useGetAllClasses({ search });
 
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
 
-  const pageCount = Math.ceil(classes.length / itemsPerPage);
+  const pageCount = Math.ceil(classes?.length / itemsPerPage);
   const offset = currentPage * itemsPerPage;
-  const currentClasses = classes.slice(offset, offset + itemsPerPage);
+  const currentClasses = classes?.slice(offset, offset + itemsPerPage);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
     window.scrollTo(0, 0);
-  };
-
-  // Orchestrated Layout Variants
-  const parentContainer = {
-    initial: {},
-    animate: {
-      transition: { staggerChildren: 0.05 },
-    },
-  };
-
-  const cardNode = {
-    initial: { opacity: 0, y: 30, scale: 0.98 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
   };
 
   return (
@@ -73,7 +55,7 @@ const AllClasses = () => {
       {/* Grid Layout Container */}
       {isLoading ? (
         <Loader />
-      ) : currentClasses.length > 0 ? (
+      ) : currentClasses?.length > 0 ? (
         // <AnimatePresence mode="wait">
         <motion.div
           variants={parentContainer}
@@ -81,7 +63,7 @@ const AllClasses = () => {
           animate="animate"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
-          {currentClasses.map((classItem) => (
+          {currentClasses?.map((classItem) => (
             <motion.div variants={cardNode} key={classItem.id || classItem._id}>
               <div className="h-full flex flex-col gap-5 p-6 rounded-2xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-xl hover:shadow-2xl hover:border-primary/40 dark:hover:border-primary/30 transition-all duration-300 group relative overflow-hidden">
                 {/* Content Block: Text fixes applied here */}
@@ -105,10 +87,10 @@ const AllClasses = () => {
 
                   {classItem.trainers && classItem.trainers.length > 0 ? (
                     <ul className="flex flex-wrap gap-2 pt-1">
-                      {classItem.trainers.slice(0, 5).map((trainer, index) => (
+                      {classItem.trainers.slice(0, 5)?.map((trainer, index) => (
                         <li key={trainer._id || index}>
                           <Link
-                            to={`/all-trainer/trainer/${trainer}`}
+                            to={`/trainers/trainer/${trainer}`}
                             className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 hover:text-white hover:bg-primary dark:hover:bg-primary hover:border-primary dark:hover:border-primary font-medium transition-all duration-200 shadow-sm"
                           >
                             <HiOutlineHashtag className="text-[10px] shrink-0" />

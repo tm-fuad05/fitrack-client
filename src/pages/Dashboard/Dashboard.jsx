@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../components/Shared/Logo";
-import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import "./dashboard.css";
 import { LuLetterText } from "react-icons/lu";
 import { CgGym, CgProfile } from "react-icons/cg";
@@ -14,18 +14,14 @@ import { SlEnvolopeLetter } from "react-icons/sl";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-
 import { TbLogout2 } from "react-icons/tb";
 import useAdmin from "../../hooks/useAdmin";
-import useTrainerCheck from "../../hooks/trainer_hook/useTrainerCheck";
-import fitrack from "../../assets/fitrack.png";
-import useAppliedTrainer from "../../hooks/trainer_hook/useAppliedTrainer";
+import { useTrainerCheck } from "../../hooks/useTrainer";
 
 const Dashboard = () => {
   const { signOutUser } = useAuth();
   const { isAdmin } = useAdmin();
   const { isTrainer } = useTrainerCheck();
-  const { appliedTrainers } = useAppliedTrainer();
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -84,12 +80,8 @@ const Dashboard = () => {
             className={navLinkStyling}
             to="/dashboard/applied-trainers"
           >
-            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied Trainers{" "}
-            {/* <span>
-              {appliedTrainers.length == 0
-                ? ""
-                : `(${appliedTrainers?.length})`}
-            </span> */}
+            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied
+            Trainers{" "}
           </NavLink>
           <NavLink
             onClick={handleLinkClick}

@@ -1,4 +1,3 @@
-import React from "react";
 import SectionTitle from "../Shared/SectionTitle";
 import { motion } from "framer-motion";
 
@@ -76,7 +75,7 @@ const Trainers = () => {
           viewport={{ once: true, amount: 0.1 }}
           className="grid grid-cols-1 lg:grid-cols-3 gap-7 w-10/12 mx-auto"
         >
-          {trainers.map((trainer) => (
+          {trainers?.map((trainer) => (
             <motion.div
               key={trainer.id}
               variants={cardVariants}
@@ -107,7 +106,7 @@ const Trainers = () => {
 
               {/* Keeping your original list structure intact */}
               <ul className="text-sm lg:text-md list-disc list-inside space-y-1">
-                {trainer.expertise.map((point, idx) => (
+                {trainer.expertise?.map((point, idx) => (
                   <li key={idx} className="text-white/90">
                     {point}
                   </li>

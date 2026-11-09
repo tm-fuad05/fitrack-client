@@ -1,4 +1,3 @@
-import React from "react";
 import fitrack from "../../assets/fitrack.png";
 const Logo = ({ scrolled = {} }) => {
   return (

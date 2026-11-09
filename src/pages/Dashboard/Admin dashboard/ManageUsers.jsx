@@ -1,8 +1,8 @@
-import React from "react";
-import useUser from "../../../hooks/user_hook/useUser";
+/* eslint-disable no-unused-vars */
+import { useGetAllUsers } from "../../../hooks/useUser";
 import Swal from "sweetalert2";
 import Back from "../../../components/Shared/Back";
-import useAxiosSecure from "../../../hooks/axios_hook/useAxiosSecure";
+import { useAxiosSecure } from "../../../hooks/useAxios";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import {
@@ -12,11 +12,11 @@ import {
   FiTrash2,
   FiUserCheck,
 } from "react-icons/fi";
-import { useDeleteUser } from "../../../hooks/user_hook/useDeleteUser";
-import { useMakeAdmin } from "../../../hooks/user_hook/useMakeAdmin";
+import { useDeleteUser } from "../../../hooks/useUser";
+import { useMakeAdmin } from "../../../hooks/useMakeAdmin";
 
 const ManageUsers = () => {
-  const { users, refetch, isLoading } = useUser() || { users: [] };
+  const { users, refetch, isLoading } = useGetAllUsers() || { users: [] };
   const axiosSecure = useAxiosSecure();
   const deleleMutation = useDeleteUser();
   const updateMutation = useMakeAdmin();
@@ -122,7 +122,7 @@ const ManageUsers = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {users.map((user) => (
+              {users?.map((user) => (
                 <tr
                   key={user._id}
                   className="group bg-gray-50 dark:bg-transparent hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200"

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import BeATrainer from "./BeATariner";
 import { Helmet } from "react-helmet-async";
@@ -14,7 +13,7 @@ import {
 } from "react-icons/fi";
 
 const TrainerDetails = () => {
-  const trainer = useLoaderData();
+  const { data: trainer } = useLoaderData();
   const { user } = useAuth();
 
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import trainer from "../../../assets/trainer.jpg";
 import { Link } from "react-router-dom";
 const BeATrainer = () => {
