@@ -15,10 +15,7 @@ const SocialLogin = () => {
       const result = await googleSignIn();
       const details = getAdditionalUserInfo(result);
 
-      console.log("Result:", result);
-      console.log("Details:", details);
-
-      if (!result.user) console.error("Google sign in failed");
+      if (!result.user) toast.error("Google sign in failed");
 
       const userInfo = {
         name: result.user?.displayName,

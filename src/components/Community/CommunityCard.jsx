@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
-import { AiFillDislike, AiFillLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 import {
   HiOutlineUser,
   HiOutlineCalendar,
@@ -9,45 +9,14 @@ import {
 } from "react-icons/hi2";
 import moment from "moment/moment";
 import { useAxiosSecure } from "../../hooks/useAxios";
-import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
-import { useInstantVote } from "../../hooks/useInstantVote";
+import { useVote } from "../../hooks/useVote";
 
 const CommunityCard = ({ post }) => {
-  const queryClient = useQueryClient();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { _id, author, category, date, description, role, title, votedBy } =
     post;
   const axiosSecure = useAxiosSecure();
-  // const { isVoted, voteCount } = useInstantVote(post);
-  const isVoted = votedBy.includes(user?.email);
-
-  const mutation = useMutation({
-    mutationFn: async (id) => {
-      await axiosSecure.patch(`/communities/vote/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["community"],
-      });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || error?.message);
-    },
-  });
-
-  const handleVote = async (id) => {
-    if (user && user?.email) {
-      mutation.mutate(id);
-    } else {
-      navigate("/login", { state: location.pathname });
-    }
-  };
+  const { isVoted, voteCount, handleVote } = useVote(post);
 
   return (
     <div
@@ -112,7 +81,7 @@ const CommunityCard = ({ post }) => {
               animate={{ scale: 1, color: "currentColor" }}
               className={`inline-block font-bold ${votedBy?.voteCount >= 0 ? "text-primary" : "text-red-400"}`}
             >
-              {votedBy?.length || 0}
+              {voteCount}
             </motion.span>
           </span>
         </div>
@@ -124,7 +93,7 @@ const CommunityCard = ({ post }) => {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleVote(_id)}
             className={` ${isVoted ? "text-primary" : "text-gray-600"} p-2 rounded-lg  hover:text-primary hover:bg-white/5 transition-all`}
-            aria-label="Upvote"
+            aria-label="vote"
           >
             <AiFillLike className="text-xl" />
           </motion.button>
