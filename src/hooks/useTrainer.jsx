@@ -4,14 +4,14 @@ import Swal from "sweetalert2";
 
 export const useAddTrainer = () => {
   const axiosSecure = useAxiosSecure();
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async ({ payload, email }) => {
-      (await axiosSecure.post("/trainers", payload),
-        await axiosSecure.patch(`/users/change-user-role?email=${email}`, {
-          role: "TRAINER",
-        }),
-        await axiosSecure.delete(`/applicants/delete?email=${email}`));
+      await axiosSecure.post("/trainers", payload);
+      await axiosSecure.patch(`/users/change-user-role?email=${email}`, {
+        role: "TRAINER",
+      });
+      await axiosSecure.delete(`/applicants/delete?email=${email}`);
     },
     onSuccess: () => {
       Swal.fire({
@@ -20,6 +20,9 @@ export const useAddTrainer = () => {
         showConfirmButton: false,
         timer: 1000,
       });
+      queryClient.invalidateQueries({ queryKey: ["trainer"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["applicant"] });
     },
     onError: (error) => {
       const message = error?.response?.data?.message || "Something went wrong";
@@ -72,6 +75,8 @@ export function useRemoveTrainer() {
           title: data.message,
           text: `${variables.name} has been successfully reverted to a member.`,
           icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
         });
         queryClient.invalidateQueries({ queryKey: ["user"] });
         queryClient.invalidateQueries({ queryKey: ["trainer"] });

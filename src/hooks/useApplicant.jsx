@@ -124,3 +124,22 @@ export const useDeleteApplication = () => {
   });
   return mutation;
 };
+
+export const useRejectApplication = () => {
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (id) => {
+      await axiosSecure.patch(`/applicants/reject/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["applicant"] });
+    },
+    onError: async (error) => {
+      console.error(error?.response?.data?.message);
+      await Swal.fire("Error", error?.response?.data?.message, "error");
+    },
+  });
+  return mutation;
+};

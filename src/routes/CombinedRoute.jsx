@@ -2,7 +2,7 @@
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import Loader from "../components/Shared/Loader";
-import { useCheckRole } from "../hooks/useCheckRole";
+import { useCheckRole } from "../hooks/useRole";
 
 const CombinedRoute = ({ children }) => {
   const { user, loader } = useAuth();

@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useGetAllUsers } from "../../../hooks/useUser";
 import Swal from "sweetalert2";
-import Back from "../../../components/Shared/Back";
-import { useAxiosSecure } from "../../../hooks/useAxios";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import {
@@ -13,13 +11,15 @@ import {
   FiUserCheck,
 } from "react-icons/fi";
 import { useDeleteUser } from "../../../hooks/useUser";
-import { useMakeAdmin } from "../../../hooks/useMakeAdmin";
+import { useChangeRole } from "../../../hooks/useRole";
+import useAuth from "../../../hooks/useAuth";
 
 const ManageUsers = () => {
-  const { data: users, isLoading } = useGetAllUsers() || { users: [] };
+  const { data: users, isLoading } = useGetAllUsers();
+  const { user: currentUser } = useAuth();
 
   const deleleMutation = useDeleteUser();
-  const updateMutation = useMakeAdmin();
+  const updateMutation = useChangeRole();
 
   const handleDelete = async (user) => {
     const result = await Swal.fire({
@@ -36,10 +36,10 @@ const ManageUsers = () => {
     deleleMutation.mutate(user);
   };
 
-  const handleRole = async (user) => {
+  const handleMakeAdmin = async (user) => {
     const result = await Swal.fire({
       title: "Make Admin?",
-      text: `Grant full administrative root privileges to ${user.name}?`,
+      text: `Want to make User: ${user.name} to Admin?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "var(--color-primary, #ff5200)",
@@ -48,7 +48,7 @@ const ManageUsers = () => {
     });
 
     if (!result.isConfirmed) return;
-    updateMutation.mutate(user);
+    updateMutation.mutate({ role: "ADMIN", email: user?.email });
   };
 
   if (isLoading) {
@@ -99,21 +99,19 @@ const ManageUsers = () => {
             <thead>
               <tr className="bg-slate-100/80 dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Identity Stack
+                  Name
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  <span className="flex items-center gap-1.5">
-                    <FiMail className="text-primary" /> Email Coordinates
-                  </span>
+                  Email
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Authority Role
+                  Role
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
                   Promote Admin
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
-                  Terminate
+                  Delete
                 </th>
               </tr>
             </thead>
@@ -156,7 +154,7 @@ const ManageUsers = () => {
                       </span>
                     ) : (
                       <button
-                        onClick={() => handleRole(user)}
+                        onClick={() => handleMakeAdmin(user)}
                         className="p-2 bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white border border-green-500/20 rounded-lg transition-all text-base cursor-pointer inline-flex items-center justify-center"
                         title="Elevate Node to Root Admin"
                       >
@@ -167,13 +165,15 @@ const ManageUsers = () => {
 
                   {/* Termination Controls */}
                   <td className="p-4 text-center">
-                    <button
-                      onClick={() => handleDelete(user)}
-                      className="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg transition-all text-base cursor-pointer inline-flex items-center justify-center"
-                      title="Purge Identity Stack"
-                    >
-                      <FiTrash2 />
-                    </button>
+                    {user?.email !== currentUser?.email && (
+                      <button
+                        onClick={() => handleDelete(user)}
+                        className="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-lg transition-all text-base cursor-pointer inline-flex items-center justify-center"
+                        title="Purge Identity Stack"
+                      >
+                        <FiTrash2 />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

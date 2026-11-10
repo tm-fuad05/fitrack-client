@@ -6,19 +6,19 @@ import { FiUsers, FiMail, FiEye, FiX, FiUserX } from "react-icons/fi";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useGetAllUsers } from "../../../hooks/useUser";
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
-import { useAxiosSecure } from "../../../hooks/useAxios";
-import { useGetAllApplicants } from "../../../hooks/useApplicant";
+import {
+  useGetAllApplicants,
+  useRejectApplication,
+} from "../../../hooks/useApplicant";
 import { useAddTrainer } from "../../../hooks/useTrainer";
+import { useAddFeedback } from "../../../hooks/useFeedback";
 
 const Applicants = () => {
   const [open, setOpen] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
-  const axiosSecure = useAxiosSecure();
-  const { users } = useGetAllUsers();
 
   const { data: applicants, refetch, isLoading } = useGetAllApplicants();
   const pendingFilter = applicants?.filter((p) => p.status === "pending") || [];
@@ -31,18 +31,12 @@ const Applicants = () => {
   const postMutation = useAddTrainer();
 
   const handleConfirmTrainer = async (trainer) => {
-    const currentTrainer = users.find((u) => u.email === trainer.email);
-    if (!currentTrainer) {
-      Swal.fire("Error", "User account not found.", "error");
-      return;
-    }
-
     const { _id, status, ...remaining } = trainer;
     const { email } = remaining;
 
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: `Confirm ${trainer.fullName} as an active instructor?`,
+      text: `Confirm ${trainer.fullName} as a Trainer at your Gym?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "var(--color-primary, #ff5200)",
@@ -56,7 +50,11 @@ const Applicants = () => {
         email: email,
       });
   };
-  const handleRejectPipeline = async (e) => {
+
+  const postFeedbackMutation = useAddFeedback(handleOpen);
+  const patchMutation = useRejectApplication();
+
+  const handleReject = async (e) => {
     e.preventDefault();
     if (!selectedTrainer) return;
 
@@ -64,33 +62,8 @@ const Applicants = () => {
     const email = form.email.value;
     const feedback = form.feedback.value;
 
-    try {
-      const feedbackRes = await axiosSecure.post("/rejection-feedback", {
-        email,
-        feedback,
-      });
-
-      if (feedbackRes.data.success) {
-        const patchRes = await axiosSecure.patch(
-          `/applied-as-trainer/${selectedTrainer._id}`,
-        );
-
-        if (patchRes.data.success) {
-          refetch();
-          handleOpen();
-          Swal.fire({
-            title: "Application Rejected",
-            text: "Feedback successfully transmitted and log updated.",
-            icon: "success",
-            timer: 2000,
-            showConfirmButton: false,
-          });
-        }
-      }
-    } catch (error) {
-      console.error("Pipeline failure:", error);
-      Swal.fire("Error", "Failed to process rejection routine.", "error");
-    }
+    postFeedbackMutation.mutate({ email, feedback });
+    patchMutation.mutate(selectedTrainer._id);
   };
 
   if (isLoading) {
@@ -259,7 +232,7 @@ const Applicants = () => {
               </div>
 
               {/* Feedback Interface */}
-              <form onSubmit={handleRejectPipeline} className="space-y-4">
+              <form onSubmit={handleReject} className="space-y-4">
                 <div className="hidden">
                   <Input
                     label="email"
@@ -288,13 +261,13 @@ const Applicants = () => {
                     className="px-4 py-2 text-xs font-bold uppercase text-gray-500 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer"
                     onClick={() => handleOpen(null)}
                   >
-                    Abort Control
+                    Cancel
                   </button>
                   <button
                     type="submit"
                     className="px-5 py-2.5 text-xs font-black uppercase text-white bg-gradient-to-r from-primary to-secondary hover:opacity-90 rounded-xl shadow-md transition-all cursor-pointer"
                   >
-                    Execute Rejection
+                    Submit
                   </button>
                 </div>
               </form>

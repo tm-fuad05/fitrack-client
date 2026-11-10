@@ -11,7 +11,7 @@ import {
   FiCalendar,
   FiShield,
 } from "react-icons/fi";
-import { useCheckRole } from "../../../hooks/useCheckRole";
+import { useCheckRole } from "../../../hooks/useRole";
 import { usePostCommunity } from "../../../hooks/useCommunity";
 
 const AddForum = () => {

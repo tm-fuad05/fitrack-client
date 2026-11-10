@@ -15,7 +15,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { TbLogout2 } from "react-icons/tb";
-import { useCheckRole } from "../../hooks/useCheckRole";
+import { useCheckRole } from "../../hooks/useRole";
 
 const Dashboard = () => {
   const { signOutUser } = useAuth();

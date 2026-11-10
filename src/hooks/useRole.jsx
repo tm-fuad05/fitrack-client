@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 import { useAxiosSecure } from "./useAxios";
 import Swal from "sweetalert2";
@@ -24,22 +24,28 @@ export const useCheckRole = () => {
   return { isAdmin, isTrainer, isLoading };
 };
 
-export const useChangeRole = (id) => {
+export const useChangeRole = () => {
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      const res = await axiosSecure.patch(`/users/change-user-role/${id}`);
+    mutationFn: async ({ role, email }) => {
+      const res = await axiosSecure.patch(
+        `/users/change-user-role?email=${email}`,
+        { role },
+      );
 
       return res.data;
     },
     onSuccess: async (data) => {
       if (data?.success) {
         await Swal.fire({
+          icon: "success",
           title: data?.message,
           showConfirmButton: false,
           timer: 1000,
         });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
       }
     },
   });

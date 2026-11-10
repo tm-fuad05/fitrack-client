@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAxiosSecure } from "./useAxios";
 import useAuth from "./useAuth";
+import Swal from "sweetalert2";
 
 export const useGetAllAplicantsFeedback = () => {
   const axiosSecure = useAxiosSecure();
@@ -43,4 +44,31 @@ export const useGetUserFeedback = () => {
     },
   });
   return { data, isLoading };
+};
+
+export const useAddFeedback = (handleOpen) => {
+  const axiosSecure = useAxiosSecure();
+  const mutation = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axiosSecure.post("/rejection-feedback", payload);
+      return res.data;
+    },
+    onSuccess: async (data) => {
+      if (data.success) {
+        handleOpen();
+        Swal.fire({
+          title: data?.message,
+          text: "Feedback successfully transmitted",
+          icon: "success",
+          timer: 1000,
+          showConfirmButton: false,
+        });
+      }
+    },
+    onError: async (error) => {
+      console.error("Pipeline failure:", error);
+      Swal.fire("Error", "Failed to process rejection routine.", "error");
+    },
+  });
+  return mutation;
 };

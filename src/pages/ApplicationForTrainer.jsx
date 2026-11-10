@@ -1,9 +1,3 @@
-import { useState } from "react";
-import Select from "react-select";
-import { Helmet } from "react-helmet-async";
-import useAuth from "../hooks/useAuth";
-import { useApplyForTrainer, useMyApplication } from "../hooks/useApplicant";
-
 import {
   FiUser,
   FiMail,
@@ -15,7 +9,13 @@ import {
   FiAlertTriangle,
   FiCheckCircle,
 } from "react-icons/fi";
-import { useCheckRole } from "../hooks/useCheckRole";
+import { useState } from "react";
+import Select from "react-select";
+import { Helmet } from "react-helmet-async";
+import useAuth from "../hooks/useAuth";
+import { useApplyForTrainer, useMyApplication } from "../hooks/useApplicant";
+
+import { useCheckRole } from "../hooks/useRole";
 
 const ApplicationForTrainer = () => {
   const { user } = useAuth();

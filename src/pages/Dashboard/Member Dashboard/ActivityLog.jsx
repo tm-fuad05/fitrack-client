@@ -4,12 +4,7 @@ import {
   useMyApplication,
 } from "../../../hooks/useApplicant";
 
-import {
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import Swal from "sweetalert2";
@@ -35,7 +30,6 @@ const ActivityLog = () => {
 
   const { data: applicant } = useMyApplication();
   const deleteMutation = useDeleteApplication();
-  console.log(applicant);
 
   const handleDelete = async () => {
     const result = await Swal.fire({
@@ -93,14 +87,14 @@ const ActivityLog = () => {
                   Email
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Applied For
+                  Appl For
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                   Status
                 </th>
                 {applicant?.status === "rejected" && (
                   <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
-                    Declined Reason
+                    Feedback
                   </th>
                 )}
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
@@ -178,7 +172,7 @@ const ActivityLog = () => {
       >
         <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-4 text-surface-dark dark:text-white font-black text-base uppercase tracking-tight">
           <span className="flex items-center gap-2">
-            <FiInfo className="text-red-500" /> Infrastructure Feedback
+            <FiInfo className="text-red-500" /> Feedback
           </span>
           <button
             onClick={handleOpen}
@@ -197,15 +191,6 @@ const ActivityLog = () => {
             </span>
           )}
         </DialogBody>
-
-        <DialogFooter className="p-4 border-t border-gray-200 dark:border-white/5 flex items-center justify-end">
-          <button
-            onClick={handleOpen}
-            className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-primary to-secondary hover:opacity-95 transition-all cursor-pointer shadow-lg shadow-primary/10"
-          >
-            Acknowledge Blueprint
-          </button>
-        </DialogFooter>
       </Dialog>
     </div>
   );

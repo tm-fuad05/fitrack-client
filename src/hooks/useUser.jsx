@@ -44,15 +44,20 @@ export function useDeleteUser() {
 
   const mutation = useMutation({
     mutationFn: async (user) => {
-      return await axiosSecure.delete(`/users/${user._id}`);
+      const res = await axiosSecure.delete(`/users/delete/${user._id}`);
+      return res.data;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-      Swal.fire({
-        title: "User Deleted",
-        text: `${variables.name} has been erased from user list.`,
-        icon: "success",
-      });
+    onSuccess: (data, variables) => {
+      if (data?.success) {
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        Swal.fire({
+          title: "User Deleted",
+          text: `${variables.name} has been erased from user list.`,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
     },
     onError: (error) => {
       Swal.fire({
