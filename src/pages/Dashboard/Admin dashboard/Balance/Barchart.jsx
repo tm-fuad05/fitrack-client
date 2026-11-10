@@ -8,8 +8,8 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import usePayment from "../../../../hooks/usePayment";
 import { useGetAllNewsletter } from "../../../../hooks/useNewsletter";
+import { useGetAllTransaction } from "../../../../hooks/useTransaction";
 
 // Custom Premium Tooltip Component
 const CustomTooltip = ({ active, payload }) => {
@@ -33,7 +33,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const Barchart = () => {
   const { newsletters } = useGetAllNewsletter();
-  const { payments } = usePayment();
+  const { data: transactions } = useGetAllTransaction();
 
   const data = [
     {
@@ -42,7 +42,7 @@ const Barchart = () => {
     },
     {
       name: "Paid Members",
-      total: payments?.length || 0,
+      total: transactions?.length || 0,
     },
   ];
 

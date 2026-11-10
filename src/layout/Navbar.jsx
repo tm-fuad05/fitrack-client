@@ -66,8 +66,6 @@ const Navbar = () => {
     };
   }, [mobileSidebarOpen]);
 
-  // const { isAdmin } = useAdmin();
-  // const { isTrainer } = useTrainerCheck();
   const { pathname } = useLocation();
 
   const { user, signOutUser, loader } = useAuth();

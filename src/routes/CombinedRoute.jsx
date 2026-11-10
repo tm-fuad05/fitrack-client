@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import useAdmin from "../hooks/useAdmin";
 import Loader from "../components/Shared/Loader";
-import { useTrainerCheck } from "../hooks/useTrainer";
+import { useCheckRole } from "../hooks/useCheckRole";
 
 const CombinedRoute = ({ children }) => {
   const { user, loader } = useAuth();
-  const { isAdmin, adminLoading } = useAdmin();
-  const { isTrainer, trainerLoading } = useTrainerCheck();
+  const { isTrainer, isAdmin, isLoading } = useCheckRole();
 
-  if (loader || adminLoading || trainerLoading) {
+  if (loader || isLoading) {
     return <Loader />;
   }
 

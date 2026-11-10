@@ -2,13 +2,13 @@
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import Loader from "../components/Shared/Loader";
-import { useTrainerCheck } from "../hooks/useTrainer";
+import { useCheckRole } from "../hooks/useCheckRole";
 
 const TrainerRoute = ({ children }) => {
   const { user, loader, signOutUser } = useAuth();
-  const { isTrainer, trainerLoading } = useTrainerCheck();
+  const { isTrainer, isLoading } = useCheckRole();
 
-  if (loader || trainerLoading) {
+  if (loader || isLoading) {
     return <Loader />;
   }
 

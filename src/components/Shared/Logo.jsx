@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import fitrack from "../../assets/fitrack.png";
 const Logo = ({ scrolled = {} }) => {
   return (

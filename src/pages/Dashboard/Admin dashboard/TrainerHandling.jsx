@@ -1,15 +1,15 @@
-import { useGetAllUsers } from "../../../hooks/useUser";
-import Back from "../../../components/Shared/Back";
 import Swal from "sweetalert2";
-
 import { Helmet } from "react-helmet-async";
 import { FiShield, FiMail, FiUserMinus, FiAward } from "react-icons/fi";
-import { useRemoveTrainerRole } from "../../../hooks/useTrainer";
+import { useRemoveTrainer } from "../../../hooks/useTrainer";
+import { useGetAllUsers } from "../../../hooks/useUser";
 
 const TrainerHandling = () => {
-  const { users } = useGetAllUsers();
-  const trainers = users?.filter((u) => u.role === "trainer") || [];
-  const mutation = useRemoveTrainerRole();
+  const { data: users } = useGetAllUsers();
+
+  const trainers = users?.filter((u) => u.role === "TRAINER");
+
+  const mutation = useRemoveTrainer();
 
   const handleRemoveTrainerRole = async (trainer) => {
     const result = await Swal.fire({
@@ -32,10 +32,6 @@ const TrainerHandling = () => {
         <title>FitRack | Trainer Management</title>
       </Helmet>
 
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
-
       {/* Premium Analytics Metric & Header Card */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
         <div className="absolute top-[-30%] right-[-10%] w-40 h-40 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
@@ -56,14 +52,14 @@ const TrainerHandling = () => {
               Active Roster
             </span>
             <span className="text-2xl font-black text-surface-dark dark:text-white tracking-tight">
-              {trainers.length}
+              {trainers?.length}
             </span>
           </div>
         </div>
       </div>
 
       {/* Industrial Grade Ledger Table Module */}
-      {trainers.length === 0 ? (
+      {trainers?.length === 0 ? (
         <div className="py-16 text-center rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10">
           <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase">
             No active trainers indexed in infrastructure
@@ -75,20 +71,20 @@ const TrainerHandling = () => {
             <thead>
               <tr className="bg-white dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
-                  Trainer Name
+                  Name
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                   <span className="flex items-center gap-1.5">
-                    <FiMail className="text-primary" /> Email Coordinates
+                    <FiMail className="text-primary" /> Email
                   </span>
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                   <span className="flex items-center gap-1.5">
-                    <FiAward /> Authority Context
+                    <FiAward /> Role
                   </span>
                 </th>
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
-                  Action Auth
+                  Action
                 </th>
               </tr>
             </thead>

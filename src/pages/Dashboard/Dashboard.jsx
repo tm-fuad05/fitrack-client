@@ -15,13 +15,11 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { TbLogout2 } from "react-icons/tb";
-import useAdmin from "../../hooks/useAdmin";
-import { useTrainerCheck } from "../../hooks/useTrainer";
+import { useCheckRole } from "../../hooks/useCheckRole";
 
 const Dashboard = () => {
   const { signOutUser } = useAuth();
-  const { isAdmin } = useAdmin();
-  const { isTrainer } = useTrainerCheck();
+  const { isAdmin, isTrainer } = useCheckRole();
 
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -73,15 +71,14 @@ const Dashboard = () => {
             className={navLinkStyling}
             to="/dashboard/newsletter"
           >
-            <LuLetterText className="text-xl shrink-0" /> Newsletter Subscribers
+            <LuLetterText className="text-xl shrink-0" /> Newsletter
           </NavLink>
           <NavLink
             onClick={handleLinkClick}
             className={navLinkStyling}
             to="/dashboard/applied-trainers"
           >
-            <SlEnvolopeLetter className="text-xl shrink-0" /> Applied
-            Trainers{" "}
+            <SlEnvolopeLetter className="text-xl shrink-0" /> Applicants{" "}
           </NavLink>
           <NavLink
             onClick={handleLinkClick}
@@ -207,8 +204,18 @@ const Dashboard = () => {
     <div className="min-h-screen dark:text-white antialiased grid grid-cols-12 relative">
       {/* Desktop SideBar (Glassy Slate Panel) */}
       <aside className="hidden lg:flex flex-col lg:col-span-3 bg-white dark:bg-transparent border-r border-gray-200 dark:border-white/10  min-h-screen sticky top-0 h-screen overflow-y-auto">
-        <div className="p-5 py-4">
-          <Logo />
+        <div className="flex items-center justify-between p-5 py-4 ">
+          <Logo />{" "}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="w-fit text-slate-800 dark:text-gray-200 text-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-white/5 p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-all shadow-sm"
+          >
+            {darkMode ? (
+              <MdLightMode className="text-amber-600" />
+            ) : (
+              <MdDarkMode />
+            )}
+          </button>
         </div>
         <div className="border-b border-gray-200 dark:border-white/10 " />
 
@@ -230,16 +237,6 @@ const Dashboard = () => {
 
       {/* Main Structural Pipeline */}
       <section className="col-span-12 lg:col-span-9 flex flex-col min-h-screen">
-        {/* Top Floating Control Deck (Desktop Only) */}
-        <div className="hidden lg:flex justify-end p-5 pb-0 bg-transparent border-b border-transparent">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="text-slate-800 dark:text-gray-200 text-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-white/5 p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-white/10 transition-all shadow-sm"
-          >
-            {darkMode ? <MdLightMode /> : <MdDarkMode />}
-          </button>
-        </div>
-
         {/* Small Device Header Deck */}
         <header className="bg-white/80 dark:bg-[#060911] backdrop-blur-md border-b border-gray-200 dark:border-white/10 lg:hidden sticky top-0 z-50 shadow-sm">
           <div className="flex justify-between items-center w-11/12 mx-auto py-4">

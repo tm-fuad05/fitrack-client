@@ -1,5 +1,3 @@
-import { useLoaderData } from "react-router-dom";
-import Back from "../../../components/Shared/Back";
 import { Helmet } from "react-helmet-async";
 import {
   FiMail,
@@ -9,19 +7,18 @@ import {
   FiCalendar,
   FiUser,
 } from "react-icons/fi";
+import { useApplicantById } from "../../../hooks/useApplicant";
+import { useParams } from "react-router-dom";
 
-const AppliedTrainerDetails = () => {
-  const appliedTrainer = useLoaderData() || {};
+const ApplicantDetails = () => {
+  const { id } = useParams();
+  const { data: applicant } = useApplicantById(id);
 
   return (
     <div className="space-y-6 antialiased pb-10">
       <Helmet>
         <title>FitRack | Candidate File Review</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Main Container Stack */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 mt-4">
@@ -34,15 +31,15 @@ const AppliedTrainerDetails = () => {
             <div className="w-full h-72 rounded-xl overflow-hidden border border-gray-200 dark:border-white/5 relative">
               <img
                 className="w-full height-full object-cover group-hover:scale-105 transition-transform duration-500"
-                src={appliedTrainer.profileImage}
-                alt={`${appliedTrainer.fullName || "Candidate"} Framework Profile`}
+                src={applicant?.profileImage}
+                alt={`${applicant?.fullName || "Candidate"} Framework Profile`}
               />
             </div>
 
             {/* Profile Meta Metadata */}
             <div className="mt-4 space-y-1">
               <h2 className="text-lg font-black tracking-tight text-surface-dark dark:text-white uppercase">
-                {appliedTrainer.fullName}
+                {applicant?.fullName}
               </h2>
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-500 dark:text-gray-400">
                 <FiUser className="text-primary text-sm" />{" "}
@@ -53,9 +50,9 @@ const AppliedTrainerDetails = () => {
                 <FiMail className="text-secondary shrink-0" />
                 <span
                   className="text-xs font-bold text-slate-800 dark:text-gray-300 truncate"
-                  title={appliedTrainer.email}
+                  title={applicant?.email}
                 >
-                  {appliedTrainer.email}
+                  {applicant?.email}
                 </span>
               </div>
             </div>
@@ -84,7 +81,7 @@ const AppliedTrainerDetails = () => {
                   Age Context
                 </span>
                 <span className="text-lg font-black text-surface-dark dark:text-white tracking-tight">
-                  {appliedTrainer.age}{" "}
+                  {applicant?.age}{" "}
                   <span className="text-xs font-semibold text-gray-400">
                     Years
                   </span>
@@ -95,7 +92,7 @@ const AppliedTrainerDetails = () => {
                   <FiBriefcase /> Seniority
                 </span>
                 <span className="text-lg font-black text-surface-dark dark:text-white tracking-tight">
-                  {appliedTrainer.yearsOfExperience}{" "}
+                  {applicant?.yearsOfExperience}{" "}
                   <span className="text-xs font-semibold text-gray-400">
                     Yrs Exp
                   </span>
@@ -107,21 +104,21 @@ const AppliedTrainerDetails = () => {
                 </span>
                 <span
                   className="text-sm font-black text-surface-dark dark:text-white truncate block mt-0.5"
-                  title={appliedTrainer.availableTime}
+                  title={applicant?.availableTime}
                 >
-                  {appliedTrainer.availableTime}
+                  {applicant?.availableTime}
                 </span>
               </div>
             </div>
 
             {/* Bio / Payload Description */}
-            {appliedTrainer.bio && (
+            {applicant?.bio && (
               <div className="space-y-1.5">
                 <span className="text-xs font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500">
                   Professional Bio
                 </span>
                 <p className="text-xs font-medium leading-relaxed text-gray-600 dark:text-gray-400 bg-slate-50/50 dark:bg-white/5 p-4 rounded-xl border border-gray-300/30 dark:border-white/5">
-                  {appliedTrainer.bio}
+                  {applicant?.bio}
                 </p>
               </div>
             )}
@@ -132,7 +129,7 @@ const AppliedTrainerDetails = () => {
                 <FiAward className="text-primary" /> Endorsed Core Skills Stack
               </span>
               <div className="flex flex-wrap gap-2">
-                {appliedTrainer?.skills?.map((skill, index) => (
+                {applicant?.skills?.map((skill, index) => (
                   <span
                     key={index}
                     className="px-3 py-1.5 text-xs font-bold text-slate-900 dark:text-gray-300 bg-slate-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg uppercase tracking-wide"
@@ -150,7 +147,7 @@ const AppliedTrainerDetails = () => {
                 Schedule
               </span>
               <div className="flex flex-wrap gap-1.5">
-                {appliedTrainer?.availableDays?.map((day, index) => (
+                {applicant?.availableDays?.map((day, index) => (
                   <span
                     key={index}
                     className="px-3 py-1 text-xs font-extrabold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary rounded-md"
@@ -167,4 +164,4 @@ const AppliedTrainerDetails = () => {
   );
 };
 
-export default AppliedTrainerDetails;
+export default ApplicantDetails;

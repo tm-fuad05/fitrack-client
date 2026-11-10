@@ -70,9 +70,6 @@ const CommunityCard = ({ post }) => {
       {/* Footer Area: Voting System */}
       <div className="flex justify-between items-center border-t dark:border-white/5  border-gray-300 pt-4 mt-2">
         <div className="flex flex-col">
-          <span className="text-[10px] uppercase tracking-wider font-semibold text-gray-700 dark:text-gray-500">
-            Total Feedback
-          </span>
           <span className="text-sm font-bold text-gray-700 dark:text-white">
             Votes:{" "}
             <motion.span

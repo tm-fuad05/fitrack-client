@@ -3,11 +3,10 @@ import Select from "react-select";
 import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import { Helmet } from "react-helmet-async";
 import { FiPlusCircle, FiBookOpen, FiFileText, FiUsers } from "react-icons/fi";
-import Back from "../../../components/Shared/Back";
 import { useAddClass } from "../../../hooks/useClass";
 
 const AddClass = () => {
-  const { data: trainers } = useGetAllTrainers() || { trainers: [] };
+  const { data: trainers } = useGetAllTrainers();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -114,10 +113,6 @@ const AddClass = () => {
       <Helmet>
         <title>FitRack | Initialize Class Blueprint</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Premium Profile Section Header */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden max-w-3xl mx-auto">

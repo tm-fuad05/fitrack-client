@@ -4,7 +4,6 @@ import useAuth from "../../../hooks/useAuth";
 import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import { FaTrash } from "react-icons/fa6";
 import { FiCalendar, FiCheckCircle } from "react-icons/fi";
-import usePayment from "../../../hooks/usePayment";
 import { TiTick } from "react-icons/ti";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Select from "react-select";
@@ -12,6 +11,7 @@ import { useAxiosSecure } from "../../../hooks/useAxios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Loader from "../../../components/Shared/Loader";
+import { useGetAllTransaction } from "../../../hooks/useTransaction";
 
 const ManageSlot = () => {
   const axiosSecure = useAxiosSecure();
@@ -21,7 +21,7 @@ const ManageSlot = () => {
 
   const { user } = useAuth();
   const { trainers, refetch, isLoading } = useGetAllTrainers();
-  const { payments } = usePayment();
+  const { data: transactions } = useGetAllTransaction();
   const isDark = document.documentElement.classList.contains("dark");
 
   const currentTrainer = trainers.find((t) => t.email === user.email);
@@ -30,7 +30,9 @@ const ManageSlot = () => {
     availableDays: [],
   });
 
-  const bookingSlots = payments.filter((p) => p.trainer === user.displayName);
+  const bookingSlots = transactions.filter(
+    (p) => p.trainer === user.displayName,
+  );
 
   const selectedSlots = currentTrainer?.availableDays?.map((d) => ({
     value: d,

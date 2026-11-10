@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
-import { useGetAllApplicants } from "../../../hooks/useApplicant";
-import Back from "../../../components/Shared/Back";
-import useAuth from "../../../hooks/useAuth";
+import {
+  useDeleteApplication,
+  useMyApplication,
+} from "../../../hooks/useApplicant";
+
 import {
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import { useQuery } from "@tanstack/react-query";
-import { useAxiosSecure } from "../../../hooks/useAxios";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import Swal from "sweetalert2";
@@ -21,65 +21,33 @@ import {
   FiX,
   FiInfo,
 } from "react-icons/fi";
+import { useState } from "react";
+import { useGetUserFeedback } from "../../../hooks/useFeedback";
+import useAuth from "../../../hooks/useAuth";
 
 const ActivityLog = () => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
   // Fetch Rejection Feedbacks
-  const { data: rejectionFeedback = [], isLoading } = useQuery({
-    queryKey: ["feedback"],
-    queryFn: async () => {
-      try {
-        const { data } = await axiosSecure.get("/rejection-feedback");
-        return data;
-      } catch (error) {
-        console.error(
-          "Failed to load data",
-          error?.response?.data?.message || error?.message,
-        );
-        return [];
-      }
-    },
-  });
+  const { data: rejectionFeedback, isLoading } = useGetUserFeedback();
 
-  const rejectedUser = rejectionFeedback.find((u) => u.email === user?.email);
-  const { data: applicants, refetch } = useGetAllApplicants();
-  const currentUser = applicants.find((u) => u.email === user?.email);
+  const { data: applicant } = useMyApplication();
+  const deleteMutation = useDeleteApplication();
+  console.log(applicant);
 
   const handleDelete = async () => {
     const result = await Swal.fire({
-      title: "Retract Application?",
-      text: "This will purge your submission record from the screening queue.",
+      title: "Want to delete your application?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "var(--color-primary, #ff5200)",
-      confirmButtonText: "Retract Record",
+      confirmButtonText: "Delete",
     });
 
-    if (!result.isConfirmed) return;
-
-    try {
-      const { data } = await axiosSecure.delete(
-        `/applied-as-trainer/${currentUser._id}`,
-      );
-      if (data.success) {
-        refetch();
-        Swal.fire({
-          title: "Record Terminated",
-          text: "Your application footprint has been cleared.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.error("Failed to delete", error);
-      Swal.fire("Error", "Pipeline failure during data clearing.", "error");
-    }
+    if (result.isConfirmed) deleteMutation.mutate(user?.email);
   };
 
   if (isLoading) {
@@ -91,10 +59,6 @@ const ActivityLog = () => {
       <Helmet>
         <title>FitRack | Operation Logs</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Premium Sci-Fi Stats Header Panel */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
@@ -110,7 +74,7 @@ const ActivityLog = () => {
       </div>
 
       {/* Core Log Entry Table Layout */}
-      {!currentUser ? (
+      {!applicant ? (
         <div className="py-16 text-center rounded-2xl border-2 border-dashed border-gray-300 dark:border-white/10 bg-white dark:bg-transparent">
           <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase flex flex-col lg:flex-row items-center justify-center gap-2">
             <FiClock className="text-gray-400 " /> Static Void: No Operational
@@ -134,7 +98,7 @@ const ActivityLog = () => {
                 <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300">
                   Status
                 </th>
-                {currentUser?.status === "rejected" && (
+                {applicant?.status === "rejected" && (
                   <th className="p-4 text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-300 text-center">
                     Declined Reason
                   </th>
@@ -148,36 +112,36 @@ const ActivityLog = () => {
               <tr className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors duration-200 bg-gray-50 dark:bg-transparent">
                 {/* Full Name */}
                 <td className="p-4 text-sm font-bold text-surface-dark dark:text-gray-200 whitespace-nowrap">
-                  {currentUser?.fullName}
+                  {applicant?.fullName}
                 </td>
 
                 {/* Email */}
                 <td className="p-4 text-sm font-semibold text-slate-800 dark:text-gray-400 whitespace-nowrap">
-                  {currentUser?.email}
+                  {applicant?.email}
                 </td>
 
                 {/* Target Role Tag */}
                 <td className="p-4 text-xs font-extrabold uppercase tracking-widest text-secondary whitespace-nowrap">
-                  [{currentUser?.role || "trainer"}]
+                  trainer
                 </td>
 
                 {/* Highly Dynamic Status Badge System */}
                 <td className="p-4 text-xs font-extrabold uppercase tracking-wider whitespace-nowrap">
                   <span
                     className={`px-2.5 py-1 rounded-md border ${
-                      currentUser?.status === "accepted"
+                      applicant?.status === "accepted"
                         ? "bg-green-500/10 border-green-500/20 text-green-500"
-                        : currentUser?.status === "rejected"
+                        : applicant?.status === "rejected"
                           ? "bg-red-500/10 border-red-500/20 text-red-500"
-                          : "bg-amber-500/10 border-amber-500/20 text-amber-500 animate-pulse"
+                          : "bg-amber-500/10 border-amber-800/20 text-amber-800"
                     }`}
                   >
-                    {currentUser?.status || "pending"}
+                    {applicant?.status || "pending"}
                   </span>
                 </td>
 
                 {/* Inspect Feedback Cell Link */}
-                {currentUser?.status === "rejected" && (
+                {applicant?.status === "rejected" && (
                   <td className="p-4 text-center">
                     <button
                       onClick={handleOpen}
@@ -225,8 +189,8 @@ const ActivityLog = () => {
         </DialogHeader>
 
         <DialogBody className="p-6 text-sm font-semibold text-slate-700 dark:text-gray-400 leading-relaxed">
-          {rejectedUser?.feedback ? (
-            rejectedUser.feedback
+          {rejectionFeedback?.feedback ? (
+            rejectionFeedback.feedback
           ) : (
             <span className="text-xs italic text-gray-400 dark:text-gray-500">
               No textual diagnostic payload provided by the root administrator.

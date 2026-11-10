@@ -1,13 +1,9 @@
 import { useState } from "react";
 import Select from "react-select";
-import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
-import useAdmin from "../hooks/useAdmin";
-import { useAxiosSecure } from "../hooks/useAxios";
 import useAuth from "../hooks/useAuth";
-import { useGetAllApplicants } from "../hooks/useApplicant";
-import { useTrainerCheck } from "../hooks/useTrainer";
+import { useApplyForTrainer, useMyApplication } from "../hooks/useApplicant";
+
 import {
   FiUser,
   FiMail,
@@ -19,16 +15,13 @@ import {
   FiAlertTriangle,
   FiCheckCircle,
 } from "react-icons/fi";
+import { useCheckRole } from "../hooks/useCheckRole";
 
 const ApplicationForTrainer = () => {
-  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const { isAdmin } = useAdmin();
-  const { isTrainer } = useTrainerCheck();
-  const { data: applicants } = useGetAllApplicants();
+  const { isAdmin, isTrainer } = useCheckRole();
 
-  const currentUser = applicants?.find((u) => u.email === user?.email);
+  const { data: applicant } = useMyApplication();
 
   const [formData, setFormData] = useState({
     fullName: user?.displayName || "",
@@ -40,6 +33,13 @@ const ApplicationForTrainer = () => {
     availableDays: [],
     availableTime: "",
   });
+
+  const postMutation = useApplyForTrainer();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    postMutation.mutate(formData);
+  };
 
   const skillsOptions = [
     { value: "Weight Loss Coaching", label: "Weight Loss Coaching" },
@@ -92,23 +92,22 @@ const ApplicationForTrainer = () => {
 
       return {
         ...provided,
-        // ১. Selected হলে Primary কালার, Focused/Hover হলে হালকা অপাসিটি, আর ডিফল্ট অবস্থায় মোড অনুযায়ী ব্যাকগ্রাউন্ড
+
         backgroundColor: state.isSelected
           ? "#ff5200"
           : state.isFocused
-            ? "rgba(255, 82, 0)" // Hover State with low opacity primary
+            ? "rgba(255, 82, 0)"
             : isDark
-              ? "#12131a" // আপনার dynamic dark surface কালার (বা প্রোজেক্টের surface-dark hex)
-              : "#ffffff", // Light mode default bg
+              ? "#12131a"
+              : "#ffffff",
 
-        // ২. Selected হলে সাদা, Focused হলে Primary, আর ডিফল্ট অবস্থায় মোড অনুযায়ী টেক্সট কালার
         color: state.isSelected
           ? "#ffffff"
           : state.isFocused
             ? "#fff"
             : isDark
-              ? "#d1d5db" // text-gray-300
-              : "#111827", // text-gray-900
+              ? "#d1d5db"
+              : "#111827",
 
         cursor: "pointer",
         fontSize: "13px",
@@ -147,36 +146,6 @@ const ApplicationForTrainer = () => {
     }),
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axiosSecure.post("/applied-as-trainer", {
-        ...formData,
-        status: "pending",
-      });
-
-      if (data.success) {
-        Swal.fire({
-          title: "Application Broadcasted",
-          text: "Your professional registry is pending verification log review.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          navigate("/dashboard/activity-log");
-        }, 1500);
-      }
-    } catch (error) {
-      console.error("Transmission sequence broken", error);
-      Swal.fire(
-        "Transmission Failed",
-        error.message || "Network Error",
-        "error",
-      );
-    }
-  };
-
   return (
     <div className="py-28">
       <div className="max-w-4xl mx-auto bg-white dark:bg-transparent md:border border-gray-300/60 dark:border-white/5 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-sm relative overflow-hidden antialiased">
@@ -211,7 +180,7 @@ const ApplicationForTrainer = () => {
               (Admin/Trainer). Re-application is restricted.
             </p>
           </div>
-        ) : currentUser?.status === "pending" ? (
+        ) : applicant?.status === "pending" ? (
           <div className="py-20 text-center rounded-xl border border-secondary/20 bg-secondary/5 max-w-xl mx-auto p-6 space-y-3">
             <FiClock className="text-4xl text-secondary mx-auto animate-spin-slow" />
             <h3 className="text-sm font-black uppercase tracking-wider text-secondary">

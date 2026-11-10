@@ -16,8 +16,8 @@ import { useDeleteUser } from "../../../hooks/useUser";
 import { useMakeAdmin } from "../../../hooks/useMakeAdmin";
 
 const ManageUsers = () => {
-  const { users, refetch, isLoading } = useGetAllUsers() || { users: [] };
-  const axiosSecure = useAxiosSecure();
+  const { data: users, isLoading } = useGetAllUsers() || { users: [] };
+
   const deleleMutation = useDeleteUser();
   const updateMutation = useMakeAdmin();
 
@@ -60,10 +60,6 @@ const ManageUsers = () => {
       <Helmet>
         <title>FitRack | Manage Users Matrix</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Premium Stats Header Panel */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
@@ -141,20 +137,20 @@ const ManageUsers = () => {
                   <td className="p-4 text-xs font-extrabold uppercase tracking-wider whitespace-nowrap">
                     <span
                       className={`px-2.5 py-1 rounded-md border ${
-                        user.role === "admin"
+                        user.role === "ADMIN"
                           ? "bg-green-500/10 border-green-500/20 text-green-500"
-                          : user.role === "trainer"
+                          : user.role === "TRAINER"
                             ? "bg-red-500/10 border-red-500/20 text-red-500"
                             : "bg-slate-500/10 border-slate-500/20 text-slate-600 dark:text-gray-400"
                       }`}
                     >
-                      {user.role || "member"}
+                      {user.role || "MEMBER"}
                     </span>
                   </td>
 
                   {/* Promote Admin System Action */}
                   <td className="p-4 text-center">
-                    {user.role === "admin" ? (
+                    {user.role === "ADMIN" ? (
                       <span className="p-2 text-green-500 bg-green-500/5 border border-green-500/10 rounded-lg text-sm font-bold inline-flex items-center gap-1 opacity-70">
                         <FiUserCheck /> Rooted
                       </span>

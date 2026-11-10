@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const titleColors = {
   default: "text-foreground dark:text-foreground-dark",
   white: "text-white",

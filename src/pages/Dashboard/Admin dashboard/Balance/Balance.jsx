@@ -1,38 +1,22 @@
 import { Helmet } from "react-helmet-async";
-import Back from "../../../../components/Shared/Back";
-import usePayment from "../../../../hooks/usePayment";
-import { useQuery } from "@tanstack/react-query";
 import Barchart from "./Barchart";
-import { useGetAllUsers } from "../../../../hooks/useUser";
 import Loader from "../../../../components/Shared/Loader";
-import { useAxiosSecure } from "../../../../hooks/useAxios";
 import {
   FiDollarSign,
   FiTrendingUp,
   FiCreditCard,
   FiCalendar,
 } from "react-icons/fi";
+import {
+  useGetAllTransaction,
+  useGetRecentTransaction,
+} from "../../../../hooks/useTransaction";
 
 const Balance = () => {
-  const axiosSecure = useAxiosSecure();
-  const { users } = useGetAllUsers();
-  console.log(users);
+  const { data: transactions, isLoading } = useGetAllTransaction();
 
-  const { data: recentPayments = [], isLoading } = useQuery({
-    queryKey: ["recent payments"], // Removed whitespace prefix from key
-    queryFn: async () => {
-      try {
-        const { data } = await axiosSecure.get(`/recent-payments`);
-        return data;
-      } catch (error) {
-        console.error(error?.response?.data?.message || error?.message);
-        return [];
-      }
-    },
-  });
-
-  const { payments } = usePayment();
-  const totalBalance = payments.reduce(
+  const { data: recentTransactions } = useGetRecentTransaction();
+  const totalBalance = transactions?.reduce(
     (accum, total) => accum + parseInt(total.price || 0),
     0,
   );
@@ -46,10 +30,6 @@ const Balance = () => {
       <Helmet>
         <title>FitRack | Balance Overview</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Metrics Stat Cards Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -86,7 +66,7 @@ const Balance = () => {
                 Monitored Volume
               </p>
               <h3 className="text-3xl font-black text-surface-dark dark:text-white mt-1.5 tracking-tight">
-                {recentPayments?.length || 0}{" "}
+                {recentTransactions?.length || 0}{" "}
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                   Batches
                 </span>
@@ -108,11 +88,11 @@ const Balance = () => {
           Recent Logs Terminal
         </h2>
         <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
-          Comprehensive audit overview of inbound system ledger payments.
+          Comprehensive audit overview of inbound system ledger transactions.
         </p>
       </div>
 
-      {recentPayments?.length === 0 ? (
+      {recentTransactions?.length === 0 ? (
         <div className="py-12 text-center rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10">
           <p className="text-sm font-bold text-gray-500 dark:text-gray-400 tracking-wide uppercase">
             No Transactions Registered In Current Frame
@@ -138,7 +118,7 @@ const Balance = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-white/5">
-              {recentPayments?.map((p) => (
+              {recentTransactions?.map((p) => (
                 <tr
                   key={p._id}
                   className="group bg-gray-50 dark:bg-transparent dark:hover:bg-white/5 transition-colors duration-200 whitespace-nowrap"

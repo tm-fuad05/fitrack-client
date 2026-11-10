@@ -1,8 +1,39 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAxiosPublic } from "./useAxios";
-import { useAxiosSecure } from "./useAxios";
-import useAuth from "./useAuth";
+import { useAxiosPublic, useAxiosSecure } from "./useAxios";
 import Swal from "sweetalert2";
+
+export const useAddTrainer = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const mutation = useMutation({
+    mutationFn: async ({ payload, email }) => {
+      (await axiosSecure.post("/trainers", payload),
+        await axiosSecure.patch(`/users/change-user-role?email=${email}`, {
+          role: "TRAINER",
+        }),
+        await axiosSecure.delete(`/applicants/delete?email=${email}`));
+    },
+    onSuccess: () => {
+      Swal.fire({
+        icon: "success",
+        title: "Successfully added",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    },
+    onError: (error) => {
+      const message = error?.response?.data?.message || "Something went wrong";
+      console.error(message);
+      Swal.fire({
+        icon: "error",
+        title: message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
+  });
+  return mutation;
+};
 
 export const useGetAllTrainers = (sort = "") => {
   const axiosPublic = useAxiosPublic();
@@ -22,41 +53,29 @@ export const useGetAllTrainers = (sort = "") => {
   return { data, refetch, isLoading };
 };
 
-export const useTrainerCheck = () => {
-  const { user, loader } = useAuth();
-  const axiosSecure = useAxiosSecure();
-
-  const { data: isTrainer, isPending: trainerLoading } = useQuery({
-    queryKey: [user?.email, "trainer"],
-    enabled: !loader,
-    queryFn: async () => {
-      try {
-        const { data } = await axiosSecure.get(`/user/trainer/${user.email}`);
-
-        return data?.isTrainer;
-      } catch (error) {
-        console.error(error?.response?.data?.message || error?.message);
-      }
-    },
-  });
-  return { isTrainer, trainerLoading };
-};
-
-export function useRemoveTrainerRole() {
+export function useRemoveTrainer() {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (trainer) => {
-      await axiosSecure.patch(`/users/make-member/${trainer._id}`);
+      const res = await axiosSecure.patch(
+        `/users/change-user-role?email=${trainer?.email}`,
+        { role: "MEMBER" },
+      );
+      await axiosSecure.delete(`/trainers/delete?email=${trainer?.email}`);
+      return res.data;
     },
-    onSuccess: (_, variables) => {
-      Swal.fire({
-        title: "Role Revoked",
-        text: `${variables.name} has been successfully reverted to a member.`,
-        icon: "success",
-      });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+    onSuccess: (data, variables) => {
+      if (data?.success) {
+        Swal.fire({
+          title: data.message,
+          text: `${variables.name} has been successfully reverted to a member.`,
+          icon: "success",
+        });
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        queryClient.invalidateQueries({ queryKey: ["trainer"] });
+      }
     },
     onError: (error) => {
       Swal.fire({

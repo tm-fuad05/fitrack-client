@@ -13,14 +13,14 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import NewsletterSubscribers from "../pages/Dashboard/Admin dashboard/NewsletterSubscribers";
 import TrainerHandling from "../pages/Dashboard/Admin dashboard/TrainerHandling";
 import ManageUsers from "../pages/Dashboard/Admin dashboard/ManageUsers";
-import AppliedTrainerDetails from "../pages/Dashboard/Admin dashboard/AppliedTrainerDetails";
+import ApplicantDetails from "../pages/Dashboard/Admin dashboard/ApplicantDetails";
 import ActivityLog from "../pages/Dashboard/Member Dashboard/ActivityLog";
 import BookedTrainer from "../pages/Dashboard/Member Dashboard/BookedTrainer";
 import Profile from "../pages/Dashboard/Profile";
 import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
 import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
-import AppliedTrainer from "../pages/Dashboard/Admin dashboard/AppliedTrainer";
+import Applicants from "../pages/Dashboard/Admin dashboard/Applicants";
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
 import AdminRoute from "./AdminRoute";
 import Community from "../pages/Community";
@@ -137,7 +137,7 @@ const router = createBrowserRouter([
             path: "/dashboard/applied-trainers",
             element: (
               <AdminRoute>
-                <AppliedTrainer></AppliedTrainer>
+                <Applicants></Applicants>
               </AdminRoute>
             ),
           },
@@ -150,16 +150,12 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/applied-trainers/:id",
+            path: "/dashboard/applicants/:id",
             element: (
               <AdminRoute>
-                <AppliedTrainerDetails />
+                <ApplicantDetails />
               </AdminRoute>
             ),
-            loader: ({ params }) =>
-              fetch(
-                `https://fitrack-server.vercel.app/applied-as-trainer/${params.id}`,
-              ),
           },
 
           // Member Dashboard Menus

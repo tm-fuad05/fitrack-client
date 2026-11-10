@@ -1,12 +1,8 @@
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import { useAxiosSecure } from "../../../hooks/useAxios";
-import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import moment from "moment/moment";
-import { useNavigate } from "react-router-dom";
-import useAdmin from "../../../hooks/useAdmin";
 import {
   FiFileText,
   FiTag,
@@ -15,13 +11,12 @@ import {
   FiCalendar,
   FiShield,
 } from "react-icons/fi";
+import { useCheckRole } from "../../../hooks/useCheckRole";
+import { usePostCommunity } from "../../../hooks/useCommunity";
 
 const AddForum = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-  const { isAdmin } = useAdmin();
-  const axiosSecure = useAxiosSecure();
-  const isDark = document.documentElement.classList.contains("dark");
+  const { isAdmin } = useCheckRole();
 
   const date = new Date();
 
@@ -30,34 +25,16 @@ const AddForum = () => {
     author: user?.displayName,
     date: date,
     category: "",
-    role: `${isAdmin ? "admin" : "trainer"}`,
+    role: `${isAdmin ? "ADMIN" : "TRAINER"}`,
     description: "",
     votedBy: [],
   });
 
+  const postMutation = usePostCommunity();
+
   const handlePost = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axiosSecure.post("/community", formData);
-      if (data.success) {
-        Swal.fire({
-          title: "Successfully Added",
-          icon: "success",
-          background: isDark ? "#171717" : "#ffffff",
-          color: isDark ? "#ffffff" : "#171717",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          navigate("/community");
-        }, 1500);
-      }
-    } catch (error) {
-      console.error(
-        "Failed to post",
-        error?.response?.data?.message || error?.message,
-      );
-    }
+    postMutation.mutate(formData);
   };
 
   return (

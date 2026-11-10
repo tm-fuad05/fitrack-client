@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-empty */
 import { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { FiUsers, FiMail, FiEye, FiX, FiUserX } from "react-icons/fi";
@@ -5,43 +7,38 @@ import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useGetAllUsers } from "../../../hooks/useUser";
-import Back from "../../../components/Shared/Back";
 import { Dialog, DialogBody, Input, Textarea } from "@material-tailwind/react";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../../components/Shared/Loader";
 import { useAxiosSecure } from "../../../hooks/useAxios";
 import { useGetAllApplicants } from "../../../hooks/useApplicant";
+import { useAddTrainer } from "../../../hooks/useTrainer";
 
-const AppliedTrainer = () => {
-  const { data: applicants, refetch, isLoading } = useGetAllApplicants();
-  const pendingFilter = applicants?.filter((p) => p.status === "pending") || [];
+const Applicants = () => {
+  const [open, setOpen] = useState(false);
+  const [selectedTrainer, setSelectedTrainer] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { users } = useGetAllUsers();
 
-  const [open, setOpen] = useState(false);
-  const [selectedTrainer, setSelectedTrainer] = useState(null);
+  const { data: applicants, refetch, isLoading } = useGetAllApplicants();
+  const pendingFilter = applicants?.filter((p) => p.status === "pending") || [];
 
   const handleOpen = (trainer = null) => {
     setSelectedTrainer(trainer);
     setOpen(!open);
   };
 
+  const postMutation = useAddTrainer();
+
   const handleConfirmTrainer = async (trainer) => {
     const currentTrainer = users.find((u) => u.email === trainer.email);
     if (!currentTrainer) {
-      Swal.fire("Error", "Corresponding user account not found.", "error");
+      Swal.fire("Error", "User account not found.", "error");
       return;
     }
 
-    const confirmedTrainer = {
-      fullName: trainer.fullName,
-      email: trainer.email,
-      age: trainer.age,
-      profileImage: trainer.profileImage,
-      skills: trainer.skills,
-      availableDays: trainer.availableDays,
-      availableTime: trainer.availableTime,
-    };
+    const { _id, status, ...remaining } = trainer;
+    const { email } = remaining;
 
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -53,39 +50,12 @@ const AppliedTrainer = () => {
       confirmButtonText: "Confirm Allocation",
     });
 
-    if (!result.isConfirmed) return;
-
-    try {
-      const [postRes, deleteRes, patchRes] = await Promise.all([
-        axiosSecure.post("/trainers", confirmedTrainer),
-        axiosSecure.delete(`/applied-as-trainer/${trainer._id}`),
-        axiosSecure.patch(`/users/make-trainer/${currentTrainer._id}`),
-      ]);
-
-      if (
-        postRes.data.success &&
-        deleteRes.data.success &&
-        patchRes.data.success
-      ) {
-        refetch();
-        Swal.fire({
-          title: "Session Initialized!",
-          text: `${trainer.fullName} has been successfully promoted to Trainer.`,
-          icon: "success",
-        });
-      } else {
-        Swal.fire("Error", "One or more pipeline operations failed.", "error");
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire(
-        "Error",
-        error.message || "Failed to execute pipeline.",
-        "error",
-      );
-    }
+    if (result.isConfirmed)
+      postMutation.mutate({
+        payload: remaining,
+        email: email,
+      });
   };
-
   const handleRejectPipeline = async (e) => {
     e.preventDefault();
     if (!selectedTrainer) return;
@@ -130,12 +100,8 @@ const AppliedTrainer = () => {
   return (
     <div className="space-y-6 antialiased">
       <Helmet>
-        <title>FitRack | Applied Trainers</title>
+        <title>FitRack | Applicants</title>
       </Helmet>
-
-      <div className="flex items-center justify-between">
-        <Back />
-      </div>
 
       {/* Premium Stats Header Panel */}
       <div className="p-6 rounded-2xl bg-white dark:bg-transparent border border-gray-300/60 dark:border-white/10 backdrop-blur-md shadow-sm relative overflow-hidden">
@@ -213,7 +179,10 @@ const AppliedTrainer = () => {
 
                   {/* Details Navigation */}
                   <td className="p-4 text-center">
-                    <Link to={trainer._id} title="Inspect Core Criteria">
+                    <Link
+                      to={`/dashboard/applicants/${trainer?._id}`}
+                      title="Inspect Core Criteria"
+                    >
                       <button className="p-2 bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-gray-300 rounded-lg hover:text-secondary border border-gray-300 dark:border-white/10 transition-colors cursor-pointer inline-flex items-center justify-center text-lg">
                         <TbListDetails />
                       </button>
@@ -337,4 +306,4 @@ const AppliedTrainer = () => {
   );
 };
 
-export default AppliedTrainer;
+export default Applicants;

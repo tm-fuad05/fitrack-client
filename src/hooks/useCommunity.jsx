@@ -1,5 +1,7 @@
-import { useAxiosPublic } from "./useAxios";
-import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { useAxiosPublic, useAxiosSecure } from "./useAxios";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export const useGetAllCommunities = () => {
   const axiosPublic = useAxiosPublic();
@@ -37,4 +39,46 @@ export const useGetRecentCommunities = () => {
     },
   });
   return { data, refetch, isLoading };
+};
+
+export const usePostCommunity = () => {
+  const axiosSecure = useAxiosSecure();
+  const isDark = document.documentElement.classList.contains("dark");
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: async (payload) => {
+      const { data } = await axiosSecure.post("/communities", payload);
+      return data;
+    },
+    onSuccess: async (data) => {
+      if (data.success) {
+        Swal.fire({
+          title: "Successfully Added",
+          icon: "success",
+          background: isDark ? "#171717" : "#ffffff",
+          color: isDark ? "#ffffff" : "#171717",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          navigate("/communities");
+        }, 1000);
+      }
+    },
+    onError: async (error) => {
+      console.error(
+        "Failed to post",
+        error?.response?.data?.message || error?.message,
+      );
+      await Swal.fire({
+        title: "Failed to post",
+        icon: "error",
+        background: isDark ? "#171717" : "#ffffff",
+        color: isDark ? "#ffffff" : "#171717",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    },
+  });
+  return mutation;
 };

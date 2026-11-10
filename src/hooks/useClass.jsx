@@ -30,22 +30,21 @@ export function useAddClass() {
     },
     onSuccess: () => {
       Swal.fire({
-        title: "Class Dispatched Successfully",
-        text: "The structural class profile has been added to index.",
+        title: "Class Added Successfully",
         icon: "success",
         showConfirmButton: false,
         timer: 1500,
       });
       setTimeout(() => {
-        navigate("/all-classes");
-      }, 1500);
+        navigate("/classes");
+      }, 1000);
     },
     onError: (error) => {
       Swal.fire({
         title: error?.response?.data?.message || error?.message,
         icon: "error",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
     },
   });

@@ -5,12 +5,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 export function useGetAllUsers() {
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: users = [],
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["user"],
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["user", "all"],
     queryFn: async () => {
       try {
         const { data } = await axiosSecure.get("/users");
@@ -21,14 +17,14 @@ export function useGetAllUsers() {
     },
   });
 
-  return { users, refetch, isLoading };
+  return { data, refetch, isLoading };
 }
 
-export function useGetSpacificUser(email = "") {
+export function useGetUserByEmail(email = "") {
   const axiosPublic = useAxiosPublic();
 
   const { data, refetch, isLoading } = useQuery({
-    queryKey: ["user", "single", email],
+    queryKey: ["user", "by-email", email],
     queryFn: async () => {
       try {
         const { data } = await axiosPublic.get(`/users/user?email=${email}`);

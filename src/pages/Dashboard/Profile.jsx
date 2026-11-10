@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Swal from "sweetalert2";
-import { useGetSpacificUser } from "../../hooks/useUser";
+import { useGetUserByEmail } from "../../hooks/useUser";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../components/Shared/Loader";
 import { useAxiosSecure } from "../../hooks/useAxios";
@@ -29,7 +29,7 @@ const Profile = () => {
     data: currentUser,
     isLoading,
     refetch,
-  } = useGetSpacificUser(user?.email);
+  } = useGetUserByEmail(user?.email);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
