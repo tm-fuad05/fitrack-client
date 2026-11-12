@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { useAxiosSecure } from "./useAxios";
+/* eslint-disable no-unused-vars */
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAxiosPublic, useAxiosSecure } from "./useAxios";
+import Swal from "sweetalert2";
 
 export const useGetAllNewsletter = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,4 +18,16 @@ export const useGetAllNewsletter = () => {
     },
   });
   return { data, isLoading };
+};
+
+export const usePostNewsletter = () => {
+  const axiosPublic = useAxiosPublic();
+
+  const mutation = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axiosPublic.post("/newsletters", payload);
+      return res.data;
+    },
+  });
+  return mutation;
 };

@@ -6,47 +6,76 @@ import gymbg from "../../assets/gymbg.jpg";
 
 // Icons
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import { FiUser, FiImage, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
 import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAxiosPublic } from "../../hooks/useAxios";
+import { signUpSchema } from "../../validation/schema/auth.validation";
+import { validate } from "zod";
+import { useValidateInput } from "../../hooks/useValidateInput";
 
 const Register = () => {
-  const [isEyeOpen, setIsEyeOpen] = useState(false);
+  const [isEyeOpen, setIsEyeOpen] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
   const { registerUser, updateUserProfile, signOutUser, user } = useAuth();
-  const [error, setError] = useState("");
+  const { isValid, error, setError, validate, data } =
+    useValidateInput(signUpSchema);
+  const [authError, setAuthError] = useState("");
+  console.log(authError);
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
 
+  const [formData, setFormData] = useState({
+    name: null,
+    email: null,
+    password: null,
+    confirmPassword: null,
+  });
+
+  console.log(formData.name, formData.password);
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
+  const nameError = error.find((err) => err.field === "name");
+  const emailError = error.find((err) => err.field === "email");
+  const passwordError = error.find((err) => err.field === "password");
+  const confirmPasswordError = error.find(
+    (err) => err.field === "confirmPassword",
+  );
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    setAuthError("");
 
-    const form = e.target;
-    const name = form.name.value;
-    const photo = form.photo.value;
-    const email = form.email.value;
-    const password = form.password.value;
-
-    setError("");
-    const strongPass =
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
-
-    if (!strongPass.test(password)) {
-      setError("Your password is not strong enough. Try again!");
+    validate(formData);
+    if (!isValid) {
       return;
     }
 
     try {
-      await registerUser(email, password);
-      await updateUserProfile({ displayName: name, photoURL: photo });
+      await registerUser(data.email, data.password);
+      await updateUserProfile({ displayName: data.name });
 
-      const userInfo = { name: name, email: email };
-      const { data } = await axiosPublic.post("/users", userInfo);
+      const userInfo = { name: data.name, email: data.email };
+      const res = await axiosPublic.post("/users", userInfo);
 
-      if (data.success) {
+      if (res.data.success) {
         toast.success("Successfully registered");
       }
 
@@ -54,7 +83,7 @@ const Register = () => {
       navigate("/login");
     } catch (error) {
       console.error(error);
-      setError(error.message || "Something went wrong! Please try again.");
+      setAuthError(error.message || "Something went wrong! Please try again.");
     }
   };
 
@@ -118,28 +147,13 @@ const Register = () => {
                 type="text"
                 name="name"
                 id="name"
+                onChange={changeInputHandler}
                 placeholder="John Doe"
                 className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                required
               />
-            </div>
-
-            {/* Photo URL Field Panel */}
-            <div className="space-y-1">
-              <label
-                htmlFor="photo"
-                className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5"
-              >
-                <FiImage className="text-secondary" /> Photo URL
-              </label>
-              <input
-                type="url"
-                name="photo"
-                id="photo"
-                placeholder="https://example.com/photo.jpg"
-                className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                required
-              />
+              {nameError && (
+                <p className="text-xs text-red-500 pl-1">{nameError.message}</p>
+              )}
             </div>
 
             {/* Email Field Panel */}
@@ -151,13 +165,17 @@ const Register = () => {
                 <FiMail className="text-primary" /> Email Address
               </label>
               <input
-                type="email"
                 name="email"
                 id="email"
+                onChange={changeInputHandler}
                 placeholder="name@example.com"
                 className="w-full rounded-xl pl-4 pr-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                required
               />
+              {emailError && (
+                <p className="text-xs text-red-500 pl-1">
+                  {emailError.message}
+                </p>
+              )}
             </div>
 
             {/* Password Field Panel */}
@@ -166,30 +184,76 @@ const Register = () => {
                 htmlFor="password"
                 className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5"
               >
-                <FiLock className="text-secondary" /> Security Password
+                <FiLock className="text-secondary" /> Password
               </label>
               <div className="relative">
                 <input
-                  type={isEyeOpen ? "text" : "password"}
+                  type={isEyeOpen.password ? "text" : "password"}
                   name="password"
                   id="password"
+                  onChange={changeInputHandler}
                   placeholder="••••••••"
                   className="w-full rounded-xl pl-4 pr-12 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                  required
                 />
                 <button
                   type="button"
-                  onClick={() => setIsEyeOpen(!isEyeOpen)}
+                  onClick={() =>
+                    setIsEyeOpen((prev) => ({
+                      ...prev,
+                      password: !prev.password,
+                    }))
+                  }
                   className="absolute top-1/2 -translate-y-1/2 right-4 text-xl text-gray-500 dark:text-gray-400 hover:text-surface-dark dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  {isEyeOpen ? <IoEyeOutline /> : <IoEyeOffOutline />}
+                  {isEyeOpen.password ? <IoEyeOutline /> : <IoEyeOffOutline />}
                 </button>
               </div>
 
-              {/* Dynamic Error Logs */}
-              {error && (
-                <p className="text-xs font-bold text-red-500 bg-red-500/10 p-2.5 rounded-lg border border-red-500/20 mt-2">
-                  {error}
+              {passwordError && (
+                <p className="text-xs text-red-500 pl-1">
+                  {passwordError.message}
+                </p>
+              )}
+            </div>
+            {/*COnfirm Password Field Panel */}
+            <div className="space-y-1">
+              <label
+                htmlFor="password"
+                className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5"
+              >
+                <FiLock className="text-secondary" />
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={isEyeOpen.confirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  onChange={changeInputHandler}
+                  placeholder="••••••••"
+                  className="w-full rounded-xl pl-4 pr-12 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
+                />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setIsEyeOpen((prev) => ({
+                      ...prev,
+                      confirmPassword: !prev.confirmPassword,
+                    }))
+                  }
+                  className="absolute top-1/2 -translate-y-1/2 right-4 text-xl text-gray-500 dark:text-gray-400 hover:text-surface-dark dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  {isEyeOpen.confirmPassword ? (
+                    <IoEyeOutline />
+                  ) : (
+                    <IoEyeOffOutline />
+                  )}
+                </button>
+              </div>
+
+              {confirmPasswordError && (
+                <p className="text-xs text-red-500 pl-1">
+                  {confirmPasswordError.message}
                 </p>
               )}
             </div>

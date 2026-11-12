@@ -1,15 +1,12 @@
+import Swal from "sweetalert2";
 import newsletter from "../../assets/newsletter.png";
+import { usePostNewsletter } from "../../hooks/useNewsletter";
 import Button from "../Shared/Button";
 import SectionTitle from "../Shared/SectionTitle";
-import { useAxiosPublic } from "../../hooks/useAxios";
 import { motion } from "framer-motion";
-// SweetAlert
-import Swal from "sweetalert2/dist/sweetalert2.js";
-import "sweetalert2/src/sweetalert2.scss";
 
 const Newsletter = () => {
-  const axiosPublic = useAxiosPublic();
-
+  const postMutation = usePostNewsletter();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -26,20 +23,19 @@ const Newsletter = () => {
       message,
     };
 
-    try {
-      const { data } = await axiosPublic.post("/newsletter", newsLetterInfo);
-      if (data.success) {
-        form.reset();
-        Swal.fire({
-          title: "Message Sent",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.error(error?.response?.data?.message || error?.message);
-    }
+    postMutation.mutate(newsLetterInfo, {
+      onSuccess: async (data) => {
+        if (data.success) {
+          await Swal.fire({
+            title: "Message Sent",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+        }
+      },
+    });
   };
 
   // Animation configuration for staggering inputs

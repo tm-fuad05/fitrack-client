@@ -180,7 +180,6 @@ const router = createBrowserRouter([
               </TrainerRoute>
             ),
           },
-
           // Admin and Trainer Route
           {
             path: "/dashboard/add-forum",

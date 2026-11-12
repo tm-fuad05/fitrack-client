@@ -10,31 +10,55 @@ import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useValidateInput } from "../../hooks/useValidateInput";
+import { signInSchema } from "../../validation/schema/auth.validation";
 
 const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
   const { signInUser, setUser, user } = useAuth();
-  const [error, setError] = useState("");
+  const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { data, error, isValid, setError, validate } =
+    useValidateInput(signInSchema);
+
+  const [formData, setFormData] = useState({
+    email: null,
+    password: null,
+  });
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
+
+  const emailError = error?.find((err) => err.field === "email");
+  const passwordError = error?.find((err) => err.field === "password");
+
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-
     setError("");
 
+    validate(formData);
+    if (!isValid) return;
+
     try {
-      const result = await signInUser(email, password);
+      const result = await signInUser(data.email, data.password);
       toast.success("Successfully signed in");
       setUser(result.user);
       navigate(location?.state || "/");
     } catch (error) {
       console.error("Login error:", error);
-      setError("Invalid email or password. Try again!");
+      setAuthError("Invalid email or password. Try again!");
     }
   };
 
@@ -96,14 +120,18 @@ const Login = () => {
               </label>
               <div className="relative">
                 <input
-                  type="email"
                   name="email"
                   id="email"
+                  onChange={changeInputHandler}
                   placeholder="name@example.com"
                   className="w-full rounded-xl pl-4 pr-4 py-3.5 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                  required
                 />
               </div>
+              {emailError && (
+                <p className="text-xs text-red-500 pl-1">
+                  {emailError.message}
+                </p>
+              )}
             </div>
 
             {/* Password Field Panel */}
@@ -119,9 +147,9 @@ const Login = () => {
                   type={isEyeOpen ? "text" : "password"}
                   name="password"
                   id="password"
+                  onChange={changeInputHandler}
                   placeholder="••••••••"
                   className="w-full rounded-xl pl-4 pr-12 py-3.5 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                  required
                 />
                 <button
                   type="button"
@@ -132,10 +160,9 @@ const Login = () => {
                 </button>
               </div>
 
-              {/* Dynamic Error Logs */}
-              {error && (
-                <p className="text-xs font-bold text-red-500 bg-red-500/10 p-2.5 rounded-lg border border-red-500/20 mt-2">
-                  {error}
+              {passwordError && (
+                <p className="text-xs text-red-500 pl-1">
+                  {passwordError.message}
                 </p>
               )}
             </div>
