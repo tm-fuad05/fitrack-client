@@ -16,7 +16,7 @@ import {
   FiActivity,
   FiCpu,
 } from "react-icons/fi";
-
+import { GoShieldCheck } from "react-icons/go";
 const Profile = () => {
   const [open, setOpen] = useState(false);
 
@@ -24,7 +24,7 @@ const Profile = () => {
   const handleOpen = () => setOpen(!open);
 
   const { user, updateUserProfile } = useAuth();
-
+  console.log(user.emailVerified);
   const {
     data: currentUser,
     isLoading,
@@ -112,8 +112,8 @@ const Profile = () => {
             </h3>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 text-primary">
-              <FiShield className="text-xs" /> Tier:{" "}
-              {currentUser?.role || "Standard Client"}
+              <FiShield className="text-xs" />
+              {currentUser?.role}
             </div>
           </div>
 
@@ -122,7 +122,7 @@ const Profile = () => {
             onClick={handleOpen}
             className="mt-8 w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl shadow-primary/20 transition-all duration-500 transform hover:-translate-y-0.5 cursor-pointer"
           >
-            <FiSliders className="text-sm" /> Modify Configuration
+            <FiSliders className="text-sm" /> Update
           </button>
         </div>
 
@@ -152,7 +152,7 @@ const Profile = () => {
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                  Identity Tag
+                  Name
                 </p>
                 <p className="text-base font-bold text-surface-dark dark:text-gray-200 mt-1">
                   {user?.displayName}
@@ -167,7 +167,7 @@ const Profile = () => {
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                  Secure Network Endpoint
+                  Email
                 </p>
                 <p className="text-sm font-bold text-surface-dark dark:text-gray-200 mt-1 truncate select-all">
                   {user?.email}
@@ -178,14 +178,14 @@ const Profile = () => {
             {/* Box 3: Database ID Signature */}
             <div className="p-6 rounded-[1.5rem] border border-gray-300/60 dark:border-white/5 bg-white dark:bg-transparent space-y-3 relative overflow-hidden group hover:border-primary/20 transition-colors duration-300">
               <div className="text-primary/40 group-hover:text-primary text-lg transition-colors">
-                <FiCpu />
+                <GoShieldCheck />
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                  Hex Ledger Signature
+                  Email Status
                 </p>
                 <p className="text-sm font-mono font-bold text-surface-dark dark:text-gray-300 mt-1 tracking-wide">
-                  {currentUser?._id || "fetching_hash..."}
+                  {user?.emailVerified ? "Verified" : "Not Verified"}
                 </p>
               </div>
             </div>
@@ -217,7 +217,7 @@ const Profile = () => {
       >
         <DialogHeader className="flex items-center justify-between border-b border-gray-200 dark:border-white/5 p-5 text-surface-dark dark:text-white font-black text-base uppercase tracking-tight">
           <span className="flex items-center gap-2">
-            <FiSliders className="text-primary" /> Modify Parameter Payload
+            <FiSliders className="text-primary" /> Update Profile
           </span>
           <button
             onClick={handleOpen}
@@ -231,7 +231,7 @@ const Profile = () => {
           <form onSubmit={handleUpdate} className="space-y-5">
             <div className="space-y-1.5">
               <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Core Alias Label
+                Name
               </label>
               <input
                 type="text"
@@ -244,7 +244,7 @@ const Profile = () => {
 
             <div className="space-y-1.5">
               <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Avatar Route URL
+                Photo
               </label>
               <input
                 type="url"
@@ -257,17 +257,10 @@ const Profile = () => {
 
             <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-white/5">
               <button
-                type="button"
-                onClick={handleOpen}
-                className="px-5 py-2.5 rounded-xl border border-gray-300 dark:border-white/10 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer"
-              >
-                Abort
-              </button>
-              <button
                 type="submit"
                 className="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-primary to-secondary hover:opacity-95 transition-all cursor-pointer shadow-lg shadow-primary/10"
               >
-                Execute Sync
+                Submit
               </button>
             </div>
           </form>

@@ -52,17 +52,15 @@ export const usePostCommunity = () => {
     },
     onSuccess: async (data) => {
       if (data.success) {
-        Swal.fire({
+        await Swal.fire({
           title: "Successfully Added",
           icon: "success",
           background: isDark ? "#171717" : "#ffffff",
           color: isDark ? "#ffffff" : "#171717",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
         });
-        setTimeout(() => {
-          navigate("/communities");
-        }, 1000);
+        navigate("/communities");
       }
     },
     onError: async (error) => {

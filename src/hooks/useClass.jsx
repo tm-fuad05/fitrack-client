@@ -28,16 +28,14 @@ export function useAddClass() {
     mutationFn: async (newClass) => {
       await axiosSecure.post("/classes", newClass);
     },
-    onSuccess: () => {
-      Swal.fire({
+    onSuccess: async () => {
+      await Swal.fire({
         title: "Class Added Successfully",
         icon: "success",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
-      setTimeout(() => {
-        navigate("/classes");
-      }, 1000);
+      navigate("/classes");
     },
     onError: (error) => {
       Swal.fire({

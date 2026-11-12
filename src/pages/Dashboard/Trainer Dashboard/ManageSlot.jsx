@@ -1,72 +1,49 @@
-import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { useEffect, useState } from "react";
+import { useManageSlot, useGetAllTrainers } from "../../../hooks/useTrainer";
 import useAuth from "../../../hooks/useAuth";
-import { useGetAllTrainers } from "../../../hooks/useTrainer";
-import { FaTrash } from "react-icons/fa6";
-import { FiCalendar, FiCheckCircle } from "react-icons/fi";
-import { TiTick } from "react-icons/ti";
-import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
 import Select from "react-select";
-import { useAxiosSecure } from "../../../hooks/useAxios";
-import Swal from "sweetalert2/dist/sweetalert2.js";
+import { Helmet } from "react-helmet-async";
 import "sweetalert2/src/sweetalert2.scss";
-import Loader from "../../../components/Shared/Loader";
-import { useGetAllTransaction } from "../../../hooks/useTransaction";
+import { FiPlusCircle, FiUser, FiCalendar, FiClock } from "react-icons/fi";
 
 const ManageSlot = () => {
-  const axiosSecure = useAxiosSecure();
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(!open);
-
   const { user } = useAuth();
-  const { trainers, refetch, isLoading } = useGetAllTrainers();
-  const { data: transactions } = useGetAllTransaction();
-  const isDark = document.documentElement.classList.contains("dark");
-
-  const currentTrainer = trainers.find((t) => t.email === user.email);
-
+  const { data: trainers, isLoading } = useGetAllTrainers();
+  const currentTrainer = trainers?.find((t) => t.email === user.email);
   const [formData, setFormData] = useState({
     availableDays: [],
+    availableTime: "",
   });
+  useEffect(() => {
+    if (!isLoading && currentTrainer) {
+      setFormData((prev) => ({
+        ...prev,
+        availableDays: currentTrainer?.availableDays || [],
+        availableTime: currentTrainer?.availableTime || "",
+      }));
+    }
+  }, [currentTrainer, user, isLoading]);
 
-  const bookingSlots = transactions.filter(
-    (p) => p.trainer === user.displayName,
+  const isDark = document.documentElement.classList.contains("dark");
+
+  const daysOptions = [
+    { value: "Sunday", label: "Sunday" },
+    { value: "Monday", label: "Monday" },
+    { value: "Tuesday", label: "Tuesday" },
+    { value: "Wednesday", label: "Wednesday" },
+    { value: "Thursday", label: "Thursday" },
+    { value: "Friday", label: "Friday" },
+    { value: "Saturday", label: "Saturday" },
+  ];
+
+  const selectedDays = daysOptions?.filter((d) =>
+    formData?.availableDays?.includes(d.value),
+  );
+  const remainingDays = daysOptions?.filter(
+    (d) => !formData?.availableDays?.includes(d.value),
   );
 
-  const selectedSlots = currentTrainer?.availableDays?.map((d) => ({
-    value: d,
-    label: d,
-  }));
-
-  const handleManageSlots = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axiosSecure.patch(
-        `/trainers/deleteSlot/${currentTrainer._id}`,
-        formData,
-      );
-
-      if (data.success) {
-        refetch();
-        setOpen(false);
-        Swal.fire({
-          title: "Slot Configuration Updated",
-          icon: "success",
-          background: isDark ? "#171717" : "#ffffff",
-          color: isDark ? "#ffffff" : "#0f172a",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } catch (error) {
-      console.error(
-        `Failed to delete slot: ${error?.response?.data?.message || error?.message}`,
-      );
-    }
-  };
-
-  // react-select কাস্টম স্টাইলস (লাইট মোডে ডিপ থিম ট্র্যাকিং সহ)
+  // react-select এর জন্য থিম স্টাইলস (লাইট মোডে ডিপ টেক্সট কন্ট্রাস্ট সহ)
   const customSelectStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -75,7 +52,7 @@ const ManageSlot = () => {
         ? "var(--color-primary, #3b82f6)"
         : isDark
           ? "rgba(255, 255, 255, 0.1)"
-          : "#9ca3af",
+          : "#D1D5DB",
       borderRadius: "0.75rem",
       padding: "2px",
       boxShadow: "none",
@@ -90,18 +67,18 @@ const ManageSlot = () => {
       border: isDark
         ? "1px solid rgba(255, 255, 255, 0.1)"
         : "1px solid #d1d5db",
-      zIndex: 50,
+      zIndex: 20,
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected
+      backgroundColor: state.isprev
         ? "var(--color-primary, #3b82f6)"
         : state.isFocused
           ? isDark
             ? "rgba(255, 255, 255, 0.1)"
             : "#f3f4f6"
           : "transparent",
-      color: state.isSelected ? "#ffffff" : isDark ? "#ffffff" : "#0f172a",
+      color: state.isprev ? "#ffffff" : isDark ? "#ffffff" : "#0f172a", // লাইট মোডে ড্রপডাউন অপশনের ডিপ কালার
     }),
     multiValue: (provided) => ({
       ...provided,
@@ -110,177 +87,124 @@ const ManageSlot = () => {
     }),
     multiValueLabel: (provided) => ({
       ...provided,
-      color: isDark ? "#ffffff" : "#0f172a",
+      color: isDark ? "#ffffff" : "#0f172a", // সিলেক্টেড ব্যাজের টেক্সট ডিপ করা হয়েছে
       fontWeight: "500",
     }),
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const patchMutation = useManageSlot();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    patchMutation.mutate({
+      payload: formData,
+      id: currentTrainer?._id,
+    });
+  };
 
   return (
-    <div className="w-11/12 max-w-5xl mx-auto bg-transparent text-slate-900 dark:text-white antialiased">
+    <div className="w-11/12 max-w-4xl mx-auto bg-transparent text-slate-900 dark:text-white antialiased">
       <Helmet>
-        <title>FitRack | Manage Slot</title>
+        <title>FitRack | Add Slots</title>
       </Helmet>
 
-      {/* Header section */}
+      {/* Header Container */}
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-black tracking-tight text-surface-dark dark:text-white uppercase flex items-center justify-center gap-2">
-          <FiCalendar className="text-primary" /> Manage Routine{" "}
-          <span className="text-primary">Slots</span>
+          <FiPlusCircle className="text-primary" /> Add Routine{" "}
+          <span className="text-primary">Slot</span>
         </h1>
         <p className="text-sm font-semibold text-gray-600 dark:text-gray-400 mt-1">
-          Monitor active day distributions, filter bookings, and handle
-          availability updates
+          Configure a fresh availability structure for your dynamic training
+          roster
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-8">
-        {/* Table Glass Card Wrapper */}
-        <div className="rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-2xl overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-gray-200/70 dark:bg-white/5 border-b border-gray-300 dark:border-white/10">
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300">
-                    Trainer Name
-                  </th>
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300">
-                    Active Slots / Schedule
-                  </th>
-                  <th className="p-4 text-xs font-black uppercase tracking-wider text-surface-dark dark:text-gray-300 text-center">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-300/50 dark:divide-white/5">
-                <tr className="hover:bg-gray-200/20 dark:hover:bg-white/5 transition-colors">
-                  <td className="p-4 font-bold text-surface-dark dark:text-gray-200 text-sm">
-                    {user?.displayName}
-                  </td>
-                  <td className="p-4 space-y-1.5">
-                    {currentTrainer?.availableDays?.map((d, index) => (
-                      <div
-                        key={index}
-                        className="inline-flex items-center gap-1.5 bg-gray-200/60 dark:bg-white/10 text-surface-dark dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-lg mr-2 mb-1.5 shadow-sm"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {d} ({currentTrainer?.availableTime || "Not Specified"})
-                      </div>
-                    ))}
-                  </td>
-                  <td className="p-4 text-center">
-                    <button
-                      onClick={handleOpen}
-                      title="Modify Availability Slots"
-                      className="p-3 bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white rounded-xl transition-all duration-300 shadow-md shadow-red-500/5 hover:shadow-red-500/20 cursor-pointer"
-                    >
-                      <FaTrash className="text-sm" />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {/* Main Glass Form Wrapper */}
+      <div className="p-6 lg:p-10 rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-2xl relative">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Booked Slots Analytics Card */}
-        <div className="p-6 rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-100/70 dark:bg-white/5 backdrop-blur-md shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full blur-2xl pointer-events-none" />
-
-          <h3 className="text-lg font-black text-surface-dark dark:text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
-            <FiCheckCircle className="text-green-500" /> Current Trainee
-            Bookings
-          </h3>
-
-          {bookingSlots.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {bookingSlots?.map((slot, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2.5 p-3 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-white/5 text-surface-dark dark:text-gray-200 shadow-inner"
-                >
-                  <div className="p-1.5 rounded-lg bg-green-500/10 text-green-500 shrink-0">
-                    <TiTick className="text-xl" />
-                  </div>
-                  <div className="text-xs font-semibold truncate">
-                    <span className="font-extrabold text-primary">
-                      {slot.slot}
-                    </span>
-                    <span className="mx-1.5 text-gray-400">||</span>
-                    <span className="text-gray-600 dark:text-gray-400">
-                      By:{" "}
-                      <strong className="text-surface-dark dark:text-white font-bold">
-                        {slot.name}
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-              ))}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Section: Read Only Meta Profile */}
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 p-4 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-300 dark:border-white/5">
+            {/* Full Name */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-extrabold text-gray-700 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <FiUser /> Full Name
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-xl px-4 py-2.5 bg-gray-400/30 dark:bg-white/5 border border-transparent text-gray-700 dark:text-gray-400 font-bold cursor-not-allowed text-sm"
+                defaultValue={currentTrainer?.fullName}
+                disabled
+              />
             </div>
-          ) : (
-            <p className="text-sm font-semibold text-gray-500 dark:text-gray-400 italic bg-white dark:bg-white/5 p-4 rounded-xl text-center border border-dashed border-gray-300 dark:border-white/10">
-              No reservation logs discovered on your slots data pipeline.
-            </p>
-          )}
-        </div>
-      </div>
 
-      {/* Material Tailwind Global Themed Dialog */}
-      <Dialog
-        open={open}
-        handler={handleOpen}
-        size="sm"
-        className="bg-white dark:bg-neutral-900 border border-gray-300 dark:border-white/10 shadow-2xl rounded-3xl overflow-hidden focus:outline-none"
-      >
-        <DialogHeader className="text-lg font-black text-surface-dark dark:text-white px-6 pt-6 uppercase tracking-wide border-b border-gray-200 dark:border-white/5 pb-3">
-          Configure Distribution Structure
-        </DialogHeader>
-        <DialogBody className="p-6">
-          <form onSubmit={handleManageSlots} className="space-y-6">
+            {/* Email */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-extrabold text-gray-700 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                Email Address
+              </label>
+              <input
+                type="email"
+                className="w-full rounded-xl px-4 py-2.5 bg-gray-400/30 dark:bg-white/5 border border-transparent text-gray-700 dark:text-gray-400 font-bold cursor-not-allowed text-sm"
+                defaultValue={currentTrainer?.email}
+                disabled
+              />
+            </div>
+          </div>
+
+          {/* Section: Interactive Slot Data Configuration */}
+          <div className="grid grid-cols-1 gap-6 relative">
+            {/* Available Time */}
+            <div className="col-span-1 md:col-span-2 space-y-1.5">
+              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <FiClock className="text-primary" /> Daily Schedule
+              </label>
+              <input
+                type="text"
+                placeholder="e.g., 09:00 AM - 05:00 PM"
+                className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
+                value={formData.availableTime}
+                onChange={(e) =>
+                  setFormData({ ...formData, availableTime: e.target.value })
+                }
+                required
+              />
+            </div>
+            {/* Available Days */}
             <div className="space-y-2">
-              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider block">
-                Retain / Active Week Slots
+              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <FiCalendar className="text-primary" /> Available Days
               </label>
               <Select
                 isMulti
-                defaultValue={selectedSlots}
-                options={selectedSlots} // শুধুমাত্র নিজের একটিভ স্লটগুলোই অপশন হিসেবে থাকবে রিমুভ করার জন্য
+                value={selectedDays}
+                options={remainingDays}
                 styles={customSelectStyles}
-                onChange={(selected) =>
+                onChange={(selected) => {
                   setFormData({
+                    ...formData,
                     availableDays: selected
                       ? selected?.map((d) => d.value)
                       : [],
-                  })
-                }
+                  });
+                }}
               />
-              <p className="text-[11px] text-gray-500 font-semibold mt-1">
-                * Deselect any target days inside the wrapper block to purge
-                them from backend storage logs upon commit.
-              </p>
             </div>
+          </div>
 
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                type="button"
-                onClick={handleOpen}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-gray-700 dark:text-gray-300 bg-gray-200/70 dark:bg-white/5 hover:bg-gray-300/80 dark:hover:bg-white/10 transition-all cursor-pointer"
-              >
-                Discard
-              </button>
-              <button
-                type="submit"
-                className="px-5 py-2 rounded-xl text-xs font-black text-white bg-gradient-to-r from-primary to-secondary hover:opacity-95 shadow-md shadow-primary/10 transition-all cursor-pointer"
-              >
-                Commit Structural Changes
-              </button>
-            </div>
-          </form>
-        </DialogBody>
-      </Dialog>
+          {/* Action Trigger Submit */}
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="w-full py-4 px-6 rounded-xl font-black text-sm tracking-wide text-white bg-gradient-to-r from-primary to-secondary hover:opacity-95 shadow-lg shadow-primary/20 transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+            >
+              Commit & Append New Slot
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

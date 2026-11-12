@@ -1,40 +1,30 @@
-import { useState } from "react";
-import { useAxiosSecure } from "../../../hooks/useAxios";
-import { useGetAllTrainers } from "../../../hooks/useTrainer";
+import { useEffect, useState } from "react";
+import { useAddSlot, useGetAllTrainers } from "../../../hooks/useTrainer";
 import useAuth from "../../../hooks/useAuth";
 import Select from "react-select";
 import { Helmet } from "react-helmet-async";
-import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { useNavigate } from "react-router-dom";
-import { FiPlusCircle, FiUser, FiCalendar, FiLayers } from "react-icons/fi";
+import { FiPlusCircle, FiUser, FiCalendar, FiClock } from "react-icons/fi";
 
 const AddSlot = () => {
-  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { trainers, refetch } = useGetAllTrainers();
-  const currentTrainer = trainers.find((t) => t.email === user.email);
-  const navigate = useNavigate();
-  const isDark = document.documentElement.classList.contains("dark");
-
+  const { data: trainers, isLoading } = useGetAllTrainers();
+  const currentTrainer = trainers?.find((t) => t.email === user.email);
   const [formData, setFormData] = useState({
-    fullName: user.displayName,
-    email: user?.email,
-    skills: [],
     availableDays: [],
-    slotName: "",
-    availableTime: currentTrainer?.availableTime,
+    availableTime: "",
   });
+  useEffect(() => {
+    if (!isLoading && currentTrainer) {
+      setFormData((prev) => ({
+        ...prev,
+        availableDays: currentTrainer?.availableDays || [],
+        availableTime: currentTrainer?.availableTime || "",
+      }));
+    }
+  }, [currentTrainer, user, isLoading]);
 
-  const selectedSkills = currentTrainer?.skills?.map((s) => ({
-    value: s,
-    label: s,
-  }));
-
-  const selectedSlots = currentTrainer?.availableDays?.map((d) => ({
-    value: d,
-    label: d,
-  }));
+  const isDark = document.documentElement.classList.contains("dark");
 
   const daysOptions = [
     { value: "Sunday", label: "Sunday" },
@@ -46,24 +36,12 @@ const AddSlot = () => {
     { value: "Saturday", label: "Saturday" },
   ];
 
-  const classesOptions = [
-    { value: "yoga", label: "Yoga" },
-    { value: "hiit", label: "HIIT (High-Intensity Interval Training)" },
-    { value: "zumba", label: "Zumba" },
-    { value: "pilates", label: "Pilates" },
-    { value: "spinning", label: "Spinning" },
-    { value: "strength_training", label: "Strength Training" },
-    { value: "boxing", label: "Boxing" },
-    { value: "dance", label: "Dance Fitness" },
-    { value: "crossfit", label: "CrossFit" },
-    { value: "aqua_aerobics", label: "Aqua Aerobics" },
-    { value: "barre", label: "Barre" },
-    { value: "kickboxing", label: "Kickboxing" },
-    { value: "tai_chi", label: "Tai Chi" },
-    { value: "stretching", label: "Stretching" },
-    { value: "cardio", label: "Cardio Workouts" },
-    { value: "functional_training", label: "Functional Training" },
-  ];
+  const selectedDays = daysOptions?.filter((d) =>
+    formData?.availableDays?.includes(d.value),
+  );
+  const remainingDays = daysOptions?.filter(
+    (d) => !formData?.availableDays?.includes(d.value),
+  );
 
   // react-select এর জন্য থিম স্টাইলস (লাইট মোডে ডিপ টেক্সট কন্ট্রাস্ট সহ)
   const customSelectStyles = {
@@ -93,14 +71,14 @@ const AddSlot = () => {
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected
+      backgroundColor: state.isprev
         ? "var(--color-primary, #3b82f6)"
         : state.isFocused
           ? isDark
             ? "rgba(255, 255, 255, 0.1)"
             : "#f3f4f6"
           : "transparent",
-      color: state.isSelected ? "#ffffff" : isDark ? "#ffffff" : "#0f172a", // লাইট মোডে ড্রপডাউন অপশনের ডিপ কালার
+      color: state.isprev ? "#ffffff" : isDark ? "#ffffff" : "#0f172a", // লাইট মোডে ড্রপডাউন অপশনের ডিপ কালার
     }),
     multiValue: (provided) => ({
       ...provided,
@@ -114,34 +92,14 @@ const AddSlot = () => {
     }),
   };
 
+  const patchMutation = useAddSlot();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axiosSecure.patch(
-        `/trainers/addSlot/${currentTrainer._id}`,
-        formData,
-      );
-
-      if (data.modifiedCount > 0) {
-        refetch();
-        Swal.fire({
-          title: "Slot Added Successfully",
-          icon: "success",
-          background: isDark ? "#171717" : "#ffffff",
-          color: isDark ? "#ffffff" : "#171717",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setTimeout(() => {
-          navigate("/dashboard/manage-slot");
-        }, 1500);
-      }
-    } catch (error) {
-      console.error(
-        "Failed to add slot",
-        error?.response?.data?.message || error?.message,
-      );
-    }
+    patchMutation.mutate({
+      payload: formData,
+      id: currentTrainer?._id,
+    });
   };
 
   return (
@@ -163,7 +121,7 @@ const AddSlot = () => {
       </div>
 
       {/* Main Glass Form Wrapper */}
-      <div className="p-6 lg:p-10 rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-2xl relative overflow-hidden">
+      <div className="p-6 lg:p-10 rounded-3xl border border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-transparent backdrop-blur-md shadow-2xl relative">
         <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -177,7 +135,7 @@ const AddSlot = () => {
               <input
                 type="text"
                 className="w-full rounded-xl px-4 py-2.5 bg-gray-400/30 dark:bg-white/5 border border-transparent text-gray-700 dark:text-gray-400 font-bold cursor-not-allowed text-sm"
-                value={formData.fullName}
+                defaultValue={currentTrainer?.fullName}
                 disabled
               />
             </div>
@@ -190,81 +148,48 @@ const AddSlot = () => {
               <input
                 type="email"
                 className="w-full rounded-xl px-4 py-2.5 bg-gray-400/30 dark:bg-white/5 border border-transparent text-gray-700 dark:text-gray-400 font-bold cursor-not-allowed text-sm"
-                value={formData.email}
+                defaultValue={currentTrainer?.email}
                 disabled
               />
             </div>
           </div>
 
           {/* Section: Interactive Slot Data Configuration */}
-          <div className="grid grid-cols-1 gap-6">
-            {/* Slot Name */}
-            <div className="space-y-2">
-              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider block">
-                Target Slot Identifier / Name
+          <div className="grid grid-cols-1 gap-6 relative">
+            {/* Available Time */}
+            <div className="col-span-1 md:col-span-2 space-y-1.5">
+              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <FiClock className="text-primary" /> Daily Schedule
               </label>
               <input
                 type="text"
-                placeholder="e.g., Morning Shift, Afternoon Core, Late Night Hypertrophy"
-                className="w-full rounded-xl px-4 py-3 border border-gray-400 dark:border-white/10 bg-white dark:bg-white/5 text-surface-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-500 font-semibold text-sm transition-all focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-inner"
-                value={formData.slotName}
+                placeholder="e.g., 09:00 AM - 05:00 PM"
+                className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
+                value={formData.availableTime}
                 onChange={(e) =>
-                  setFormData({ ...formData, slotName: e.target.value })
+                  setFormData({ ...formData, availableTime: e.target.value })
                 }
                 required
               />
             </div>
-
-            {/* Available Days Multi-Select */}
+            {/* Available Days */}
             <div className="space-y-2">
               <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <FiCalendar className="text-primary" /> Active Schedule
-                Distribution (Days)
+                <FiCalendar className="text-primary" /> Available Days
               </label>
               <Select
                 isMulti
-                defaultValue={selectedSlots}
-                options={daysOptions}
+                value={selectedDays}
+                options={remainingDays}
                 styles={customSelectStyles}
-                onChange={(selected) =>
+                onChange={(selected) => {
                   setFormData({
                     ...formData,
                     availableDays: selected
                       ? selected?.map((d) => d.value)
                       : [],
-                  })
-                }
-              />
-            </div>
-
-            {/* Classes Assignment Multi-Select */}
-            <div className="space-y-2">
-              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <FiLayers className="text-secondary" /> Map Gym Classes into
-                Slot
-              </label>
-              <Select
-                isMulti
-                options={classesOptions}
-                styles={customSelectStyles}
-                onChange={(selected) =>
-                  setFormData({
-                    ...formData,
-                    classes: selected ? selected?.map((c) => c.value) : [],
-                  })
-                }
-              />
-            </div>
-
-            {/* Skills (Read Only Badge Visuals) */}
-            <div className="space-y-2 opacity-85">
-              <label className="text-xs font-extrabold text-gray-800 dark:text-gray-400 uppercase tracking-wider block">
-                Your Specializations Reference
-              </label>
-              <Select
-                isMulti
-                defaultValue={selectedSkills}
-                styles={customSelectStyles}
+                  });
+                }}
               />
             </div>
           </div>

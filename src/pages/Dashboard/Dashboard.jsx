@@ -8,7 +8,7 @@ import { RiMenuFill, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdClass, MdDarkMode, MdForum, MdLightMode } from "react-icons/md";
 import { SiGooglecampaignmanager360, SiGoogleclassroom } from "react-icons/si";
 import { FaBookmark, FaHouse, FaRegCircleUser } from "react-icons/fa6";
-import { IoIosAddCircle, IoMdClose } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import { BsActivity } from "react-icons/bs";
 import { SlEnvolopeLetter } from "react-icons/sl";
 import useAuth from "../../hooks/useAuth";
@@ -132,13 +132,7 @@ const Dashboard = () => {
             <SiGooglecampaignmanager360 className="text-xl shrink-0" /> Manage
             Slot
           </NavLink>
-          <NavLink
-            onClick={handleLinkClick}
-            className={navLinkStyling}
-            to="/dashboard/add-slot"
-          >
-            <IoIosAddCircle className="text-xl shrink-0" /> Add Slot
-          </NavLink>
+
           <NavLink
             onClick={handleLinkClick}
             className={navLinkStyling}

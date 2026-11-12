@@ -90,18 +90,16 @@ const CheckoutForm = ({ slot, membershipType, price, trainerName }) => {
         try {
           const { data } = await axiosSecure.post("/payments", paymentInfo);
           if (data.insertedId) {
-            Swal.fire({
+            await Swal.fire({
               title: "Payment Successful",
               text: `Transaction ID: ${paymentIntent.id}`,
               icon: "success",
               background: isDark ? "#171717" : "#ffffff",
               color: isDark ? "#ffffff" : "#171717",
               showConfirmButton: false,
-              timer: 2500,
+              timer: 1500,
             });
-            setTimeout(() => {
-              navigate("/dashboard/booked-trainers");
-            }, 2000);
+            navigate("/dashboard/booked-trainers");
           }
         } catch (postError) {
           setError(`Failed to synchronize backend: ${postError.message}`);

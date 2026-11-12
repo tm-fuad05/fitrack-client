@@ -89,7 +89,7 @@ const CommunityCard = ({ post }) => {
             whileHover={{ scale: 1.1, y: -1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => handleVote(_id)}
-            className={` ${isVoted ? "text-primary" : "text-gray-600"} p-2 rounded-lg  hover:text-primary hover:bg-white/5 transition-all`}
+            className={` ${isVoted ? "text-primary" : "text-gray-600"} p-2 rounded-lg  hover:text-primary duration-0 transition-all`}
             aria-label="vote"
           >
             <AiFillLike className="text-xl" />

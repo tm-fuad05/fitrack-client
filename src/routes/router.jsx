@@ -18,7 +18,6 @@ import ActivityLog from "../pages/Dashboard/Member Dashboard/ActivityLog";
 import BookedTrainer from "../pages/Dashboard/Member Dashboard/BookedTrainer";
 import Profile from "../pages/Dashboard/Profile";
 import ManageSlot from "../pages/Dashboard/Trainer Dashboard/ManageSlot";
-import AddSlot from "../pages/Dashboard/Trainer Dashboard/AddSlot";
 import AddForum from "../pages/Dashboard/Trainer Dashboard/AddForum";
 import Applicants from "../pages/Dashboard/Admin dashboard/Applicants";
 import AddClass from "../pages/Dashboard/Admin dashboard/AddClass";
@@ -181,14 +180,7 @@ const router = createBrowserRouter([
               </TrainerRoute>
             ),
           },
-          {
-            path: "/dashboard/add-slot",
-            element: (
-              <TrainerRoute>
-                <AddSlot></AddSlot>
-              </TrainerRoute>
-            ),
-          },
+
           // Admin and Trainer Route
           {
             path: "/dashboard/add-forum",

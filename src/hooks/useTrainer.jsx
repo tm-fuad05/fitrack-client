@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAxiosPublic, useAxiosSecure } from "./useAxios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const useAddTrainer = () => {
   const axiosSecure = useAxiosSecure();
@@ -91,3 +92,50 @@ export function useRemoveTrainer() {
   });
   return mutation;
 }
+
+export const useManageSlot = () => {
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const isDark = document.documentElement.classList.contains("dark");
+
+  const mutation = useMutation({
+    mutationFn: async ({ payload, id }) => {
+      const { data } = await axiosSecure.patch(
+        `/trainers/add-slot/${id}`,
+        payload,
+      );
+      return data;
+    },
+    onSuccess: async (data) => {
+      if (data?.success) {
+        await Swal.fire({
+          title: "Slot Added Successfully",
+          icon: "success",
+          background: isDark ? "#171717" : "#ffffff",
+          color: isDark ? "#ffffff" : "#171717",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        queryClient.invalidateQueries({ queryKey: ["trainer"] });
+        navigate("/dashboard/manage-slot");
+      }
+    },
+    onError: (error) => {
+      console.error(
+        "Failed to add slot",
+        error?.response?.data?.message || error?.message,
+      );
+      Swal.fire({
+        title: "Something went wrong",
+        text: error?.response?.data?.message || error?.message,
+        icon: "error",
+        background: isDark ? "#171717" : "#ffffff",
+        color: isDark ? "#ffffff" : "#171717",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    },
+  });
+  return mutation;
+};

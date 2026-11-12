@@ -21,10 +21,8 @@ export const useApplyForTrainer = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-      }
-      setTimeout(() => {
         navigate("/dashboard/activity-log");
-      }, 1500);
+      }
     },
     onError: (error) => {
       console.error("Transmission sequence broken", error);

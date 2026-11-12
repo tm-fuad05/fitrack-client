@@ -181,7 +181,11 @@ const Navbar = () => {
             } hover:text-primary dark:hover:text-primary`}
             aria-label="Toggle Theme"
           >
-            {darkMode ? <MdLightMode /> : <MdDarkMode />}
+            {darkMode ? (
+              <MdLightMode className="text-amber-600" />
+            ) : (
+              <MdDarkMode />
+            )}
           </button>
 
           {/* User Section / Login */}

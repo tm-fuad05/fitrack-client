@@ -42,14 +42,22 @@ const ApplicationForTrainer = () => {
   };
 
   const skillsOptions = [
-    { value: "Weight Loss Coaching", label: "Weight Loss Coaching" },
-    { value: "Nutrition Planning", label: "Nutrition Planning" },
-    { value: "Bodybuilding", label: "Bodybuilding" },
-    { value: "Strength Conditioning", label: "Strength Conditioning" },
-    { value: "HIIT", label: "HIIT" },
-    { value: "Fat Burn", label: "Fat Burn" },
-    { value: "Core Strength", label: "Core Strength" },
-    { value: "Injury Prevention", label: "Injury Prevention" },
+    { value: "Yoga", label: "Yoga" },
+    { value: "HIIT", label: "HIIT (High-Intensity Interval Training)" },
+    { value: "Zumba", label: "Zumba" },
+    { value: "Pilates", label: "Pilates" },
+    { value: "Spinning", label: "Spinning" },
+    { value: "Strength Training", label: "Strength Training" },
+    { value: "Boxing", label: "Boxing" },
+    { value: "Dance Fitness", label: "Dance Fitness" },
+    { value: "CrossFit", label: "CrossFit" },
+    { value: "Aqua Aerobics", label: "Aqua Aerobics" },
+    { value: "Barre", label: "Barre" },
+    { value: "Kickboxing", label: "Kickboxing" },
+    { value: "Tai Chi", label: "Tai Chi" },
+    { value: "Stretching", label: "Stretching" },
+    { value: "Cardio Workouts", label: "Cardio Workouts" },
+    { value: "Functional Training", label: "Functional Training" },
   ];
 
   const daysOptions = [
@@ -283,7 +291,7 @@ const ApplicationForTrainer = () => {
               {/* Advanced Multi-Select Matrix Modules */}
               <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
                 {/* Skills Selector */}
-                <div className="space-y-1.5">
+                <div className="space-y-1.5" data-lenis-prevent>
                   <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400">
                     Skill-Set Class Matrix
                   </label>
