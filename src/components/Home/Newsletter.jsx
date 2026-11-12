@@ -4,26 +4,54 @@ import { usePostNewsletter } from "../../hooks/useNewsletter";
 import Button from "../Shared/Button";
 import SectionTitle from "../Shared/SectionTitle";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { createNewsletterSchema } from "../../validation/schema/newsletter.validation";
 
 const Newsletter = () => {
   const postMutation = usePostNewsletter();
+  const [error, setError] = useState([]);
+  const [formData, setFormData] = useState({
+    name: null,
+    phone: null,
+    email: null,
+    subject: null,
+    message: null,
+  });
+
+  const nameError = error?.find((err) => err.field === "name");
+  const phoneError = error?.find((err) => err.field === "phone");
+  const emailError = error?.find((err) => err.field === "email");
+  const subjectError = error?.find((err) => err.field === "subject");
+  const messageError = error?.find((err) => err.field === "message");
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const phone = form.phone.value;
-    const email = form.email.value;
-    const subject = form.subject.value;
-    const message = form.message.value;
-    const newsLetterInfo = {
-      name,
-      phone,
-      email,
-      subject,
-      message,
-    };
 
-    postMutation.mutate(newsLetterInfo, {
+    const { data, error: validationError } =
+      createNewsletterSchema.safeParse(formData);
+
+    if (validationError)
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+
+    postMutation.mutate(data, {
       onSuccess: async (data) => {
         if (data.success) {
           await Swal.fire({
@@ -32,7 +60,7 @@ const Newsletter = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          form.reset();
+          e.target.reset();
         }
       },
     });
@@ -89,9 +117,14 @@ const Newsletter = () => {
               type="text"
               placeholder="Name"
               name="name"
+              onChange={changeInputHandler}
               className="w-full rounded-xl border border-white/10 bg-white/5 pl-5 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-              required
             />
+            {nameError && (
+              <p className="text-xs text-red-500 pl-1 pt-1">
+                {nameError.message}
+              </p>
+            )}
           </motion.div>
 
           {/* Phone Input */}
@@ -100,20 +133,29 @@ const Newsletter = () => {
               type="text"
               name="phone"
               placeholder="Phone"
+              onChange={changeInputHandler}
               className="w-full rounded-xl border border-white/10 bg-white/5 pl-5 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-              required
             />
+            {phoneError && (
+              <p className="text-xs text-red-500 pl-1 pt-1">
+                {phoneError.message}
+              </p>
+            )}
           </motion.div>
 
           {/* Email Input */}
           <motion.div variants={itemVariants} className="w-full">
             <input
-              type="email"
               name="email"
               placeholder="Email"
+              onChange={changeInputHandler}
               className="w-full rounded-xl border border-white/10 bg-white/5 pl-5 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-              required
             />
+            {emailError && (
+              <p className="text-xs text-red-500 pl-1 pt-1">
+                {emailError.message}
+              </p>
+            )}
           </motion.div>
 
           {/* Subject Input */}
@@ -122,9 +164,14 @@ const Newsletter = () => {
               type="text"
               placeholder="Subject"
               name="subject"
+              onChange={changeInputHandler}
               className="w-full rounded-xl border border-white/10 bg-white/5 pl-5 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
-              required
             />
+            {subjectError && (
+              <p className="text-xs text-red-500 pl-1 pt-1">
+                {subjectError.message}
+              </p>
+            )}
           </motion.div>
 
           {/* Message Textarea */}
@@ -132,10 +179,15 @@ const Newsletter = () => {
             <textarea
               name="message"
               placeholder="Send a message"
+              onChange={changeInputHandler}
               className="w-full rounded-xl border border-white/10 bg-white/5 pl-5 pt-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 backdrop-blur-sm"
               rows={5}
-              required
             />
+            {messageError && (
+              <p className="text-xs text-red-500 pl-1 pt-1">
+                {messageError.message}
+              </p>
+            )}
           </motion.div>
 
           {/* Subscribe Button Wrapper */}

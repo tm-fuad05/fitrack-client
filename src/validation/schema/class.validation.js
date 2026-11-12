@@ -1,6 +1,6 @@
 import z from "zod";
 
-const createClassSchema = z.object({
+export const createClassSchema = z.object({
   name: z
     .string({ error: "Class name is required" })
     .min(1, { error: "Class name is required" })
@@ -13,7 +13,3 @@ const createClassSchema = z.object({
     .array(z.string().min(1, { error: "Can't be empty" }))
     .nonempty({ error: "At least one trainer is required" }),
 });
-
-export const ClassValidation = {
-  createClassSchema,
-};

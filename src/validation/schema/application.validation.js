@@ -9,7 +9,7 @@ export const createApplicationSchema = z.object({
   age: z.coerce
     .number({ error: "Age is required" })
     .gte(18, { error: "Under 18 is not allowed to be a trainer" }),
-  profileImage: z.url({ error: "Please enter a valid url" }),
+  profileImage: z.url({ error: "Enter a valid url" }),
   yearsOfExperience: z.coerce
     .number({ error: "Experience year is required" })
     .gte(2, {
@@ -40,17 +40,11 @@ export const createApplicationSchema = z.object({
         },
       ),
     )
-    .nonempty(),
+    .nonempty({ error: "Days are required" }),
   availableTime: z
     .string({ error: "Available time is required" })
     .min(1, { error: "Available time is required" })
     .trim(),
 });
 
-export const updateApplicationSchema = z.object({
-  body: createApplicationSchema.shape.body
-    .omit({
-      status: true,
-    })
-    .partial(),
-});
+export const updateApplicationSchema = createApplicationSchema.partial();

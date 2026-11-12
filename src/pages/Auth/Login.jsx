@@ -10,18 +10,15 @@ import SocialLogin from "../../components/Shared/SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useValidateInput } from "../../hooks/useValidateInput";
 import { signInSchema } from "../../validation/schema/auth.validation";
 
 const Login = () => {
   const [isEyeOpen, setIsEyeOpen] = useState(false);
   const { signInUser, setUser, user } = useAuth();
+  const [error, setError] = useState([]);
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { data, error, isValid, setError, validate } =
-    useValidateInput(signInSchema);
 
   const [formData, setFormData] = useState({
     email: null,
@@ -48,8 +45,16 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
-    validate(formData);
-    if (!isValid) return;
+    const { data, error: validationError } = signInSchema.safeParse(formData);
+
+    if (validationError) {
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+    }
 
     try {
       const result = await signInUser(data.email, data.password);

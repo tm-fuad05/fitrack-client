@@ -20,7 +20,7 @@ export const useValidateInput = (schema) => {
           message: err?.message,
         })),
       );
-    }
+    } else isValid = true;
   };
   return { isValid, error, setError, validate, data };
 };

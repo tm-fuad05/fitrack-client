@@ -13,20 +13,16 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAxiosPublic } from "../../hooks/useAxios";
 import { signUpSchema } from "../../validation/schema/auth.validation";
-import { validate } from "zod";
-import { useValidateInput } from "../../hooks/useValidateInput";
 
 const Register = () => {
   const [isEyeOpen, setIsEyeOpen] = useState({
     password: false,
     confirmPassword: false,
   });
+  const [error, setError] = useState([]);
 
   const { registerUser, updateUserProfile, signOutUser, user } = useAuth();
-  const { isValid, error, setError, validate, data } =
-    useValidateInput(signUpSchema);
   const [authError, setAuthError] = useState("");
-  console.log(authError);
   const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
@@ -37,8 +33,6 @@ const Register = () => {
     password: null,
     confirmPassword: null,
   });
-
-  console.log(formData.name, formData.password);
 
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
@@ -63,9 +57,15 @@ const Register = () => {
     e.preventDefault();
     setAuthError("");
 
-    validate(formData);
-    if (!isValid) {
-      return;
+    const { data, error: validationError } = signUpSchema.safeParse(formData);
+
+    if (validationError) {
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
     }
 
     try {
@@ -79,8 +79,8 @@ const Register = () => {
         toast.success("Successfully registered");
       }
 
-      await signOutUser();
       navigate("/login");
+      await signOutUser();
     } catch (error) {
       console.error(error);
       setAuthError(error.message || "Something went wrong! Please try again.");

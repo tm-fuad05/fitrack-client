@@ -4,12 +4,17 @@ import { useGetAllTrainers } from "../../../hooks/useTrainer";
 import { Helmet } from "react-helmet-async";
 import { FiPlusCircle, FiBookOpen, FiFileText, FiUsers } from "react-icons/fi";
 import { useAddClass } from "../../../hooks/useClass";
+import { useValidateInput } from "../../../hooks/useValidateInput";
+import { createClassSchema } from "../../../validation/schema/class.validation";
 
 const AddClass = () => {
   const { data: trainers } = useGetAllTrainers();
+  const [error, setError] = useState([]);
+  // const { data, error, isValid, setError, validate } =
+  // useValidateInput(createClassSchema);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
+    name: null,
+    description: null,
     trainers: [],
   });
   const mutation = useAddClass();
@@ -19,9 +24,38 @@ const AddClass = () => {
     label: trainer.fullName,
   }));
 
+  const nameError = error?.find((err) => err.field === "name");
+  const desError = error?.find((err) => err.field === "description");
+  const trainerError = error?.find((err) => err.field === "trainers");
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+
+    const { data, error: validationError } =
+      createClassSchema.safeParse(formData);
+
+    if (validationError)
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+
+    mutation.mutate(data);
   };
 
   const customSelectStyles = {
@@ -138,14 +172,15 @@ const AddClass = () => {
             </label>
             <input
               type="text"
+              name="name"
               placeholder="e.g., High-Intensity Metabolic Conditioning"
               className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-              required
+              onChange={changeInputHandler}
             />
+            {nameError && (
+              <p className="text-xs text-red-500 pl-1">{nameError.message}</p>
+            )}
           </div>
 
           {/* Details Specification */}
@@ -155,15 +190,16 @@ const AddClass = () => {
               Details
             </label>
             <textarea
+              name="description"
               placeholder="Map out structural targets, physiological scopes, or program descriptions..."
               className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={changeInputHandler}
               rows={5}
-              required
             />
+            {desError && (
+              <p className="text-xs text-red-500 pl-1">{desError.message}</p>
+            )}
           </div>
 
           {/* Instructors Multi-Allocation Core */}
@@ -173,17 +209,26 @@ const AddClass = () => {
             </label>
             <Select
               isMulti
+              name="trainers"
               options={trainersOptions}
               className="w-full text-sm font-semibold text-surface-dark dark:text-white"
               styles={customSelectStyles}
               placeholder="Search and map active instructors to system profile..."
-              onChange={(selected) =>
+              onChange={(selected) => {
+                if (trainerError)
+                  setError((prev) => [...prev, (trainerError.message = "")]);
+
                 setFormData({
                   ...formData,
                   trainers: selected ? selected?.map((t) => t.value) : [],
-                })
-              }
+                });
+              }}
             />
+            {trainerError && (
+              <p className="text-xs text-red-500 pl-1">
+                {trainerError.message}
+              </p>
+            )}
           </div>
 
           {/* Submit Action Block */}

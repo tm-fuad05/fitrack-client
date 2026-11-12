@@ -2,39 +2,57 @@ import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import "sweetalert2/src/sweetalert2.scss";
-import moment from "moment/moment";
-import {
-  FiFileText,
-  FiTag,
-  FiEdit3,
-  FiUser,
-  FiCalendar,
-  FiShield,
-} from "react-icons/fi";
+import { FiFileText, FiTag, FiEdit3, FiUser, FiShield } from "react-icons/fi";
 import { useCheckRole } from "../../../hooks/useRole";
 import { usePostCommunity } from "../../../hooks/useCommunity";
+import { createCommunitySchema } from "../../../validation/schema/community.validation";
 
 const AddForum = () => {
   const { user } = useAuth();
   const { isAdmin } = useCheckRole();
-
-  const date = new Date();
+  const [error, setError] = useState([]);
 
   const [formData, setFormData] = useState({
-    title: "",
     author: user?.displayName,
-    date: date,
-    category: "",
     role: `${isAdmin ? "ADMIN" : "TRAINER"}`,
-    description: "",
-    votedBy: [],
+    title: null,
+    category: null,
+    description: null,
   });
+  const titleError = error?.find((err) => err.field === "title");
+  const categoryError = error?.find((err) => err.field === "category");
+  const descriptionError = error?.find((err) => err.field === "description");
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
 
   const postMutation = usePostCommunity();
 
   const handlePost = async (e) => {
     e.preventDefault();
-    postMutation.mutate(formData);
+
+    const { data, error: validationError } =
+      createCommunitySchema.safeParse(formData);
+
+    if (validationError)
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+
+    postMutation.mutate(data);
   };
 
   return (
@@ -61,7 +79,7 @@ const AddForum = () => {
 
         <form onSubmit={handlePost} className="space-y-6">
           {/* Top Banner Meta Info (Read Only Display) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-300 dark:border-white/5 text-sm">
+          <div className="flex justify-between sm:grid-cols-3 gap-4 p-4 rounded-2xl bg-gray-200/50 dark:bg-white/5 border border-gray-300 dark:border-white/5 text-sm">
             <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-semibold">
               <FiUser className="text-primary shrink-0" />
               <span className="truncate">
@@ -71,15 +89,7 @@ const AddForum = () => {
                 {formData.author}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-semibold">
-              <FiCalendar className="text-primary shrink-0" />
-              <span>
-                <span className="text-gray-700 dark:text-gray-400 font-bold mr-1">
-                  Date:
-                </span>{" "}
-                {moment(formData.date).format("MMM DD YYYY")}
-              </span>
-            </div>
+
             <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-semibold capitalize">
               <FiShield className="text-secondary shrink-0" />
               <span>
@@ -98,14 +108,15 @@ const AddForum = () => {
             </label>
             <input
               type="text"
+              name="title"
               placeholder="e.g., Optimal Post-Workout Nutrition Windows"
               className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
-              required
+              onChange={changeInputHandler}
             />
+            {titleError && (
+              <p className="text-xs text-red-500 pl-1">{titleError.message}</p>
+            )}
           </div>
 
           {/* Category Input */}
@@ -115,14 +126,17 @@ const AddForum = () => {
             </label>
             <input
               type="text"
+              name="category"
               placeholder="e.g., Diet & Nutrition, Hypertrophy, Cardio"
               className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
               value={formData.category}
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
-              }
-              required
+              onChange={changeInputHandler}
             />
+            {categoryError && (
+              <p className="text-xs text-red-500 pl-1">
+                {categoryError.message}
+              </p>
+            )}
           </div>
 
           {/* Description Textarea */}
@@ -132,14 +146,17 @@ const AddForum = () => {
             </label>
             <textarea
               placeholder="Compose your comprehensive technical discourse here..."
+              name="description"
               className="w-full bg-transparent text-surface-dark dark:text-white border border-gray-400/40 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none leading-relaxed"
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={changeInputHandler}
               rows={6}
-              required
             />
+            {descriptionError && (
+              <p className="text-xs text-red-500 pl-1">
+                {descriptionError.message}
+              </p>
+            )}
           </div>
 
           {/* Action Trigger Submit Button */}

@@ -24,7 +24,8 @@ const Profile = () => {
   const handleOpen = () => setOpen(!open);
 
   const { user, updateUserProfile } = useAuth();
-  console.log(user.emailVerified);
+  console.log(user);
+
   const {
     data: currentUser,
     isLoading,
@@ -98,12 +99,18 @@ const Profile = () => {
           {/* Futuristic Glowing Avatar Stack */}
           <div className="relative group my-auto">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary via-transparent to-secondary rounded-full p-1 animate-spin duration-10000 opacity-70 group-hover:opacity-100" />
-            <div className="absolute inset-1 bg-white dark:bg-neutral-950 rounded-full" />
-            <img
-              src={user?.photoURL || "https://i.ibb.co/vxs71Nf/placeholder.png"}
-              alt="Cluster Core"
-              className="relative w-36 h-36 rounded-full object-cover p-2 shadow-2xl"
-            />
+            <div className="absolute inset-1 bg-amber-900 dark:bg-neutral-950 rounded-full" />
+            {user?.photoURL ? (
+              <img
+                src={user?.photoURL}
+                alt="Cluster Core"
+                className="relative w-36 h-36 rounded-full object-cover p-2 shadow-2xl"
+              />
+            ) : (
+              <div className="relative w-36 h-36 rounded-full  p-2 shadow-2xl flex justify-center items-center text-6xl font-bold">
+                {user?.displayName[0]}
+              </div>
+            )}
           </div>
 
           <div className="mt-8 space-y-2 w-full">

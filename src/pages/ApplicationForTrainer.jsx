@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   FiUser,
   FiMail,
@@ -16,29 +17,65 @@ import useAuth from "../hooks/useAuth";
 import { useApplyForTrainer, useMyApplication } from "../hooks/useApplicant";
 
 import { useCheckRole } from "../hooks/useRole";
+import { createApplicationSchema } from "../validation/schema/application.validation";
 
 const ApplicationForTrainer = () => {
   const { user } = useAuth();
   const { isAdmin, isTrainer } = useCheckRole();
-
+  const [error, setError] = useState([]);
   const { data: applicant } = useMyApplication();
 
   const [formData, setFormData] = useState({
-    fullName: user?.displayName || "",
-    email: user?.email || "",
-    age: "",
-    profileImage: "",
-    yearsOfExperience: "",
+    fullName: null,
+    email: user?.email,
+    age: null,
+    profileImage: null,
+    yearsOfExperience: null,
     skills: [],
     availableDays: [],
-    availableTime: "",
+    availableTime: null,
   });
+
+  const nameError = error?.find((err) => err.field === "fullName");
+  const emailError = error?.find((err) => err.field === "email");
+  const ageError = error?.find((err) => err.field === "age");
+  const imageError = error?.find((err) => err.field === "profileImage");
+  const experienceError = error?.find(
+    (err) => err.field === "yearsOfExperience",
+  );
+  const skillError = error?.find((err) => err.field === "skills");
+  const daysError = error?.find((err) => err.field === "availableDays");
+  const timeError = error?.find((err) => err.field === "availableTime");
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error.find((err) => err.field === name);
+
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
 
   const postMutation = useApplyForTrainer();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    postMutation.mutate(formData);
+
+    const { data, error: validationError } =
+      createApplicationSchema.safeParse(formData);
+
+    if (validationError)
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+    postMutation.mutate(data);
   };
 
   const skillsOptions = [
@@ -210,14 +247,17 @@ const ApplicationForTrainer = () => {
                 </label>
                 <input
                   type="text"
+                  name="fullName"
                   placeholder="Enter your full name"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                  required
+                  onChange={changeInputHandler}
                 />
+                {nameError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {nameError.message}
+                  </p>
+                )}
               </div>
 
               {/* Read-Only Email Input */}
@@ -226,11 +266,17 @@ const ApplicationForTrainer = () => {
                   <FiMail className="text-gray-400" /> Email
                 </label>
                 <input
-                  type="email"
+                  name="email"
                   className="w-full bg-slate-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 text-slate-400 dark:text-gray-800 rounded-xl px-4 py-2.5 text-sm font-mono cursor-not-allowed outline-none"
                   value={formData.email}
+                  onChange={changeInputHandler}
                   readOnly
                 />
+                {emailError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {emailError.message}
+                  </p>
+                )}
               </div>
 
               {/* Age Input */}
@@ -240,14 +286,17 @@ const ApplicationForTrainer = () => {
                 </label>
                 <input
                   type="number"
+                  name="age"
                   placeholder="Years"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.age}
-                  onChange={(e) =>
-                    setFormData({ ...formData, age: e.target.value })
-                  }
-                  required
+                  onChange={changeInputHandler}
                 />
+                {ageError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {ageError.message}
+                  </p>
+                )}
               </div>
 
               {/* Experience Metric */}
@@ -257,17 +306,17 @@ const ApplicationForTrainer = () => {
                 </label>
                 <input
                   type="number"
+                  name="yearsOfExperience"
                   placeholder="e.g., 3 Years"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
                   value={formData.yearsOfExperience}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      yearsOfExperience: e.target.value,
-                    })
-                  }
-                  required
+                  onChange={changeInputHandler}
                 />
+                {experienceError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {experienceError.message}
+                  </p>
+                )}
               </div>
 
               {/* Image Vector URL */}
@@ -278,14 +327,17 @@ const ApplicationForTrainer = () => {
                 </label>
                 <input
                   type="url"
+                  name="profileImage"
                   placeholder="https://example.com/vector.png"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
                   value={formData.profileImage}
-                  onChange={(e) =>
-                    setFormData({ ...formData, profileImage: e.target.value })
-                  }
-                  required
+                  onChange={changeInputHandler}
                 />
+                {imageError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {imageError.message}
+                  </p>
+                )}
               </div>
 
               {/* Advanced Multi-Select Matrix Modules */}
@@ -297,16 +349,28 @@ const ApplicationForTrainer = () => {
                   </label>
                   <Select
                     isMulti
+                    name="skills"
                     options={skillsOptions}
                     styles={customSelectStyles}
                     placeholder="Select technical matrix components..."
-                    onChange={(selected) =>
+                    onChange={(selected) => {
+                      if (skillError)
+                        setError((prev) => [
+                          ...prev,
+                          (skillError.message = ""),
+                        ]);
+
                       setFormData({
                         ...formData,
                         skills: selected ? selected?.map((s) => s.value) : [],
-                      })
-                    }
+                      });
+                    }}
                   />
+                  {skillError && (
+                    <p className="text-xs text-red-500 pl-1">
+                      {skillError.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Day Availability Selector */}
@@ -316,18 +380,27 @@ const ApplicationForTrainer = () => {
                   </label>
                   <Select
                     isMulti
+                    name="availableDays"
                     options={daysOptions}
                     styles={customSelectStyles}
                     placeholder="Select core active days..."
-                    onChange={(selected) =>
+                    onChange={(selected) => {
+                      if (daysError)
+                        setError((prev) => [...prev, (daysError.message = "")]);
+
                       setFormData({
                         ...formData,
                         availableDays: selected
                           ? selected?.map((d) => d.value)
                           : [],
-                      })
-                    }
+                      });
+                    }}
                   />
+                  {daysError && (
+                    <p className="text-xs text-red-500 pl-1">
+                      {daysError.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -338,14 +411,17 @@ const ApplicationForTrainer = () => {
                 </label>
                 <input
                   type="text"
+                  name="availableTime"
                   placeholder="e.g., 09:00 AM - 05:00 PM"
                   className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
                   value={formData.availableTime}
-                  onChange={(e) =>
-                    setFormData({ ...formData, availableTime: e.target.value })
-                  }
-                  required
+                  onChange={changeInputHandler}
                 />
+                {timeError && (
+                  <p className="text-xs text-red-500 pl-1">
+                    {timeError.message}
+                  </p>
+                )}
               </div>
             </div>
 
