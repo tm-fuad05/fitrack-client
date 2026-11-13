@@ -1,29 +1,26 @@
+/* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
-import {
-  FiUser,
-  FiMail,
-  FiClock,
-  FiBriefcase,
-  FiHash,
-  FiImage,
-  FiGrid,
-  FiAlertTriangle,
-  FiCheckCircle,
-} from "react-icons/fi";
+import { FiClock, FiGrid, FiAlertTriangle } from "react-icons/fi";
 import { useState } from "react";
-import Select from "react-select";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../hooks/useAuth";
 import { useApplyForTrainer, useMyApplication } from "../hooks/useApplicant";
 
 import { useCheckRole } from "../hooks/useRole";
 import { createApplicationSchema } from "../validation/schema/application.validation";
+import { useUploadImage } from "../hooks/useUploadImage";
+import { fileSchema } from "../validation/schema/file.validation";
+import ApplicationFrom from "./ApplicationForm";
 
 const ApplicationForTrainer = () => {
   const { user } = useAuth();
   const { isAdmin, isTrainer } = useCheckRole();
   const [error, setError] = useState([]);
   const { data: applicant } = useMyApplication();
+  const [preview, setPreview] = useState(null);
+  const postMutation = useApplyForTrainer();
+  const uploadMutation = useUploadImage();
+  console.log(error);
 
   const [formData, setFormData] = useState({
     fullName: null,
@@ -36,16 +33,27 @@ const ApplicationForTrainer = () => {
     availableTime: null,
   });
 
-  const nameError = error?.find((err) => err.field === "fullName");
-  const emailError = error?.find((err) => err.field === "email");
-  const ageError = error?.find((err) => err.field === "age");
-  const imageError = error?.find((err) => err.field === "profileImage");
-  const experienceError = error?.find(
-    (err) => err.field === "yearsOfExperience",
-  );
-  const skillError = error?.find((err) => err.field === "skills");
-  const daysError = error?.find((err) => err.field === "availableDays");
-  const timeError = error?.find((err) => err.field === "availableTime");
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const { data, error: fileError } = fileSchema.safeParse(file);
+
+    if (fileError) {
+      return setError(
+        fileError?.issues?.map((err) => ({
+          field: "profileImage",
+          message: err?.message,
+        })),
+      );
+    }
+
+    setPreview(URL.createObjectURL(data));
+    setFormData((prev) => ({ ...prev, profileImage: data }));
+
+    const imageError = error?.find((err) => err.field === "profileImage");
+    if (imageError) setError((prev) => [...prev, (imageError.message = "")]);
+  };
 
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
@@ -60,12 +68,10 @@ const ApplicationForTrainer = () => {
     if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
   };
 
-  const postMutation = useApplyForTrainer();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data, error: validationError } =
+    const { data: applicantData, error: validationError } =
       createApplicationSchema.safeParse(formData);
 
     if (validationError)
@@ -75,7 +81,21 @@ const ApplicationForTrainer = () => {
           message: err?.message,
         })),
       );
-    postMutation.mutate(data);
+
+    let photoUrl = "";
+    try {
+      if (applicantData?.profileImage) {
+        const result = await uploadMutation.mutateAsync({
+          file: applicantData?.profileImage,
+          path: "trainers",
+        });
+        photoUrl = result?.data;
+      }
+    } catch (err) {
+      console.error("Upload Error:", err);
+    }
+
+    postMutation.mutate({ ...applicantData, profileImage: photoUrl });
   };
 
   const skillsOptions = [
@@ -237,204 +257,19 @@ const ApplicationForTrainer = () => {
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6 relative">
-            {/* Two Column Grid Structure */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {/* Full Name Input */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiUser className="text-primary" /> Full Name
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  placeholder="Enter your full name"
-                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
-                  value={formData.fullName}
-                  onChange={changeInputHandler}
-                />
-                {nameError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {nameError.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Read-Only Email Input */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiMail className="text-gray-400" /> Email
-                </label>
-                <input
-                  name="email"
-                  className="w-full bg-slate-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 text-slate-400 dark:text-gray-800 rounded-xl px-4 py-2.5 text-sm font-mono cursor-not-allowed outline-none"
-                  value={formData.email}
-                  onChange={changeInputHandler}
-                  readOnly
-                />
-                {emailError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {emailError.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Age Input */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiHash className="text-primary" /> Age
-                </label>
-                <input
-                  type="number"
-                  name="age"
-                  placeholder="Years"
-                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
-                  value={formData.age}
-                  onChange={changeInputHandler}
-                />
-                {ageError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {ageError.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Experience Metric */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiBriefcase className="text-primary" /> Years of Experience
-                </label>
-                <input
-                  type="number"
-                  name="yearsOfExperience"
-                  placeholder="e.g., 3 Years"
-                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-semibold transition-all outline-none"
-                  value={formData.yearsOfExperience}
-                  onChange={changeInputHandler}
-                />
-                {experienceError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {experienceError.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Image Vector URL */}
-              <div className="col-span-1 md:col-span-2 space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiImage className="text-primary" />
-                  Photo URL
-                </label>
-                <input
-                  type="url"
-                  name="profileImage"
-                  placeholder="https://example.com/vector.png"
-                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
-                  value={formData.profileImage}
-                  onChange={changeInputHandler}
-                />
-                {imageError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {imageError.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Advanced Multi-Select Matrix Modules */}
-              <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-                {/* Skills Selector */}
-                <div className="space-y-1.5" data-lenis-prevent>
-                  <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400">
-                    Skill-Set Class Matrix
-                  </label>
-                  <Select
-                    isMulti
-                    name="skills"
-                    options={skillsOptions}
-                    styles={customSelectStyles}
-                    placeholder="Select technical matrix components..."
-                    onChange={(selected) => {
-                      if (skillError)
-                        setError((prev) => [
-                          ...prev,
-                          (skillError.message = ""),
-                        ]);
-
-                      setFormData({
-                        ...formData,
-                        skills: selected ? selected?.map((s) => s.value) : [],
-                      });
-                    }}
-                  />
-                  {skillError && (
-                    <p className="text-xs text-red-500 pl-1">
-                      {skillError.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Day Availability Selector */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400">
-                    Weekly Node Availability
-                  </label>
-                  <Select
-                    isMulti
-                    name="availableDays"
-                    options={daysOptions}
-                    styles={customSelectStyles}
-                    placeholder="Select core active days..."
-                    onChange={(selected) => {
-                      if (daysError)
-                        setError((prev) => [...prev, (daysError.message = "")]);
-
-                      setFormData({
-                        ...formData,
-                        availableDays: selected
-                          ? selected?.map((d) => d.value)
-                          : [],
-                      });
-                    }}
-                  />
-                  {daysError && (
-                    <p className="text-xs text-red-500 pl-1">
-                      {daysError.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Time Frame Scope */}
-              <div className="col-span-1 md:col-span-2 space-y-1.5">
-                <label className="text-[10px] font-black uppercase tracking-wider text-gray-800 dark:text-gray-400 flex items-center gap-1.5">
-                  <FiClock className="text-primary" /> Daily Schedule Span
-                </label>
-                <input
-                  type="text"
-                  name="availableTime"
-                  placeholder="e.g., 09:00 AM - 05:00 PM"
-                  className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
-                  value={formData.availableTime}
-                  onChange={changeInputHandler}
-                />
-                {timeError && (
-                  <p className="text-xs text-red-500 pl-1">
-                    {timeError.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Action Form Dispatch Anchor */}
-            <div className="pt-4">
-              <button
-                type="submit"
-                className="w-full py-3.5 bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/10 hover:opacity-95 active:scale-99 transition-all cursor-pointer flex items-center justify-center gap-2"
-              >
-                <FiCheckCircle className="text-sm" /> Dispatch Registry Payload
-              </button>
-            </div>
-          </form>
+          <ApplicationFrom
+            error={error}
+            setError={setError}
+            skillsOptions={skillsOptions}
+            changeInputHandler={changeInputHandler}
+            customSelectStyles={customSelectStyles}
+            formData={formData}
+            daysOptions={daysOptions}
+            handleImageChange={handleImageChange}
+            handleSubmit={handleSubmit}
+            preview={preview}
+            setFormData={setFormData}
+          />
         )}
       </div>
     </div>

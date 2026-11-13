@@ -1,4 +1,5 @@
 import z from "zod";
+import { fileSchema } from "./file.validation";
 
 export const createApplicationSchema = z.object({
   fullName: z
@@ -9,7 +10,7 @@ export const createApplicationSchema = z.object({
   age: z.coerce
     .number({ error: "Age is required" })
     .gte(18, { error: "Under 18 is not allowed to be a trainer" }),
-  profileImage: z.url({ error: "Enter a valid url" }),
+  profileImage: fileSchema,
   yearsOfExperience: z.coerce
     .number({ error: "Experience year is required" })
     .gte(2, {
@@ -46,5 +47,3 @@ export const createApplicationSchema = z.object({
     .min(1, { error: "Available time is required" })
     .trim(),
 });
-
-export const updateApplicationSchema = createApplicationSchema.partial();

@@ -26,11 +26,7 @@ export const useApplyForTrainer = () => {
     },
     onError: (error) => {
       console.error("Transmission sequence broken", error);
-      Swal.fire(
-        "Transmission Failed",
-        error.message || "Network Error",
-        "error",
-      );
+      Swal.fire("Transmission Failed", "", "error");
     },
   });
   return mutation;
