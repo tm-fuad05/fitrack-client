@@ -19,8 +19,9 @@ import { GoShieldCheck } from "react-icons/go";
 import { fileSchema } from "../../validation/schema/file.validation";
 import { updateProfileSchema } from "../../validation/schema/profile.validation";
 import { useUploadImage } from "../../hooks/useUploadImage";
+import Swal from "sweetalert2";
 const Profile = () => {
-  const { user, updateUserProfile } = useAuth();
+  const { user, setUser, updateUserProfile } = useAuth();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState([]);
   console.log(user);
@@ -75,10 +76,8 @@ const Profile = () => {
 
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
 
     setFromData({ ...formData, [name]: value?.length > 0 ? value : undefined });
-    console.log(name);
 
     if (nameError) setError([...error, (nameError.message = "")]);
   };
@@ -115,14 +114,48 @@ const Profile = () => {
       return;
     }
 
+    const isNameChanged = name !== user?.displayName;
+    const isPhotoChanged = user?.photoURL !== photoURL;
+
     try {
+      if (!isNameChanged && !isPhotoChanged) {
+        await Swal.fire({
+          title: "No changes were made",
+          icon: "info",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        return;
+      }
+
       await updateUserProfile({
         displayName: name,
         photoURL,
       });
-      updateMutation.mutate({ payload: { name }, email: currentUser?.email });
+      setUser((prev) => ({ ...prev, displayName: name, photoURL }));
+
+      if (name !== currentUser?.name) {
+        updateMutation.mutate({ payload: { name }, email: currentUser?.email });
+      }
+
+      await Swal.fire({
+        title:
+          isPhotoChanged && isNameChanged
+            ? "Profile updated"
+            : isNameChanged
+              ? "Name changed"
+              : "Photo changed",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+      });
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        timer: 1500,
+      });
     }
   };
 

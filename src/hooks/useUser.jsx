@@ -82,16 +82,11 @@ export function useUpdateUser() {
         `/users/update?email=${email}`,
         payload,
       );
+
       return res.data;
     },
     onSuccess: async (data, variables) => {
       if (data.success) {
-        Swal.fire({
-          title: "Profile updated",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 1000,
-        });
         queryClient.invalidateQueries({
           queryKey: ["user", "by-email", variables?.email],
         });
