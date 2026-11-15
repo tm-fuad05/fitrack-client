@@ -2,7 +2,7 @@ import z from "zod";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const REQUIRED_FILE_TYPE = [
-  // "image/png",
+  "image/png",
   "image/jpg",
   "image/jpeg",
   "image/webp",

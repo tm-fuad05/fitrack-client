@@ -1,11 +1,9 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
-import Swal from "sweetalert2";
-import { useGetUserByEmail } from "../../hooks/useUser";
+import { useGetUserByEmail, useUpdateUser } from "../../hooks/useUser";
 import { Helmet } from "react-helmet-async";
 import Loader from "../../components/Shared/Loader";
-import { useAxiosSecure } from "../../hooks/useAxios";
 import {
   FiUser,
   FiMail,
@@ -15,55 +13,120 @@ import {
   FiX,
   FiActivity,
   FiCpu,
+  FiCamera,
 } from "react-icons/fi";
 import { GoShieldCheck } from "react-icons/go";
+import { fileSchema } from "../../validation/schema/file.validation";
+import { updateProfileSchema } from "../../validation/schema/profile.validation";
+import { useUploadImage } from "../../hooks/useUploadImage";
 const Profile = () => {
-  const [open, setOpen] = useState(false);
-
-  const axiosSecure = useAxiosSecure();
-  const handleOpen = () => setOpen(!open);
-
   const { user, updateUserProfile } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState([]);
   console.log(user);
+  const [formData, setFromData] = useState({
+    name: user?.displayName || undefined,
+    profileImage: undefined,
+  });
+  const [photoPreview, setPhotoPreview] = useState(user?.photoURL);
+  const handleOpen = () => {
+    setError([]);
+    setOpen(!open);
+    setFromData((prev) => ({
+      ...prev,
+      name: user?.displayName || undefined,
+      profileImage: undefined,
+    }));
+    setPhotoPreview(user?.photoURL);
+  };
 
-  const {
-    data: currentUser,
-    isLoading,
-    refetch,
-  } = useGetUserByEmail(user?.email);
+  const { data: currentUser, isPending } = useGetUserByEmail(user?.email);
+  console.log(currentUser);
+  const updateMutation = useUpdateUser();
+  const uploadMutation = useUploadImage();
+
+  const nameError = error?.find((err) => err?.field === "name");
+  const imageError = error?.find((err) => err?.field === "profileImage");
+
+  const handleImageChange = (e) => {
+    if (imageError) setError([...error, (imageError.message = "")]);
+    const file = e?.target?.files?.[0];
+    if (!file) return;
+
+    const { data: validatedFile, error: fileError } =
+      fileSchema.safeParse(file);
+
+    if (fileError) {
+      return setError(
+        fileError?.issues?.map((err) => ({
+          field: "profileImage",
+          message: err?.message,
+        })),
+      );
+    }
+
+    if (photoPreview?.startsWith("blob:")) {
+      URL.revokeObjectURL(photoPreview);
+    }
+
+    setPhotoPreview(URL.createObjectURL(file));
+    setFromData({ ...formData, profileImage: validatedFile });
+  };
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+
+    setFromData({ ...formData, [name]: value?.length > 0 ? value : undefined });
+    console.log(name);
+
+    if (nameError) setError([...error, (nameError.message = "")]);
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setError([]);
     handleOpen();
-    const form = e.target;
-    const name = form.name.value;
-    const photo = form.photo.value;
+    const { data: validatedData, error: validationError } =
+      updateProfileSchema.safeParse(formData);
 
+    if (validationError) {
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path?.[0],
+          message: err?.message,
+        })),
+      );
+    }
+
+    const { name, profileImage } = validatedData;
+
+    let photoURL = user?.photoURL || "";
     try {
-      await updateUserProfile({ displayName: name, photoURL: photo });
-
-      if (currentUser?._id) {
-        const { data } = await axiosSecure.patch(`/users/${currentUser._id}`, {
-          name,
+      if (profileImage) {
+        const result = await uploadMutation.mutateAsync({
+          file: profileImage,
+          path: "users",
         });
-        if (data.success) {
-          refetch();
-          Swal.fire({
-            title: "Identity Synchronized",
-            text: "Core parameters successfully updated.",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
+        photoURL = result?.data;
       }
     } catch (error) {
-      console.error(error?.response?.data?.message || error?.message);
-      Swal.fire("Error", "Pipeline transaction failed.", "error");
+      console.error(error);
+      return;
+    }
+
+    try {
+      await updateUserProfile({
+        displayName: name,
+        photoURL,
+      });
+      updateMutation.mutate({ payload: { name }, email: currentUser?.email });
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  if (isLoading) return <Loader />;
+  if (isPending) return <Loader />;
 
   const lastLogin = user?.metadata?.lastSignInTime
     ? new Date(user.metadata.lastSignInTime).toLocaleDateString("en-US", {
@@ -98,13 +161,11 @@ const Profile = () => {
 
           {/* Futuristic Glowing Avatar Stack */}
           <div className="relative group my-auto">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary via-transparent to-secondary rounded-full p-1 animate-spin duration-10000 opacity-70 group-hover:opacity-100" />
-            <div className="absolute inset-1 bg-amber-900 dark:bg-neutral-950 rounded-full" />
             {user?.photoURL ? (
               <img
                 src={user?.photoURL}
                 alt="Cluster Core"
-                className="relative w-36 h-36 rounded-full object-cover p-2 shadow-2xl"
+                className="relative w-36 h-36 rounded-full object-cover object-top p-1 shadow-2xl border-4 border-primary"
               />
             ) : (
               <div className="relative w-36 h-36 rounded-full  p-2 shadow-2xl flex justify-center items-center text-6xl font-bold">
@@ -236,6 +297,48 @@ const Profile = () => {
 
         <DialogBody className="p-6">
           <form onSubmit={handleUpdate} className="space-y-5">
+            {/* Circular Profile Picture Upload & Preview */}
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <label
+                htmlFor="photo-upload"
+                className="relative group w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-white/20 hover:border-primary dark:hover:border-primary overflow-hidden cursor-pointer transition-all shadow-md bg-slate-50 dark:bg-white/5 flex items-center justify-center"
+              >
+                {photoPreview ? (
+                  <img
+                    src={photoPreview || user?.photoURL}
+                    alt="Profile Preview"
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <FiUser className="text-3xl text-gray-400 dark:text-gray-500" />
+                )}
+
+                {/* Hover Camera Overlay */}
+                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <FiCamera className="text-white text-xl mb-0.5" />
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-white">
+                    Change
+                  </span>
+                </div>
+
+                <input
+                  id="photo-upload"
+                  type="file"
+                  name="photo"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+              <span className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                Profile Photo
+              </span>
+              {imageError && (
+                <p className="text-xs text-red-500">{imageError?.message}</p>
+              )}
+            </div>
+
+            {/* Name Input */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
                 Name
@@ -243,26 +346,17 @@ const Profile = () => {
               <input
                 type="text"
                 name="name"
-                defaultValue={user?.displayName}
+                value={formData?.name ?? ""}
+                onChange={changeInputHandler}
                 className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-semibold transition-all outline-none"
-                required
               />
+              {nameError && (
+                <p className="text-xs text-red-500">{nameError?.message}</p>
+              )}
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                Photo
-              </label>
-              <input
-                type="url"
-                name="photo"
-                defaultValue={user?.photoURL}
-                className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none"
-                required
-              />
-            </div>
-
-            <div className="pt-4 flex items-center justify-end gap-3 border-t border-gray-200 dark:border-white/5">
+            {/* Submit Button */}
+            <div className="pt-4 flex items-center justify-end gap-3 ">
               <button
                 type="submit"
                 className="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-primary to-secondary hover:opacity-95 transition-all cursor-pointer shadow-lg shadow-primary/10"

@@ -23,11 +23,15 @@ export function useGetAllUsers() {
 export function useGetUserByEmail(email = "") {
   const axiosPublic = useAxiosPublic();
 
-  const { data, refetch, isLoading } = useQuery({
+  const {
+    data,
+    refetch,
+    isLoading: isPending,
+  } = useQuery({
     queryKey: ["user", "by-email", email],
     queryFn: async () => {
       try {
-        const { data } = await axiosPublic.get(`/users/user?email=${email}`);
+        const { data } = await axiosPublic.get(`/users/me?email=${email}`);
         return data.data;
       } catch (error) {
         console.error(error?.response?.data?.message || error?.message);
@@ -35,7 +39,7 @@ export function useGetUserByEmail(email = "") {
     },
   });
 
-  return { data, refetch, isLoading };
+  return { data, refetch, isLoading: isPending };
 }
 
 export function useDeleteUser() {
@@ -64,6 +68,38 @@ export function useDeleteUser() {
         title: error?.response?.data?.message || error?.message,
         icon: "error",
       });
+    },
+  });
+  return mutation;
+}
+
+export function useUpdateUser() {
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async ({ payload, email }) => {
+      const res = await axiosSecure.patch(
+        `/users/update?email=${email}`,
+        payload,
+      );
+      return res.data;
+    },
+    onSuccess: async (data, variables) => {
+      if (data.success) {
+        Swal.fire({
+          title: "Profile updated",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["user", "by-email", variables?.email],
+        });
+      }
+    },
+    onError: async (error) => {
+      console.error(error?.response?.data?.message || error?.message);
+      await Swal.fire("Error", "Pipeline transaction failed.", "error");
     },
   });
   return mutation;

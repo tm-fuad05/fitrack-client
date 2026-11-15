@@ -4,8 +4,8 @@ import { fileSchema } from "./file.validation";
 export const createApplicationSchema = z.object({
   fullName: z
     .string({ error: "Name is required" })
-    .min(3, { error: "Name must be at least 3 characters" })
-    .trim(),
+    .trim()
+    .min(3, { error: "Name must be at least 3 characters" }),
   email: z.email().toLowerCase().trim(),
   age: z.coerce
     .number({ error: "Age is required" })

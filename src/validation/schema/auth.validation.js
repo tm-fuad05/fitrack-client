@@ -38,3 +38,4 @@ export const signInSchema = z.object({
   email: z.email({ error: "Invalid email address" }).toLowerCase().trim(),
   password: z.string({ error: "Password is required" }),
 });
+

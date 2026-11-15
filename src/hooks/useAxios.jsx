@@ -33,7 +33,7 @@ export const useAxiosSecure = () => {
       return response;
     },
     async function (error) {
-      const status = error.response.status;
+      const status = error?.response?.status;
       if (status === 401 || status === 403) {
         try {
           await signOutUser();
