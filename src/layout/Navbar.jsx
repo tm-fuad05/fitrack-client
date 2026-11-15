@@ -123,18 +123,6 @@ const Navbar = () => {
           );
         },
       )}
-
-      {user && user?.email && (
-        <NavLink
-          className={({ isActive }) =>
-            `${getNavLinkClass(isActive)} w-full lg:w-auto pt-5 pb-1  lg:pt-0 lg:pb-0  lg:border-none flex items-center justify-center lg:inline-block`
-          }
-          to={"/dashboard/my-profile"}
-          onClick={() => setMobileSidebarOpen(false)}
-        >
-          Dashboard
-        </NavLink>
-      )}
     </>
   );
 
@@ -237,7 +225,7 @@ const Navbar = () => {
                     className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                   >
                     <TbDashboard className="text-base text-primary" />
-                    my profile
+                    Dashboard
                   </Link>
 
                   <button
