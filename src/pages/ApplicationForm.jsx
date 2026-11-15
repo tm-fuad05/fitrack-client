@@ -162,7 +162,6 @@ export default function ApplicationFrom({
           {imageError && (
             <p className="text-xs text-red-500 pl-1">{imageError.message}</p>
           )}
-          {/* )} */}
         </div>
 
         {/* Advanced Multi-Select Matrix Modules */}

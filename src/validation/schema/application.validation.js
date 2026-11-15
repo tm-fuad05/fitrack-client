@@ -20,8 +20,8 @@ export const createApplicationSchema = z.object({
     .array(
       z
         .string({ error: "Skills are required" })
-        .min(1, { error: "Can't be empty string" })
-        .trim(),
+        .trim()
+        .min(1, { error: "Can't be empty string" }),
     )
     .nonempty({ error: "Skills are required" }),
   availableDays: z
@@ -44,6 +44,6 @@ export const createApplicationSchema = z.object({
     .nonempty({ error: "Days are required" }),
   availableTime: z
     .string({ error: "Available time is required" })
-    .min(1, { error: "Available time is required" })
-    .trim(),
+    .trim()
+    .min(1, { error: "Available time is required" }),
 });

@@ -20,7 +20,6 @@ const ApplicationForTrainer = () => {
   const [preview, setPreview] = useState(null);
   const postMutation = useApplyForTrainer();
   const uploadMutation = useUploadImage();
-  console.log(error);
 
   const [formData, setFormData] = useState({
     fullName: null,

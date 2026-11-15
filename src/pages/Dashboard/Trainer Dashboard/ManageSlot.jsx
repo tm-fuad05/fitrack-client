@@ -5,21 +5,25 @@ import Select from "react-select";
 import { Helmet } from "react-helmet-async";
 import "sweetalert2/src/sweetalert2.scss";
 import { FiPlusCircle, FiUser, FiCalendar, FiClock } from "react-icons/fi";
+import Swal from "sweetalert2";
+import { updateTrainerSchema } from "../../../validation/schema/trainer.validation";
 
 const ManageSlot = () => {
   const { user } = useAuth();
   const { data: trainers, isLoading } = useGetAllTrainers();
-  const currentTrainer = trainers?.find((t) => t.email === user.email);
+  const [error, setError] = useState([]);
+  console.log(error);
+  const currentTrainer = trainers?.find((t) => t?.email === user?.email);
   const [formData, setFormData] = useState({
+    availableTime: null,
     availableDays: [],
-    availableTime: "",
   });
   useEffect(() => {
     if (!isLoading && currentTrainer) {
       setFormData((prev) => ({
         ...prev,
         availableDays: currentTrainer?.availableDays || [],
-        availableTime: currentTrainer?.availableTime || "",
+        availableTime: currentTrainer?.availableTime || null,
       }));
     }
   }, [currentTrainer, user, isLoading]);
@@ -42,6 +46,21 @@ const ManageSlot = () => {
   const remainingDays = daysOptions?.filter(
     (d) => !formData?.availableDays?.includes(d.value),
   );
+
+  const timeError = error?.find((err) => err.field === "availableTime");
+  const daysError = error?.find((err) => err.field === "availableDays");
+
+  const changeInputHandler = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value.length > 0 ? value : null,
+    }));
+
+    const fieldError = error?.find((err) => err.field === name);
+    if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
+  };
 
   // react-select এর জন্য থিম স্টাইলস (লাইট মোডে ডিপ টেক্সট কন্ট্রাস্ট সহ)
   const customSelectStyles = {
@@ -96,8 +115,41 @@ const ManageSlot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { data: validatedData, error: validationError } =
+      updateTrainerSchema.safeParse(formData);
+
+    if (validationError) {
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path?.[0],
+          message: err?.message,
+        })),
+      );
+    }
+
+    const trainerDays = currentTrainer?.availableDays || [];
+    const formDays = validatedData?.availableDays || [];
+
+    const isTimeChanged =
+      formData?.availableTime !== currentTrainer?.availableTime;
+    const isDaysChanged = !(
+      trainerDays.length === formDays.length &&
+      trainerDays.every((day) => formDays.includes(day))
+    );
+
+    if (!isTimeChanged && !isDaysChanged) {
+      await Swal.fire({
+        title: "No changes were made",
+        icon: "info",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return;
+    }
+
     patchMutation.mutate({
-      payload: formData,
+      payload: validatedData,
       id: currentTrainer?._id,
     });
   };
@@ -163,14 +215,15 @@ const ManageSlot = () => {
               </label>
               <input
                 type="text"
+                name="availableTime"
                 placeholder="e.g., 09:00 AM - 05:00 PM"
                 className="w-full bg-slate-50 dark:bg-transparent text-surface-dark dark:text-white border border-gray-300/60 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl px-4 py-2.5 text-sm font-mono transition-all outline-none"
-                value={formData.availableTime}
-                onChange={(e) =>
-                  setFormData({ ...formData, availableTime: e.target.value })
-                }
-                required
+                value={formData?.availableTime ?? ""}
+                onChange={changeInputHandler}
               />
+              {timeError && (
+                <p className="text-xs text-red-500 pl-1">{timeError.message}</p>
+              )}
             </div>
             {/* Available Days */}
             <div className="space-y-2">
@@ -183,6 +236,9 @@ const ManageSlot = () => {
                 options={remainingDays}
                 styles={customSelectStyles}
                 onChange={(selected) => {
+                  if (daysError)
+                    setError((prev) => [...prev, (daysError.message = "")]);
+
                   setFormData({
                     ...formData,
                     availableDays: selected
@@ -191,6 +247,9 @@ const ManageSlot = () => {
                   });
                 }}
               />
+              {daysError && (
+                <p className="text-xs text-red-500 pl-1">{daysError.message}</p>
+              )}
             </div>
           </div>
 

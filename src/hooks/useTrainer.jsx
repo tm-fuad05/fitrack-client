@@ -102,7 +102,7 @@ export const useManageSlot = () => {
   const mutation = useMutation({
     mutationFn: async ({ payload, id }) => {
       const { data } = await axiosSecure.patch(
-        `/trainers/add-slot/${id}`,
+        `/trainers/update/${id}`,
         payload,
       );
       return data;
@@ -110,7 +110,7 @@ export const useManageSlot = () => {
     onSuccess: async (data) => {
       if (data?.success) {
         await Swal.fire({
-          title: "Slot Added Successfully",
+          title: "Update Successfully",
           icon: "success",
           background: isDark ? "#171717" : "#ffffff",
           color: isDark ? "#ffffff" : "#171717",
